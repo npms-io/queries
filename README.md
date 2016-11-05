@@ -24,7 +24,7 @@ Module that offers a variety of queries around `npms` data.
 
 ### Usage
 
-For now, only queries related to `search` are available. Though, the goal of this module is to provide other interesting queries such as top ranked modules, top authors, etc in the future.
+For now, only queries related to `search` are available. Though, the goal of this module is to provide other interesting queries in the near future, such as top ranked modules, top authors, etc.
 
 
 #### .search(q, esClient, [options]) -> Promise
