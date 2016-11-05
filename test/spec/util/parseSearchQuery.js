@@ -88,19 +88,9 @@ describe('util/parseSearchQuery()', () => {
         });
     });
 
-    it('should fail if q has invalid qualifiers', () => {
-        expect(() => parseSearchQuery('is:foo foo')).to.throw('deprecated, unstable, insecure');
-        expect(() => parseSearchQuery('not:foo foo')).to.throw('deprecated, unstable, insecure');
-        expect(() => parseSearchQuery('boost-exact:foo foo')).to.throw('boolean');
-        expect(() => parseSearchQuery('score-effect:foo foo')).to.throw('number');
-        expect(() => parseSearchQuery('quality-weight:foo foo')).to.throw('number');
-        expect(() => parseSearchQuery('popularity-weight:foo foo')).to.throw('number');
-        expect(() => parseSearchQuery('maintenance-weight:foo foo')).to.throw('number');
-    });
-
-    it('should not fail on invalid qualifiers if options.throwOnInvalid is disabled', () => {
+    it('should not fail on invalid qualifiers by default', () => {
         const params = parseSearchQuery('is:foo not:bar boost-exact:foo score-effect:foo quality-weight:foo popularity-weight:foo \
-maintenance-weight:foo keywords:gulp foo', { throwOnInvalid: false });
+maintenance-weight:foo keywords:gulp foo');
 
         expect(params).to.eql({
             text: 'foo',
@@ -115,6 +105,16 @@ maintenance-weight:foo keywords:gulp foo', { throwOnInvalid: false });
             popularityWeight: 0.4520547945205479,
             maintenanceWeight: 0.28082191780821913,
         });
+    });
+
+    it('should fail if q has invalid qualifiers if options.throwOnInvalid is enabled', () => {
+        expect(() => parseSearchQuery('is:foo foo', { throwOnInvalid: true })).to.throw('deprecated, unstable, insecure');
+        expect(() => parseSearchQuery('not:foo foo', { throwOnInvalid: true })).to.throw('deprecated, unstable, insecure');
+        expect(() => parseSearchQuery('boost-exact:foo foo', { throwOnInvalid: true })).to.throw('boolean');
+        expect(() => parseSearchQuery('score-effect:foo foo', { throwOnInvalid: true })).to.throw('number');
+        expect(() => parseSearchQuery('quality-weight:foo foo', { throwOnInvalid: true })).to.throw('number');
+        expect(() => parseSearchQuery('popularity-weight:foo foo', { throwOnInvalid: true })).to.throw('number');
+        expect(() => parseSearchQuery('maintenance-weight:foo foo', { throwOnInvalid: true })).to.throw('number');
     });
 
     describe('discardQualifiers()', () => {
