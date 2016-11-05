@@ -7,7 +7,8 @@
     "lint": "eslint '{*.js,test/**/*.js}' --ignore-pattern=test/coverage",
     "test": "NOCK_BACK_MODE=record mocha --bail",
     "test-cov": "NOCK_BACK_MODE=record istanbul cover --dir test/coverage _mocha -- --bail && echo Coverage lies in test/coverage/lcov-report/index.html",
-    "test-travis": "NOCK_BACK_MODE=lockdown istanbul cover _mocha --report lcovonly -- --bail && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test-travis": "NOCK_BACK_MODE=lockdown istanbul cover _mocha --report lcovonly -- --bail && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "postpublish": "greenkeeper-postpublish"
   },
   "bugs": {
     "url": "https://github.com/npms/queries/issues/"
@@ -41,6 +42,7 @@
     "chai": "^3.4.1",
     "coveralls": "^2.11.6",
     "eslint": "^3.0.0",
+    "greenkeeper-postpublish": "^1.0.1",
     "istanbul": "^0.4.1",
     "mocha": "^3.1.2",
     "nock": "^9.0.2"
