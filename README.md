@@ -22,23 +22,7 @@ Module that offers a variety of queries around `npms` data.
 `$ npm install @npms/queries`
 
 
-## Usage
-
-```js
-const queries = require('@npms/queries');
-const esClient = require('elasticsearch')({
-    host: '127.0.0.1:9200',
-    apiVersion: '2.4',
-    log: null,
-});
-
-queries.search('test framework', esClient)
-.then((results) => console.log('results', results));
-.catch((err) => console.error('err', err));
-```
-
-
-### Available queries
+### Usage
 
 For now, only queries related to `search` are available. Though, the goal of this module is to provide other interesting queries such as top ranked modules, top authors, etc in the future.
 
@@ -54,8 +38,7 @@ You may read the [API docs](https://api-docs.npms.io/#api-Search-ExecuteSearchQu
 
 ```js
 queries.search('test framework', esClient)
-.then((results) => console.log(results))
-.catch((err) => console.error('err', err));
+.then((results) => console.log(results));
 ```
 
 Available options:
@@ -74,8 +57,7 @@ The `esClient` accepts a [`elasticsearch`](https://github.com/elastic/elasticsea
 
 ```js
 queries.search.suggestions('test framework', esClient)
-.then((results) => console.log(results))
-.catch((err) => console.error('err', err));
+.then((results) => console.log(results));
 ```
 
 Available options:
