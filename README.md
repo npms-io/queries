@@ -37,7 +37,11 @@ The `esClient` accepts a [`elasticsearch`](https://github.com/elastic/elasticsea
 You may read the [API docs](https://api-docs.npms.io/#api-Search-ExecuteSearchQuery) to know which qualifiers are available.
 
 ```js
-queries.search('test framework', esClient)
+const queries = require('@npms/queries');
+
+// ...
+
+queries.search('test framework', esClient);
 .then((res) => {
     console.log('total', res.total);
     console.log('results', res.results);
@@ -59,6 +63,9 @@ Only normal text is supported in `q` but any qualifiers will be automatically di
 The `esClient` accepts a [`elasticsearch`](https://github.com/elastic/elasticsearch-js) instance or a config to instantiate it.
 
 ```js
+const queries = require('@npms/queries');
+
+// ...
 queries.search.suggestions('test framework', esClient)
 .then((suggestions) => console.log('suggestions', suggestions));
 ```
