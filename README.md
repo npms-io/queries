@@ -14,7 +14,7 @@
 [david-dm-dev-url]:https://david-dm.org/npms-io/queries#info=devDependencies
 [david-dm-dev-image]:https://img.shields.io/david/dev/npms-io/queries.svg
 
-Module that offer a variety of queries around `npms` data.
+Module that offers a variety of queries around `npms` data.
 
 
 ## Installation
