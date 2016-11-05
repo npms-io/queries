@@ -38,7 +38,10 @@ You may read the [API docs](https://api-docs.npms.io/#api-Search-ExecuteSearchQu
 
 ```js
 queries.search('test framework', esClient)
-.then((results) => console.log(results));
+.then((res) => {
+    console.log('total', res.total);
+    console.log('results', res.results);
+});
 ```
 
 Available options:
@@ -57,7 +60,7 @@ The `esClient` accepts a [`elasticsearch`](https://github.com/elastic/elasticsea
 
 ```js
 queries.search.suggestions('test framework', esClient)
-.then((results) => console.log(results));
+.then((suggestions) => console.log('suggestions', suggestions));
 ```
 
 Available options:
