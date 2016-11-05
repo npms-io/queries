@@ -14,11 +14,10 @@ describe('search.suggestions()', () => {
         nockBack('search-suggestions-sass.json', (_nockDone) => { nockDone = _nockDone; });
 
         return queries.search.suggestions('sass', localEsClient)
-        .then((res) => {
-            expect(res.total).to.equal(1003);
-            expect(res.results).to.have.length(25);
-            expect(res.results[0]).to.contain.all.keys('package', 'score', 'searchScore', 'highlight');
-            expect(res.results[0].package.name).to.equal('sass');
+        .then((suggestions) => {
+            expect(suggestions).to.have.length(25);
+            expect(suggestions[0]).to.contain.all.keys('package', 'score', 'searchScore', 'highlight');
+            expect(suggestions[0].package.name).to.equal('sass');
             nockDone();
         });
     });
@@ -29,11 +28,10 @@ describe('search.suggestions()', () => {
         nockBack('search-suggestions-sass.json', (_nockDone) => { nockDone = _nockDone; });
 
         return queries.search.suggestions('author:satazor sass', localEsClient)
-        .then((res) => {
-            expect(res.total).to.equal(1003);
-            expect(res.results).to.have.length(25);
-            expect(res.results[0]).to.contain.all.keys('package', 'score', 'searchScore', 'highlight');
-            expect(res.results[0].package.name).to.equal('sass');
+        .then((suggestions) => {
+            expect(suggestions).to.have.length(25);
+            expect(suggestions[0]).to.contain.all.keys('package', 'score', 'searchScore', 'highlight');
+            expect(suggestions[0].package.name).to.equal('sass');
             nockDone();
         });
     });
@@ -44,9 +42,8 @@ describe('search.suggestions()', () => {
         nockBack('search-suggestions-sass.json', (_nockDone) => { nockDone = _nockDone; });
 
         return queries.search.suggestions('author:satazor', localEsClient)
-        .then((res) => {
-            expect(res.total).to.equal(0);
-            expect(res.results).to.have.length(0);
+        .then((suggestions) => {
+            expect(suggestions).to.eql([]);
             nockDone();
         });
     });
@@ -57,8 +54,8 @@ describe('search.suggestions()', () => {
         nockBack('search-suggestions-sass.json', (_nockDone) => { nockDone = _nockDone; });
 
         return queries.search.suggestions('sass', { host: '127.0.0.1:9200', log: null, apiVersion: '2.4' })
-        .then((res) => {
-            expect(res.total).to.equal(1003);
+        .then((suggestions) => {
+            expect(suggestions).to.have.length(25);
             nockDone();
         });
     });
