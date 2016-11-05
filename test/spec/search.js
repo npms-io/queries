@@ -58,4 +58,27 @@ describe('search()', () => {
             nockDone();
         });
     });
+
+    it('should fail if q has invalid qualifiers', () => {
+        return queries.search('keywords:gulpplugin is:foo sass', { host: '127.0.0.1:9200', log: null, apiVersion: '2.4' })
+        .then(() => {
+            throw new Error('Should have failed');
+        }, (err) => {
+            expect(err).to.be.an.instanceOf(Error);
+            expect(err.message).to.contain('deprecated, unstable, insecure');
+        });
+    });
+
+    it('should not fail on invalid qualifiers if options.throwOnInvalid is disabled', () => {
+        let nockDone;
+
+        nockBack('search-gulpplugin-sass.json', (_nockDone) => { nockDone = _nockDone; });
+
+        return queries.search('keywords:gulpplugin is:foo sass',
+            { host: '127.0.0.1:9200', log: null, apiVersion: '2.4' }, { throwOnInvalid: false })
+        .then((res) => {
+            expect(res.total).to.equal(68);
+            nockDone();
+        });
+    });
 });
