@@ -40,7 +40,7 @@ queries.search('test framework', esClient)
 
 ### Available queries
 
-For now, only queries related to `search` are available. Though, the goal of this module is to provide other interesting queries such as top ranked modules, top authors, etc.
+For now, only queries related to `search` are available. Though, the goal of this module is to provide other interesting queries such as top ranked modules, top authors, etc in the future.
 
 
 #### .search(q, esClient, [options]) -> Promise
