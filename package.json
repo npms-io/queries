@@ -1,0 +1,51 @@
+{
+  "name": "@npms/queries",
+  "version": "0.1.0",
+  "description": "Module that offer a variety of queries around `npms` data",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint '{*.js,test/**/*.js}' --ignore-pattern=test/coverage",
+    "test": "NOCK_BACK_MODE=record mocha --bail",
+    "test-cov": "NOCK_BACK_MODE=record istanbul cover --dir test/coverage _mocha -- --bail && echo Coverage lies in test/coverage/lcov-report/index.html",
+    "test-travis": "NOCK_BACK_MODE=lockdown istanbul cover _mocha --report lcovonly -- --bail && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "bugs": {
+    "url": "https://github.com/npms/queries/issues/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/npms/queries.git"
+  },
+  "keywords": [
+    "url",
+    "link",
+    "uri",
+    "working",
+    "check",
+    "alive",
+    "ok",
+    "broken"
+  ],
+  "author": "André Cruz <amdfcruz@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "deep-compact": "^1.0.2",
+    "elasticsearch": "^12.0.1",
+    "joi": "^9.2.0",
+    "lodash": "^4.16.6",
+    "normalize-number": "^1.0.3",
+    "search-query-parser": "^1.3.0"
+  },
+  "devDependencies": {
+    "@satazor/eslint-config": "^3.0.0",
+    "chai": "^3.4.1",
+    "coveralls": "^2.11.6",
+    "eslint": "^3.0.0",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.3.4",
+    "nock": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  }
+}
