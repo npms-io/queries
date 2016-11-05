@@ -40,7 +40,6 @@ You may read the [API docs](https://api-docs.npms.io/#api-Search-ExecuteSearchQu
 const queries = require('@npms/queries');
 
 // ...
-
 queries.search('test framework', esClient);
 .then((res) => {
     console.log('total', res.total);
