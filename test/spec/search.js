@@ -24,6 +24,34 @@ describe('search()', () => {
         });
     });
 
+    it('should return the desired results of a complex query', () => {
+        let nockDone;
+
+        nockBack('search-complex-query-spawn.json', (_nockDone) => { nockDone = _nockDone; });
+
+        return queries.search('maintainer:satazor keywords:spawn,-foo is:deprecated not:insecure boost-exact:no spawn', localEsClient)
+        .then((res) => {
+            expect(res.total).to.equal(1);
+            expect(res.results).to.have.length(1);
+            expect(res.results[0].package.name).to.equal('cross-spawn-async');
+            nockDone();
+        });
+    });
+
+    it('should allow to search all packages of an author', () => {
+        let nockDone;
+
+        nockBack('search-author-sindresorhus.json', (_nockDone) => { nockDone = _nockDone; });
+
+        return queries.search('author:sindresorhus', localEsClient)
+        .then((res) => {
+            expect(res.total).to.equal(767);
+            expect(res.results).to.have.length(25);
+            res.results.forEach((result) => expect(result.package.author.username).to.equal('sindresorhus'));
+            nockDone();
+        });
+    });
+
     it('should make use of options.from and options.size', () => {
         nock('http://127.0.0.1:9200')
         .post('/npms-current/score/_search', (post) => {

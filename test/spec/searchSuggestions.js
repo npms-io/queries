@@ -38,6 +38,19 @@ describe('search.suggestions()', () => {
         });
     });
 
+    it('should ignore qualifiers (empty text)', () => {
+        let nockDone;
+
+        nockBack('search-suggestions-sass.json', (_nockDone) => { nockDone = _nockDone; });
+
+        return queries.search.suggestions('author:satazor', localEsClient)
+        .then((res) => {
+            expect(res.total).to.equal(0);
+            expect(res.results).to.have.length(0);
+            nockDone();
+        });
+    });
+
     it('should accept a elasticsearch config as the second argument', () => {
         let nockDone;
 

@@ -1,0 +1,2193 @@
+[
+    {
+        "scope": "http://127.0.0.1:9200",
+        "method": "POST",
+        "path": "/npms-current/score/_search",
+        "body": {
+            "size": 25,
+            "from": 0,
+            "query": {
+                "function_score": {
+                    "boost_mode": "replace",
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "or": [
+                                        {
+                                            "term": {
+                                                "package.author.name": "sindresorhus"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "package.author.username": "sindresorhus"
+                                            }
+                                        },
+                                        {
+                                            "term": {
+                                                "package.author.email": "sindresorhus"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "must_not": [],
+                            "should": [],
+                            "minimum_should_match": 1
+                        }
+                    },
+                    "script_score": {
+                        "lang": "groovy",
+                        "script": "doc[\"package.name.raw\"].value.equals(text) ? 100000 + (doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight) : _score * pow((doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight), scoreEffect)",
+                        "params": {
+                            "text": "",
+                            "scoreEffect": 15.3,
+                            "qualityWeight": 0.2671232876712329,
+                            "popularityWeight": 0.4520547945205479,
+                            "maintenanceWeight": 0.28082191780821913
+                        }
+                    }
+                }
+            }
+        },
+        "status": 200,
+        "response": {
+            "took": 45,
+            "timed_out": false,
+            "_shards": {
+                "total": 1,
+                "successful": 1,
+                "failed": 0
+            },
+            "hits": {
+                "total": 767,
+                "max_score": 0.13270463,
+                "hits": [
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "object-assign",
+                        "_score": 0.13270463,
+                        "_source": {
+                            "package": {
+                                "name": "object-assign",
+                                "version": "4.1.0",
+                                "description": "ES2015 Object.assign() ponyfill",
+                                "keywords": [
+                                    "object",
+                                    "assign",
+                                    "extend",
+                                    "properties",
+                                    "es2015",
+                                    "ecmascript",
+                                    "harmony",
+                                    "ponyfill",
+                                    "prollyfill",
+                                    "polyfill",
+                                    "shim",
+                                    "browser"
+                                ],
+                                "date": "2016-05-02T18:09:55.804Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/object-assign",
+                                    "homepage": "https://github.com/sindresorhus/object-assign#readme",
+                                    "repository": "https://github.com/sindresorhus/object-assign",
+                                    "bugs": "https://github.com/sindresorhus/object-assign/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "spicyj",
+                                    "email": "ben@benalpert.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    },
+                                    {
+                                        "username": "spicyj",
+                                        "email": "ben@benalpert.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 642,
+                                    "downloadsCount": 18823544.666666668,
+                                    "downloadsAcceleration": 60630.6257039574,
+                                    "dependentsCount": 2703
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.9085350884768435,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.7798562791584243,
+                                    "maintenance": 0.9998940474136493
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "del",
+                        "_score": 0.06220979,
+                        "_source": {
+                            "package": {
+                                "name": "del",
+                                "version": "2.2.2",
+                                "description": "Delete files and folders",
+                                "keywords": [
+                                    "delete",
+                                    "del",
+                                    "remove",
+                                    "destroy",
+                                    "trash",
+                                    "unlink",
+                                    "clean",
+                                    "cleaning",
+                                    "cleanup",
+                                    "rm",
+                                    "rmrf",
+                                    "rimraf",
+                                    "rmdir",
+                                    "glob",
+                                    "gulpfriendly",
+                                    "file",
+                                    "files",
+                                    "folder",
+                                    "dir",
+                                    "directory",
+                                    "fs",
+                                    "filesystem"
+                                ],
+                                "date": "2016-08-13T00:05:37.041Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/del",
+                                    "homepage": "https://github.com/sindresorhus/del#readme",
+                                    "repository": "https://github.com/sindresorhus/del",
+                                    "bugs": "https://github.com/sindresorhus/del/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.75,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 760,
+                                    "downloadsCount": 3809971.3333333335,
+                                    "downloadsAcceleration": 19636.227321156774,
+                                    "dependentsCount": 1019
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9333047945205479,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8746410557488582,
+                                "detail": {
+                                    "quality": 0.9446994292391837,
+                                    "popularity": 0.689372170061472,
+                                    "maintenance": 0.9998599070159657
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "meow",
+                        "_score": 0.06093647,
+                        "_source": {
+                            "package": {
+                                "name": "meow",
+                                "version": "3.7.0",
+                                "description": "CLI app helper",
+                                "keywords": [
+                                    "cli",
+                                    "bin",
+                                    "util",
+                                    "utility",
+                                    "helper",
+                                    "argv",
+                                    "command",
+                                    "line",
+                                    "meow",
+                                    "cat",
+                                    "kitten",
+                                    "parser",
+                                    "option",
+                                    "flags",
+                                    "input",
+                                    "cmd",
+                                    "console"
+                                ],
+                                "date": "2016-01-04T14:20:49.240Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/meow",
+                                    "homepage": "https://github.com/sindresorhus/meow#readme",
+                                    "repository": "https://github.com/sindresorhus/meow",
+                                    "bugs": "https://github.com/sindresorhus/meow/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.5,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 727,
+                                    "downloadsCount": 6507290.666666667,
+                                    "downloadsAcceleration": 18574.729680365293,
+                                    "dependentsCount": 1314
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8691481718713686,
+                                "detail": {
+                                    "quality": 0.8953229783868135,
+                                    "popularity": 0.7160644518055965,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "update-notifier",
+                        "_score": 0.044269867,
+                        "_source": {
+                            "package": {
+                                "name": "update-notifier",
+                                "version": "1.0.2",
+                                "description": "Update notifications for your CLI app",
+                                "keywords": [
+                                    "npm",
+                                    "update",
+                                    "updater",
+                                    "notify",
+                                    "notifier",
+                                    "check",
+                                    "checker",
+                                    "cli",
+                                    "module",
+                                    "package",
+                                    "version"
+                                ],
+                                "date": "2016-06-21T00:21:58.743Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/update-notifier",
+                                    "homepage": "https://github.com/yeoman/update-notifier#readme",
+                                    "repository": "https://github.com/yeoman/update-notifier",
+                                    "bugs": "https://github.com/yeoman/update-notifier/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sboudrias",
+                                    "email": "admin@simonboudrias.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    },
+                                    {
+                                        "username": "addyosmani",
+                                        "email": "addyosmani@gmail.com"
+                                    },
+                                    {
+                                        "username": "passy",
+                                        "email": "phartig@rdrei.net"
+                                    },
+                                    {
+                                        "username": "sboudrias",
+                                        "email": "admin@simonboudrias.com"
+                                    },
+                                    {
+                                        "username": "eddiemonge",
+                                        "email": "eddie+npm@eddiemonge.com"
+                                    },
+                                    {
+                                        "username": "arthurvr",
+                                        "email": "contact@arthurverschaeve.be"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.75,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 632,
+                                    "downloadsCount": 2481763.6666666665,
+                                    "downloadsAcceleration": 8783.854128614916,
+                                    "dependentsCount": 976
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8602496752614114,
+                                "detail": {
+                                    "quality": 0.9446994292391837,
+                                    "popularity": 0.6483175036179731,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "strip-json-comments",
+                        "_score": 0.03994572,
+                        "_source": {
+                            "package": {
+                                "name": "strip-json-comments",
+                                "version": "2.0.1",
+                                "description": "Strip comments from JSON. Lets you use comments in your JSON files!",
+                                "keywords": [
+                                    "json",
+                                    "strip",
+                                    "remove",
+                                    "delete",
+                                    "trim",
+                                    "comments",
+                                    "multiline",
+                                    "parse",
+                                    "config",
+                                    "configuration",
+                                    "conf",
+                                    "settings",
+                                    "util",
+                                    "env",
+                                    "environment"
+                                ],
+                                "date": "2016-02-09T08:30:06.455Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/strip-json-comments",
+                                    "homepage": "https://github.com/sindresorhus/strip-json-comments#readme",
+                                    "repository": "https://github.com/sindresorhus/strip-json-comments",
+                                    "bugs": "https://github.com/sindresorhus/strip-json-comments/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 303,
+                                    "downloadsCount": 7402678.666666667,
+                                    "downloadsAcceleration": 27699.56312785387,
+                                    "dependentsCount": 248
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8566541349214944,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.6317226872043171,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "strip-ansi",
+                        "_score": 0.03976085,
+                        "_source": {
+                            "package": {
+                                "name": "strip-ansi",
+                                "version": "3.0.1",
+                                "description": "Strip ANSI escape codes",
+                                "keywords": [
+                                    "strip",
+                                    "trim",
+                                    "remove",
+                                    "ansi",
+                                    "styles",
+                                    "color",
+                                    "colour",
+                                    "colors",
+                                    "terminal",
+                                    "console",
+                                    "string",
+                                    "tty",
+                                    "escape",
+                                    "formatting",
+                                    "rgb",
+                                    "256",
+                                    "shell",
+                                    "xterm",
+                                    "log",
+                                    "logging",
+                                    "command-line",
+                                    "text"
+                                ],
+                                "date": "2016-02-21T12:21:22.998Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/strip-ansi",
+                                    "homepage": "https://github.com/chalk/strip-ansi",
+                                    "repository": "https://github.com/chalk/strip-ansi",
+                                    "bugs": "https://github.com/chalk/strip-ansi/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "jbnicolai",
+                                    "email": "jappelman@xebia.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "qix",
+                                        "email": "i.am.qix@gmail.com"
+                                    },
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 87,
+                                    "downloadsCount": 18220453,
+                                    "downloadsAcceleration": 40792.70719178082,
+                                    "dependentsCount": 280
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.8564744720687265,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.6311116608495186,
+                                    "maintenance": 0.9998940474136493
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "globby",
+                        "_score": 0.03937425,
+                        "_source": {
+                            "package": {
+                                "name": "globby",
+                                "version": "6.0.0",
+                                "description": "Extends `glob` with support for multiple patterns and exposes a Promise API",
+                                "keywords": [
+                                    "all",
+                                    "array",
+                                    "directories",
+                                    "dirs",
+                                    "expand",
+                                    "files",
+                                    "filesystem",
+                                    "filter",
+                                    "find",
+                                    "fnmatch",
+                                    "folders",
+                                    "fs",
+                                    "glob",
+                                    "globbing",
+                                    "globs",
+                                    "gulpfriendly",
+                                    "match",
+                                    "matcher",
+                                    "minimatch",
+                                    "multi",
+                                    "multiple",
+                                    "paths",
+                                    "pattern",
+                                    "patterns",
+                                    "traverse",
+                                    "util",
+                                    "utility",
+                                    "wildcard",
+                                    "wildcards",
+                                    "promise"
+                                ],
+                                "date": "2016-07-22T21:55:08.133Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/globby",
+                                    "homepage": "https://github.com/sindresorhus/globby#readme",
+                                    "repository": "https://github.com/sindresorhus/globby",
+                                    "bugs": "https://github.com/sindresorhus/globby/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "schnittstabil",
+                                        "email": "michael@schnittstabil.de"
+                                    },
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    },
+                                    {
+                                        "username": "ult_combo",
+                                        "email": "ultcombo@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 264,
+                                    "downloadsCount": 4808014.666666667,
+                                    "downloadsAcceleration": 26029.782990867585,
+                                    "dependentsCount": 379
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.989554794520548,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8560676645457679,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.6299591371979901,
+                                    "maintenance": 0.9998842638567247
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "camelcase",
+                        "_score": 0.038608838,
+                        "_source": {
+                            "package": {
+                                "name": "camelcase",
+                                "version": "3.0.0",
+                                "description": "Convert a dash/dot/underscore/space separated string to camelCase: foo-bar → fooBar",
+                                "keywords": [
+                                    "camelcase",
+                                    "camel-case",
+                                    "camel",
+                                    "case",
+                                    "dash",
+                                    "hyphen",
+                                    "dot",
+                                    "underscore",
+                                    "separator",
+                                    "string",
+                                    "text",
+                                    "convert"
+                                ],
+                                "date": "2016-05-04T17:33:27.903Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/camelcase",
+                                    "homepage": "https://github.com/sindresorhus/camelcase#readme",
+                                    "repository": "https://github.com/sindresorhus/camelcase",
+                                    "bugs": "https://github.com/sindresorhus/camelcase/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "http://sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 117,
+                                    "downloadsCount": 15570499.333333334,
+                                    "downloadsAcceleration": 67867.32374429224,
+                                    "dependentsCount": 205
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.855255007821411,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.62762747728576,
+                                    "maintenance": 0.9998940474136493
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "pify",
+                        "_score": 0.03472359,
+                        "_source": {
+                            "package": {
+                                "name": "pify",
+                                "version": "2.3.0",
+                                "description": "Promisify a callback-style function",
+                                "keywords": [
+                                    "promise",
+                                    "promises",
+                                    "promisify",
+                                    "denodify",
+                                    "denodeify",
+                                    "callback",
+                                    "cb",
+                                    "node",
+                                    "then",
+                                    "thenify",
+                                    "convert",
+                                    "transform",
+                                    "wrap",
+                                    "wrapper",
+                                    "bind",
+                                    "to",
+                                    "async",
+                                    "es2015"
+                                ],
+                                "date": "2015-10-26T13:16:18.238Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/pify",
+                                    "homepage": "https://github.com/sindresorhus/pify",
+                                    "repository": "https://github.com/sindresorhus/pify",
+                                    "bugs": "https://github.com/sindresorhus/pify/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 339,
+                                    "downloadsCount": 6354597.666666667,
+                                    "downloadsAcceleration": 24119.326522070012,
+                                    "dependentsCount": 325
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8472172320274814,
+                                "detail": {
+                                    "quality": 0.9129557704843995,
+                                    "popularity": 0.6382908018822739,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "query-string",
+                        "_score": 0.03388978,
+                        "_source": {
+                            "package": {
+                                "name": "query-string",
+                                "version": "4.2.3",
+                                "description": "Parse and stringify URL query strings",
+                                "keywords": [
+                                    "browser",
+                                    "querystring",
+                                    "query",
+                                    "string",
+                                    "qs",
+                                    "param",
+                                    "parameter",
+                                    "url",
+                                    "uri",
+                                    "parse",
+                                    "stringify",
+                                    "encode",
+                                    "decode"
+                                ],
+                                "date": "2016-08-13T00:04:14.842Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/query-string",
+                                    "homepage": "https://github.com/sindresorhus/query-string#readme",
+                                    "repository": "https://github.com/sindresorhus/query-string",
+                                    "bugs": "https://github.com/sindresorhus/query-string/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.75,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 793,
+                                    "downloadsCount": 2437486,
+                                    "downloadsAcceleration": 15621.862119482495,
+                                    "dependentsCount": 280
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9507705479452055,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9946582952409433
+                                }
+                            },
+                            "score": {
+                                "final": 0.8491991326265868,
+                                "detail": {
+                                    "quality": 0.9446994292391837,
+                                    "popularity": 0.6165683323822271,
+                                    "maintenance": 0.9999725357744349
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "ansi-styles",
+                        "_score": 0.029148838,
+                        "_source": {
+                            "package": {
+                                "name": "ansi-styles",
+                                "version": "2.2.1",
+                                "description": "ANSI escape codes for styling strings in the terminal",
+                                "keywords": [
+                                    "ansi",
+                                    "styles",
+                                    "color",
+                                    "colour",
+                                    "colors",
+                                    "terminal",
+                                    "console",
+                                    "cli",
+                                    "string",
+                                    "tty",
+                                    "escape",
+                                    "formatting",
+                                    "rgb",
+                                    "256",
+                                    "shell",
+                                    "xterm",
+                                    "log",
+                                    "logging",
+                                    "command-line",
+                                    "text"
+                                ],
+                                "date": "2016-03-28T20:35:18.267Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/ansi-styles",
+                                    "homepage": "https://github.com/chalk/ansi-styles#readme",
+                                    "repository": "https://github.com/chalk/ansi-styles",
+                                    "bugs": "https://github.com/chalk/ansi-styles/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "qix",
+                                        "email": "i.am.qix@gmail.com"
+                                    },
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 156,
+                                    "downloadsCount": 16370689,
+                                    "downloadsAcceleration": 31403.753805175016,
+                                    "dependentsCount": 75
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9278163290513834
+                                }
+                            },
+                            "score": {
+                                "final": 0.8437103515610795,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.5946774507101508,
+                                    "maintenance": 0.9998593418168831
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "path-exists",
+                        "_score": 0.028242359,
+                        "_source": {
+                            "package": {
+                                "name": "path-exists",
+                                "version": "3.0.0",
+                                "description": "Check if a path exists",
+                                "keywords": [
+                                    "path",
+                                    "exists",
+                                    "exist",
+                                    "file",
+                                    "filepath",
+                                    "fs",
+                                    "filesystem",
+                                    "file-system",
+                                    "access",
+                                    "stat"
+                                ],
+                                "date": "2016-05-01T11:44:53.762Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/path-exists",
+                                    "homepage": "https://github.com/sindresorhus/path-exists#readme",
+                                    "repository": "https://github.com/sindresorhus/path-exists",
+                                    "bugs": "https://github.com/sindresorhus/path-exists/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.5665,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 88,
+                                    "downloadsCount": 9197445.666666666,
+                                    "downloadsAcceleration": 34268.91786529681,
+                                    "dependentsCount": 293
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.8382367394690233,
+                                "detail": {
+                                    "quality": 0.9070628657812757,
+                                    "popularity": 0.6175856089710381,
+                                    "maintenance": 0.9998940474136493
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "path-is-absolute",
+                        "_score": 0.027902793,
+                        "_source": {
+                            "package": {
+                                "name": "path-is-absolute",
+                                "version": "1.0.1",
+                                "description": "Node.js 0.12 path.isAbsolute() ponyfill",
+                                "keywords": [
+                                    "path",
+                                    "paths",
+                                    "file",
+                                    "dir",
+                                    "absolute",
+                                    "isabsolute",
+                                    "is-absolute",
+                                    "built-in",
+                                    "util",
+                                    "utils",
+                                    "core",
+                                    "ponyfill",
+                                    "polyfill",
+                                    "shim",
+                                    "is",
+                                    "detect",
+                                    "check"
+                                ],
+                                "date": "2016-09-30T04:42:03.803Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/path-is-absolute",
+                                    "homepage": "https://github.com/sindresorhus/path-is-absolute#readme",
+                                    "repository": "https://github.com/sindresorhus/path-is-absolute",
+                                    "bugs": "https://github.com/sindresorhus/path-is-absolute/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 34,
+                                    "downloadsCount": 12410541,
+                                    "downloadsAcceleration": 56060.96554414001,
+                                    "dependentsCount": 153
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.8419401558458759,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.5895850430699454,
+                                    "maintenance": 0.9998940474136493
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "escape-string-regexp",
+                        "_score": 0.027900845,
+                        "_source": {
+                            "package": {
+                                "name": "escape-string-regexp",
+                                "version": "1.0.5",
+                                "description": "Escape RegExp special characters",
+                                "keywords": [
+                                    "escape",
+                                    "regex",
+                                    "regexp",
+                                    "re",
+                                    "regular",
+                                    "expression",
+                                    "string",
+                                    "str",
+                                    "special",
+                                    "characters"
+                                ],
+                                "date": "2016-02-21T12:55:17.074Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/escape-string-regexp",
+                                    "homepage": "https://github.com/sindresorhus/escape-string-regexp",
+                                    "repository": "https://github.com/sindresorhus/escape-string-regexp",
+                                    "bugs": "https://github.com/sindresorhus/escape-string-regexp/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "jbnicolai",
+                                    "email": "jappelman@xebia.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.508,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 142,
+                                    "downloadsCount": 14106290,
+                                    "downloadsAcceleration": 24511.25019025877,
+                                    "dependentsCount": 226
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.93983924512987
+                                }
+                            },
+                            "score": {
+                                "final": 0.8367084578348971,
+                                "detail": {
+                                    "quality": 0.8959881647937117,
+                                    "popularity": 0.6227313033538702,
+                                    "maintenance": 0.9998744349226545
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "supports-color",
+                        "_score": 0.025241258,
+                        "_source": {
+                            "package": {
+                                "name": "supports-color",
+                                "version": "3.1.2",
+                                "description": "Detect whether a terminal supports color",
+                                "keywords": [
+                                    "color",
+                                    "colour",
+                                    "colors",
+                                    "terminal",
+                                    "console",
+                                    "cli",
+                                    "ansi",
+                                    "styles",
+                                    "tty",
+                                    "rgb",
+                                    "256",
+                                    "shell",
+                                    "xterm",
+                                    "command-line",
+                                    "support",
+                                    "supports",
+                                    "capability",
+                                    "detect",
+                                    "truecolor",
+                                    "16m",
+                                    "million"
+                                ],
+                                "date": "2015-10-13T11:20:54.814Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/supports-color",
+                                    "homepage": "https://github.com/chalk/supports-color",
+                                    "repository": "https://github.com/chalk/supports-color",
+                                    "bugs": "https://github.com/chalk/supports-color/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "qix",
+                                        "email": "i.am.qix@gmail.com"
+                                    },
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.6,
+                                    "health": 0.75,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 102,
+                                    "downloadsCount": 21143104.333333332,
+                                    "downloadsAcceleration": 59527.40814307457,
+                                    "dependentsCount": 107
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8335414067037232,
+                                "detail": {
+                                    "quality": 0.905580285801524,
+                                    "popularity": 0.6055388592568578,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "strip-bom",
+                        "_score": 0.025196403,
+                        "_source": {
+                            "package": {
+                                "name": "strip-bom",
+                                "version": "3.0.0",
+                                "description": "Strip UTF-8 byte order mark (BOM) from a string",
+                                "keywords": [
+                                    "strip",
+                                    "bom",
+                                    "byte",
+                                    "order",
+                                    "mark",
+                                    "unicode",
+                                    "utf8",
+                                    "utf-8",
+                                    "remove",
+                                    "delete",
+                                    "trim",
+                                    "text",
+                                    "string"
+                                ],
+                                "date": "2016-04-30T16:02:44.907Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/strip-bom",
+                                    "homepage": "https://github.com/sindresorhus/strip-bom#readme",
+                                    "repository": "https://github.com/sindresorhus/strip-bom",
+                                    "bugs": "https://github.com/sindresorhus/strip-bom/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.763,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 59,
+                                    "downloadsCount": 9720526.333333334,
+                                    "downloadsAcceleration": 40910.59589041096,
+                                    "dependentsCount": 131
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.8366006565284313,
+                                "detail": {
+                                    "quality": 0.9390414483103938,
+                                    "popularity": 0.5855008726872456,
+                                    "maintenance": 0.9998940474136493
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "figures",
+                        "_score": 0.02474133,
+                        "_source": {
+                            "package": {
+                                "name": "figures",
+                                "version": "2.0.0",
+                                "description": "Unicode symbols with Windows CMD fallbacks",
+                                "keywords": [
+                                    "unicode",
+                                    "cli",
+                                    "cmd",
+                                    "command-line",
+                                    "characters",
+                                    "char",
+                                    "symbol",
+                                    "symbols",
+                                    "figure",
+                                    "figures",
+                                    "fallback"
+                                ],
+                                "date": "2016-10-18T03:59:00.091Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/figures",
+                                    "homepage": "https://github.com/sindresorhus/figures#readme",
+                                    "repository": "https://github.com/sindresorhus/figures",
+                                    "bugs": "https://github.com/sindresorhus/figures/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 169,
+                                    "downloadsCount": 4293521,
+                                    "downloadsAcceleration": 17499.030232115678,
+                                    "dependentsCount": 163
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 1,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.837092792249143,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.5756474279906001,
+                                    "maintenance": 0.9999820522166152
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "get-stdin",
+                        "_score": 0.023934457,
+                        "_source": {
+                            "package": {
+                                "name": "get-stdin",
+                                "version": "5.0.1",
+                                "description": "Get stdin as a string or buffer",
+                                "keywords": [
+                                    "std",
+                                    "stdin",
+                                    "stdio",
+                                    "concat",
+                                    "buffer",
+                                    "stream",
+                                    "process",
+                                    "read"
+                                ],
+                                "date": "2015-11-11T16:41:09.677Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/get-stdin",
+                                    "homepage": "https://github.com/sindresorhus/get-stdin",
+                                    "repository": "https://github.com/sindresorhus/get-stdin",
+                                    "bugs": "https://github.com/sindresorhus/get-stdin/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 102,
+                                    "downloadsCount": 7833169.333333333,
+                                    "downloadsAcceleration": 16892.82992770167,
+                                    "dependentsCount": 223
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8320899447376471,
+                                "detail": {
+                                    "quality": 0.9129557704843995,
+                                    "popularity": 0.5950699810541757,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "ansi-regex",
+                        "_score": 0.023545964,
+                        "_source": {
+                            "package": {
+                                "name": "ansi-regex",
+                                "version": "2.0.0",
+                                "description": "Regular expression for matching ANSI escape codes",
+                                "keywords": [
+                                    "ansi",
+                                    "styles",
+                                    "color",
+                                    "colour",
+                                    "colors",
+                                    "terminal",
+                                    "console",
+                                    "cli",
+                                    "string",
+                                    "tty",
+                                    "escape",
+                                    "formatting",
+                                    "rgb",
+                                    "256",
+                                    "shell",
+                                    "xterm",
+                                    "command-line",
+                                    "text",
+                                    "regex",
+                                    "regexp",
+                                    "re",
+                                    "match",
+                                    "test",
+                                    "find",
+                                    "pattern"
+                                ],
+                                "date": "2015-06-30T16:07:19.279Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/ansi-regex",
+                                    "homepage": "https://github.com/sindresorhus/ansi-regex",
+                                    "repository": "https://github.com/sindresorhus/ansi-regex",
+                                    "bugs": "https://github.com/sindresorhus/ansi-regex/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "qix",
+                                        "email": "i.am.qix@gmail.com"
+                                    },
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 46,
+                                    "downloadsCount": 16116485.666666666,
+                                    "downloadsAcceleration": 40061.61008371384,
+                                    "dependentsCount": 68
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8350782577638656,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.5700773238968061,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "configstore",
+                        "_score": 0.022350276,
+                        "_source": {
+                            "package": {
+                                "name": "configstore",
+                                "version": "2.1.0",
+                                "description": "Easily load and save config without having to think about where and how",
+                                "keywords": [
+                                    "config",
+                                    "store",
+                                    "storage",
+                                    "conf",
+                                    "configuration",
+                                    "settings",
+                                    "preferences",
+                                    "json",
+                                    "data",
+                                    "persist",
+                                    "persistent",
+                                    "save"
+                                ],
+                                "date": "2016-09-01T04:19:28.550Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/configstore",
+                                    "homepage": "https://github.com/yeoman/configstore#readme",
+                                    "repository": "https://github.com/yeoman/configstore",
+                                    "bugs": "https://github.com/yeoman/configstore/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sboudrias",
+                                    "email": "admin@simonboudrias.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    },
+                                    {
+                                        "username": "addyosmani",
+                                        "email": "addyosmani@gmail.com"
+                                    },
+                                    {
+                                        "username": "passy",
+                                        "email": "phartig@rdrei.net"
+                                    },
+                                    {
+                                        "username": "sboudrias",
+                                        "email": "admin@simonboudrias.com"
+                                    },
+                                    {
+                                        "username": "eddiemonge",
+                                        "email": "eddie+npm@eddiemonge.com"
+                                    },
+                                    {
+                                        "username": "arthurvr",
+                                        "email": "contact@arthurverschaeve.be"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.7777777777777778,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 366,
+                                    "downloadsCount": 2634914.6666666665,
+                                    "downloadsAcceleration": 11179.534170471841,
+                                    "dependentsCount": 152
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8325348875452867,
+                                "detail": {
+                                    "quality": 0.9471799890575159,
+                                    "popularity": 0.5670062017276178,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "user-home",
+                        "_score": 0.022123395,
+                        "_source": {
+                            "package": {
+                                "name": "user-home",
+                                "version": "2.0.0",
+                                "description": "Get the path to the user home directory",
+                                "keywords": [
+                                    "user",
+                                    "home",
+                                    "homedir",
+                                    "os-homedir",
+                                    "dir",
+                                    "directory",
+                                    "folder",
+                                    "path",
+                                    "env",
+                                    "vars",
+                                    "environment",
+                                    "variables",
+                                    "userprofile"
+                                ],
+                                "date": "2015-06-13T12:40:31.773Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/user-home",
+                                    "homepage": "https://github.com/sindresorhus/user-home",
+                                    "repository": "https://github.com/sindresorhus/user-home",
+                                    "bugs": "https://github.com/sindresorhus/user-home/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.5754999999999999,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 102,
+                                    "downloadsCount": 7706876,
+                                    "downloadsAcceleration": 30960.443721461197,
+                                    "dependentsCount": 141
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.8285518849080649,
+                                "detail": {
+                                    "quality": 0.9086729783039141,
+                                    "popularity": 0.5885344994917525,
+                                    "maintenance": 0.9998940474136493
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "decamelize",
+                        "_score": 0.020017078,
+                        "_source": {
+                            "package": {
+                                "name": "decamelize",
+                                "version": "1.2.0",
+                                "description": "Convert a camelized string into a lowercased one with a custom separator: unicornRainbow → unicorn_rainbow",
+                                "keywords": [
+                                    "decamelize",
+                                    "decamelcase",
+                                    "camelcase",
+                                    "lowercase",
+                                    "case",
+                                    "dash",
+                                    "hyphen",
+                                    "string",
+                                    "str",
+                                    "text",
+                                    "convert"
+                                ],
+                                "date": "2016-03-05T08:49:10.462Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/decamelize",
+                                    "homepage": "https://github.com/sindresorhus/decamelize#readme",
+                                    "repository": "https://github.com/sindresorhus/decamelize",
+                                    "bugs": "https://github.com/sindresorhus/decamelize/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 56,
+                                    "downloadsCount": 8273702.666666667,
+                                    "downloadsAcceleration": 20613.090563165897,
+                                    "dependentsCount": 72
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9080036018668831
+                                }
+                            },
+                            "score": {
+                                "final": 0.8286017439856233,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.551550111633705,
+                                    "maintenance": 0.9998192306777396
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "loud-rejection",
+                        "_score": 0.01978571,
+                        "_source": {
+                            "package": {
+                                "name": "loud-rejection",
+                                "version": "1.6.0",
+                                "description": "Make unhandled promise rejections fail loudly instead of the default silent fail",
+                                "keywords": [
+                                    "promise",
+                                    "promises",
+                                    "unhandled",
+                                    "uncaught",
+                                    "rejection",
+                                    "loud",
+                                    "fail",
+                                    "catch",
+                                    "throw",
+                                    "handler",
+                                    "exit",
+                                    "debug",
+                                    "debugging",
+                                    "verbose"
+                                ],
+                                "date": "2016-07-03T22:04:14.795Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/loud-rejection",
+                                    "homepage": "https://github.com/sindresorhus/loud-rejection#readme",
+                                    "repository": "https://github.com/sindresorhus/loud-rejection",
+                                    "bugs": "https://github.com/sindresorhus/loud-rejection/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "jamestalmage",
+                                        "email": "james@talmage.io"
+                                    },
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.9954999999999999,
+                                    "health": 1,
+                                    "branding": 0.3
+                                },
+                                "popularity": {
+                                    "communityInterest": 151,
+                                    "downloadsCount": 5573938.333333333,
+                                    "downloadsAcceleration": 15974.489136225267,
+                                    "dependentsCount": 29
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9199486301369864,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9865800896546635
+                                }
+                            },
+                            "score": {
+                                "final": 0.8311716438223695,
+                                "detail": {
+                                    "quality": 0.9844353646792792,
+                                    "popularity": 0.5310359127877397,
+                                    "maintenance": 0.9999384712653625
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "string-width",
+                        "_score": 0.019331325,
+                        "_source": {
+                            "package": {
+                                "name": "string-width",
+                                "version": "2.0.0",
+                                "description": "Get the visual width of a string - the number of columns required to display it",
+                                "keywords": [
+                                    "string",
+                                    "str",
+                                    "character",
+                                    "char",
+                                    "unicode",
+                                    "width",
+                                    "visual",
+                                    "column",
+                                    "columns",
+                                    "fullwidth",
+                                    "full-width",
+                                    "full",
+                                    "ansi",
+                                    "escape",
+                                    "codes",
+                                    "cli",
+                                    "command-line",
+                                    "terminal",
+                                    "console",
+                                    "cjk",
+                                    "chinese",
+                                    "japanese",
+                                    "korean",
+                                    "fixed-width"
+                                ],
+                                "date": "2016-09-22T06:54:45.828Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/string-width",
+                                    "homepage": "https://github.com/sindresorhus/string-width#readme",
+                                    "repository": "https://github.com/sindresorhus/string-width",
+                                    "bugs": "https://github.com/sindresorhus/string-width/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 65,
+                                    "downloadsCount": 6831146.666666667,
+                                    "downloadsAcceleration": 46029.40098934551,
+                                    "dependentsCount": 47
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9024828767123287,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8272088384458756,
+                                "detail": {
+                                    "quality": 0.9520749139220591,
+                                    "popularity": 0.5476515017899236,
+                                    "maintenance": 0.9997381104079559
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1478183443563",
+                        "_type": "score",
+                        "_id": "os-homedir",
+                        "_score": 0.018544337,
+                        "_source": {
+                            "package": {
+                                "name": "os-homedir",
+                                "version": "1.0.2",
+                                "description": "Node.js 4 `os.homedir()` ponyfill",
+                                "keywords": [
+                                    "builtin",
+                                    "core",
+                                    "ponyfill",
+                                    "polyfill",
+                                    "shim",
+                                    "os",
+                                    "homedir",
+                                    "home",
+                                    "dir",
+                                    "directory",
+                                    "folder",
+                                    "user",
+                                    "path"
+                                ],
+                                "date": "2016-09-30T04:58:41.739Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/os-homedir",
+                                    "homepage": "https://github.com/sindresorhus/os-homedir#readme",
+                                    "repository": "https://github.com/sindresorhus/os-homedir",
+                                    "bugs": "https://github.com/sindresorhus/os-homedir/issues"
+                                },
+                                "author": {
+                                    "name": "Sindre Sorhus",
+                                    "email": "sindresorhus@gmail.com",
+                                    "url": "sindresorhus.com",
+                                    "username": "sindresorhus"
+                                },
+                                "publisher": {
+                                    "username": "sindresorhus",
+                                    "email": "sindresorhus@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sindresorhus",
+                                        "email": "sindresorhus@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.5275000000000001,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 61,
+                                    "downloadsCount": 7297627.333333333,
+                                    "downloadsAcceleration": 35513.54982876712,
+                                    "dependentsCount": 122
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8207027362327788,
+                                "detail": {
+                                    "quality": 0.899811627032013,
+                                    "popularity": 0.5738015082851692,
+                                    "maintenance": 0.9997963434953308
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "rawHeaders": [
+            "Content-Type",
+            "application/json; charset=UTF-8",
+            "Content-Length",
+            "36034"
+        ]
+    }
+]
