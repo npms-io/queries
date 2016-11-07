@@ -65,7 +65,7 @@ The `esClient` accepts a [`elasticsearch`](https://github.com/elastic/elasticsea
 const queries = require('@npms/queries');
 
 // ...
-queries.search.suggestions('test framework', esClient)
+queries.search.suggestions('gulp', esClient)
 .then((suggestions) => console.log('suggestions', suggestions));
 ```
 
