@@ -10,10 +10,10 @@
     "test-travis": "NOCK_BACK_MODE=lockdown istanbul cover _mocha --report lcovonly -- --bail && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "postpublish": "greenkeeper-postpublish"
   },
-  "bugs": "https://github.com/npms/queries/issues/",
+  "bugs": "https://github.com/npms-io/queries/issues/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/npms/queries.git"
+    "url": "git://github.com/npms-io/queries.git"
   },
   "keywords": [
     "npms",
