@@ -51,7 +51,7 @@ Available options:
 
 - `from`: The offset in which to start searching from, defaults to `0`
 - `size`: The total number of results to return, defaults to `25`
-- `throwOnInvalid`: Whether to reject the promise if the query is invalid qualifiers or not, defaults to `false` (if `false`, invalid qualifiers will be removed from `q`)
+- `throwOnInvalid`: Whether to reject the promise if the query has invalid qualifiers or not, defaults to `false` (if `false`, invalid qualifiers will be removed from `q`)
 
 
 #### .search.suggestions(q, esClient, [options]) -> Promise
