@@ -111,9 +111,9 @@
                         "params": {
                             "text": "spawn",
                             "scoreEffect": 15.3,
-                            "qualityWeight": 0.2671232876712329,
-                            "popularityWeight": 0.4520547945205479,
-                            "maintenanceWeight": 0.28082191780821913
+                            "qualityWeight": 0.26027397260273977,
+                            "popularityWeight": 0.452054794520548,
+                            "maintenanceWeight": 0.28767123287671237
                         }
                     }
                 }

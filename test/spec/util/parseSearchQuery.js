@@ -18,9 +18,9 @@ describe('util/parseSearchQuery()', () => {
             is: [],
             boostExact: true,
             scoreEffect: 15.3,
-            qualityWeight: 0.2671232876712329,
-            popularityWeight: 0.4520547945205479,
-            maintenanceWeight: 0.28082191780821913,
+            qualityWeight: 0.26027397260273977,
+            popularityWeight: 0.452054794520548,
+            maintenanceWeight: 0.28767123287671237,
         });
 
         // Text author and maintainer
@@ -34,9 +34,9 @@ describe('util/parseSearchQuery()', () => {
             is: [],
             boostExact: true,
             scoreEffect: 15.3,
-            qualityWeight: 0.2671232876712329,
-            popularityWeight: 0.4520547945205479,
-            maintenanceWeight: 0.28082191780821913,
+            qualityWeight: 0.26027397260273977,
+            popularityWeight: 0.452054794520548,
+            maintenanceWeight: 0.28767123287671237,
         });
 
         // Test keywords: include & exclude, duplicates
@@ -50,9 +50,9 @@ describe('util/parseSearchQuery()', () => {
             is: [],
             boostExact: true,
             scoreEffect: 15.3,
-            qualityWeight: 0.2671232876712329,
-            popularityWeight: 0.4520547945205479,
-            maintenanceWeight: 0.28082191780821913,
+            qualityWeight: 0.26027397260273977,
+            popularityWeight: 0.452054794520548,
+            maintenanceWeight: 0.28767123287671237,
         });
 
         // Test flags: is and not, duplicates
@@ -66,9 +66,9 @@ describe('util/parseSearchQuery()', () => {
             is: ['insecure'],
             boostExact: true,
             scoreEffect: 15.3,
-            qualityWeight: 0.2671232876712329,
-            popularityWeight: 0.4520547945205479,
-            maintenanceWeight: 0.28082191780821913,
+            qualityWeight: 0.26027397260273977,
+            popularityWeight: 0.452054794520548,
+            maintenanceWeight: 0.28767123287671237,
         });
 
         // Test ranking modifiers
@@ -101,9 +101,9 @@ maintenance-weight:foo keywords:gulp foo');
             is: [],
             boostExact: true,
             scoreEffect: 15.3,
-            qualityWeight: 0.2671232876712329,
-            popularityWeight: 0.4520547945205479,
-            maintenanceWeight: 0.28082191780821913,
+            qualityWeight: 0.26027397260273977,
+            popularityWeight: 0.452054794520548,
+            maintenanceWeight: 0.28767123287671237,
         });
     });
 
