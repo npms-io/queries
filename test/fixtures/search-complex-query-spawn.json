@@ -107,7 +107,7 @@
                     },
                     "script_score": {
                         "lang": "groovy",
-                        "script": "(doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight)",
+                        "script": "_score * pow((doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight), scoreEffect)",
                         "params": {
                             "text": "spawn",
                             "scoreEffect": 15.3,
