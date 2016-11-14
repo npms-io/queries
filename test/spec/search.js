@@ -92,8 +92,7 @@ describe('search()', () => {
 
         nockBack('search-gulpplugin-sass.json', (_nockDone) => { nockDone = _nockDone; });
 
-        return queries.search('keywords:gulpplugin is:foo sass',
-            { host: '127.0.0.1:9200', log: null, apiVersion: '2.4' })
+        return queries.search('keywords:gulpplugin is:foo sass', localEsClient)
         .then((res) => {
             expect(res.total).to.equal(68);
             nockDone();
@@ -101,13 +100,17 @@ describe('search()', () => {
     });
 
     it('should fail if q has invalid qualifiers and options.throwOnInvalid is enabled', () => {
-        return queries.search('keywords:gulpplugin is:foo sass', { host: '127.0.0.1:9200', log: null, apiVersion: '2.4' },
-            { throwOnInvalid: true })
+        return queries.search('keywords:gulpplugin is:foo sass', localEsClient, { throwOnInvalid: true })
         .then(() => {
             throw new Error('Should have failed');
         }, (err) => {
             expect(err).to.be.an.instanceOf(Error);
             expect(err.message).to.contain('deprecated, unstable, insecure');
         });
+    });
+
+    it('should return 0 results if no text or filter qualifiers were specified', () => {
+        return queries.search('score-effect:1 quality-weight:1 popularity-weight:1 maintenance-weight:1 boost-exact:false', localEsClient)
+        .then((res) => expect(res).to.eql({ total: 0, results: [] }));
     });
 });

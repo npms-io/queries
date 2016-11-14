@@ -117,6 +117,12 @@ maintenance-weight:foo keywords:gulp foo');
         expect(() => parseSearchQuery('maintenance-weight:foo foo', { throwOnInvalid: true })).to.throw('number');
     });
 
+    it('should return null if no text or filter qualifiers were specified', () => {
+        const params = parseSearchQuery('score-effect:1 quality-weight:1 popularity-weight:1 maintenance-weight:1 boost-exact:false');
+
+        expect(params).to.equal(null);
+    });
+
     describe('discardQualifiers()', () => {
         it('should discard any qualifiers', () => {
             const text = parseSearchQuery.discardQualifiers('author:satazor maintainer: boost-exact:bar foo');
