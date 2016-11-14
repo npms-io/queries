@@ -1,6 +1,6 @@
 {
   "name": "@npms/queries",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Module that offers a variety of queries around npms data",
   "main": "index.js",
   "scripts": {
