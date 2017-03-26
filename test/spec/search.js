@@ -52,6 +52,19 @@ describe('search()', () => {
         });
     });
 
+    it('should allow to search all packages by scope', () => {
+        let nockDone;
+
+        nockBack('search-scope-bcoe.json', (_nockDone) => { nockDone = _nockDone; });
+
+        return queries.search('scope:bcoe', localEsClient)
+        .then((res) => {
+            expect(res.results).to.have.length(3);
+            res.results.forEach((result) => expect(result.package.scope).to.equal('bcoe'));
+            nockDone();
+        });
+    });
+
     it('should make use of options.from and options.size', () => {
         nock('http://127.0.0.1:9200')
         .post('/npms-current/score/_search', (post) => {
