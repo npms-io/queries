@@ -1,0 +1,246 @@
+[
+    {
+        "scope": "http://127.0.0.1:9200",
+        "method": "POST",
+        "path": "/npms-current/score/_search",
+        "body": {
+          "size": 25,
+          "from": 0,
+          "query": {
+            "function_score": {
+              "boost_mode": "replace",
+              "query": {
+                "bool": {
+                  "must": [
+                    {
+                      "term": {
+                        "package.scope": "bcoe"
+                      }
+                    }
+                  ],
+                  "must_not": [],
+                  "should": [],
+                  "minimum_should_match": 1
+                }
+              },
+              "script_score": {
+                "lang": "groovy",
+                "script": "doc[\"package.name.raw\"].value.equals(text) ? 100000 + (doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight) : _score * pow((doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight), scoreEffect)",
+                "params": {
+                  "text": "",
+                  "scoreEffect": 15.3,
+                  "qualityWeight": 0.26027397260273977,
+                  "popularityWeight": 0.452054794520548,
+                  "maintenanceWeight": 0.28767123287671237
+                }
+              }
+            }
+          }
+        },
+        "status": 200,
+        "response": {
+          "took": 1,
+          "timed_out": false,
+          "_shards": {
+            "total": 1,
+            "successful": 1,
+            "failed": 0
+          },
+          "hits": {
+            "total": 3,
+            "max_score": 5.382989e-14,
+            "hits": [
+              {
+                "_index": "npms-1490562065235",
+                "_type": "score",
+                "_id": "@bcoe/scoped-search-3",
+                "_score": 5.382989e-14,
+                "_source": {
+                  "package": {
+                    "name": "@bcoe/scoped-search-3",
+                    "version": "1.0.1",
+                    "description": "testing a scoped package search (abc123)",
+                    "date": "2017-03-26T21:08:11.992Z",
+                    "links": {
+                      "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-3"
+                    },
+                    "author": {
+                      "name": "Ben Coe",
+                      "email": "ben@npmjs.com",
+                      "username": "bcoe"
+                    },
+                    "publisher": {
+                      "username": "bcoe",
+                      "email": "ben@npmjs.com"
+                    },
+                    "maintainers": [
+                      {
+                        "username": "bcoe",
+                        "email": "ben@npmjs.com"
+                      }
+                    ],
+                    "scope": "bcoe"
+                  },
+                  "evaluation": {
+                    "quality": {
+                      "carefulness": 0.41550000000000004,
+                      "tests": 0,
+                      "health": 1,
+                      "branding": 0
+                    },
+                    "popularity": {
+                      "communityInterest": 0,
+                      "downloadsCount": 0,
+                      "downloadsAcceleration": 0,
+                      "dependentsCount": 0
+                    },
+                    "maintenance": {
+                      "releasesFrequency": 0,
+                      "commitsFrequency": 0,
+                      "openIssues": 0,
+                      "issuesDistribution": 0
+                    }
+                  },
+                  "score": {
+                    "final": 0.13258731824560602,
+                    "detail": {
+                      "quality": 0.44195772748535345,
+                      "popularity": 0,
+                      "maintenance": 0
+                    }
+                  }
+                }
+              },
+              {
+                "_index": "npms-1490562065235",
+                "_type": "score",
+                "_id": "@bcoe/scoped-search-2",
+                "_score": 5.382989e-14,
+                "_source": {
+                  "package": {
+                    "name": "@bcoe/scoped-search-2",
+                    "version": "1.0.0",
+                    "description": "testing a private package being published by an org",
+                    "date": "2017-03-26T21:05:50.344Z",
+                    "links": {
+                      "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-2"
+                    },
+                    "author": {
+                      "name": "Ben Coe",
+                      "email": "ben@npmjs.com",
+                      "username": "bcoe"
+                    },
+                    "publisher": {
+                      "username": "bcoe",
+                      "email": "ben@npmjs.com"
+                    },
+                    "maintainers": [
+                      {
+                        "username": "bcoe",
+                        "email": "ben@npmjs.com"
+                      }
+                    ],
+                    "scope": "bcoe"
+                  },
+                  "evaluation": {
+                    "quality": {
+                      "carefulness": 0.41550000000000004,
+                      "tests": 0,
+                      "health": 1,
+                      "branding": 0
+                    },
+                    "popularity": {
+                      "communityInterest": 0,
+                      "downloadsCount": 0,
+                      "downloadsAcceleration": 0,
+                      "dependentsCount": 0
+                    },
+                    "maintenance": {
+                      "releasesFrequency": 0,
+                      "commitsFrequency": 0,
+                      "openIssues": 0,
+                      "issuesDistribution": 0
+                    }
+                  },
+                  "score": {
+                    "final": 0.13258731824560602,
+                    "detail": {
+                      "quality": 0.44195772748535345,
+                      "popularity": 0,
+                      "maintenance": 0
+                    }
+                  }
+                }
+              },
+              {
+                "_index": "npms-1490562065235",
+                "_type": "score",
+                "_id": "@bcoe/scoped-search-1",
+                "_score": 5.382989e-14,
+                "_source": {
+                  "package": {
+                    "name": "@bcoe/scoped-search-1",
+                    "version": "1.0.0",
+                    "description": "testing a private package being published by an org",
+                    "date": "2017-03-26T21:05:26.130Z",
+                    "links": {
+                      "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-1"
+                    },
+                    "author": {
+                      "name": "Ben Coe",
+                      "email": "ben@npmjs.com",
+                      "username": "bcoe"
+                    },
+                    "publisher": {
+                      "username": "bcoe",
+                      "email": "ben@npmjs.com"
+                    },
+                    "maintainers": [
+                      {
+                        "username": "bcoe",
+                        "email": "ben@npmjs.com"
+                      }
+                    ],
+                    "scope": "bcoe"
+                  },
+                  "evaluation": {
+                    "quality": {
+                      "carefulness": 0.41550000000000004,
+                      "tests": 0,
+                      "health": 1,
+                      "branding": 0
+                    },
+                    "popularity": {
+                      "communityInterest": 0,
+                      "downloadsCount": 0,
+                      "downloadsAcceleration": 0,
+                      "dependentsCount": 0
+                    },
+                    "maintenance": {
+                      "releasesFrequency": 0,
+                      "commitsFrequency": 0,
+                      "openIssues": 0,
+                      "issuesDistribution": 0
+                    }
+                  },
+                  "score": {
+                    "final": 0.13258731824560602,
+                    "detail": {
+                      "quality": 0.44195772748535345,
+                      "popularity": 0,
+                      "maintenance": 0
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "rawHeaders": [
+          "Content-Type",
+          "application/json; charset=UTF-8",
+          "Content-Length",
+          "2980"
+        ]
+    }
+]
