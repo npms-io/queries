@@ -91,7 +91,7 @@ queries.search.similar('chaik', esClient)
 
 Available options:
 
-- `size`: The total number of results to return, defaults to `25`
+- `size`: The total number of results to return, defaults to `5`
 - `analyzerWeight`: How much should we weight the analyzer values by?
 - `scoreWeight`: How much should we weight the fuzzy score by?
 
