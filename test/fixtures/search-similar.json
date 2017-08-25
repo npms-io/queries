@@ -1,0 +1,429 @@
+[
+    {
+      "scope": "http://127.0.0.1:9200",
+      "method": "POST",
+      "path": "/npms-current/score/_search",
+      "body": {
+        "size": 5,
+        "query": {
+          "function_score": {
+            "min_score": 6,
+            "boost_mode": "replace",
+            "query": {
+              "fuzzy": {
+                "package.name.raw": {
+                  "value": "chaik"
+                }
+              }
+            },
+            "script_score": {
+              "lang": "groovy",
+              "script": "(doc[\"score.final\"].value * 2.2) * (_score * 1.5)",
+              "params": {}
+            }
+          }
+        }
+      },
+      "status": 200,
+      "response": {
+        "took": 2,
+        "timed_out": false,
+        "_shards": {
+          "total": 1,
+          "successful": 1,
+          "failed": 0
+        },
+        "hits": {
+          "total": 5,
+          "max_score": 15.782807,
+          "hits": [
+            {
+              "_index": "npms-1503693256008",
+              "_type": "score",
+              "_id": "chalk",
+              "_score": 15.782807,
+              "_source": {
+                "package": {
+                  "name": "chalk",
+                  "scope": "unscoped",
+                  "version": "2.1.0",
+                  "description": "Terminal string styling done right",
+                  "keywords": [
+                    "color",
+                    "colour",
+                    "colors",
+                    "terminal",
+                    "console",
+                    "cli",
+                    "string",
+                    "str",
+                    "ansi",
+                    "style",
+                    "styles",
+                    "tty",
+                    "formatting",
+                    "rgb",
+                    "256",
+                    "shell",
+                    "xterm",
+                    "log",
+                    "logging",
+                    "command-line",
+                    "text"
+                  ],
+                  "date": "2017-08-07T03:56:43.217Z",
+                  "links": {
+                    "npm": "https://www.npmjs.com/package/chalk",
+                    "homepage": "https://github.com/chalk/chalk#readme",
+                    "repository": "https://github.com/chalk/chalk",
+                    "bugs": "https://github.com/chalk/chalk/issues"
+                  },
+                  "publisher": {
+                    "username": "qix",
+                    "email": "i.am.qix@gmail.com"
+                  },
+                  "maintainers": [
+                    {
+                      "username": "qix",
+                      "email": "i.am.qix@gmail.com"
+                    },
+                    {
+                      "username": "unicorn",
+                      "email": "sindresorhus+unicorn@gmail.com"
+                    },
+                    {
+                      "username": "sindresorhus",
+                      "email": "sindresorhus@gmail.com"
+                    }
+                  ]
+                },
+                "evaluation": {
+                  "quality": {
+                    "carefulness": 0.9199999999999999,
+                    "tests": 1,
+                    "health": 1,
+                    "branding": 0.3
+                  },
+                  "popularity": {
+                    "communityInterest": 7636,
+                    "downloadsCount": 27118043,
+                    "downloadsAcceleration": 111170.7437785388,
+                    "dependentsCount": 17781
+                  },
+                  "maintenance": {
+                    "releasesFrequency": 0.9024828767123287,
+                    "commitsFrequency": 0.9481369863013699,
+                    "openIssues": 1,
+                    "issuesDistribution": 0.9240756549484997
+                  }
+                },
+                "score": {
+                  "final": 0.9656039095437992,
+                  "detail": {
+                    "quality": 0.9846826146254087,
+                    "popularity": 0.9149637459682334,
+                    "maintenance": 0.9998908973351281
+                  }
+                }
+              }
+            },
+            {
+              "_index": "npms-1503693256008",
+              "_type": "score",
+              "_id": "chai",
+              "_score": 13.830539,
+              "_source": {
+                "package": {
+                  "name": "chai",
+                  "scope": "unscoped",
+                  "version": "4.1.1",
+                  "description": "BDD/TDD assertion library for node.js and the browser. Test framework agnostic.",
+                  "keywords": [
+                    "test",
+                    "assertion",
+                    "assert",
+                    "testing",
+                    "chai"
+                  ],
+                  "date": "2017-08-05T07:33:06.266Z",
+                  "links": {
+                    "npm": "https://www.npmjs.com/package/chai",
+                    "homepage": "http://chaijs.com",
+                    "repository": "https://github.com/chaijs/chai",
+                    "bugs": "https://github.com/chaijs/chai/issues"
+                  },
+                  "author": {
+                    "name": "Jake Luer",
+                    "email": "jake@alogicalparadox.com"
+                  },
+                  "publisher": {
+                    "username": "chaijs",
+                    "email": "chaijs@keithcirkel.co.uk"
+                  },
+                  "maintainers": [
+                    {
+                      "username": "chaijs",
+                      "email": "chaijs@keithcirkel.co.uk"
+                    }
+                  ]
+                },
+                "evaluation": {
+                  "quality": {
+                    "carefulness": 0.8699999999999999,
+                    "tests": 0.9535,
+                    "health": 0.75,
+                    "branding": 1
+                  },
+                  "popularity": {
+                    "communityInterest": 5333,
+                    "downloadsCount": 4535616,
+                    "downloadsAcceleration": 15365.191191019789,
+                    "dependentsCount": 2614
+                  },
+                  "maintenance": {
+                    "releasesFrequency": 1,
+                    "commitsFrequency": 0.9582260273972603,
+                    "openIssues": 1,
+                    "issuesDistribution": 0.5310499773121844
+                  }
+                },
+                "score": {
+                  "final": 0.9025737045873155,
+                  "detail": {
+                    "quality": 0.9694625894211915,
+                    "popularity": 0.7691369367028366,
+                    "maintenance": 0.9786771426141864
+                  }
+                }
+              }
+            },
+            {
+              "_index": "npms-1503693256008",
+              "_type": "score",
+              "_id": "chaid",
+              "_score": 10.885196,
+              "_source": {
+                "package": {
+                  "name": "chaid",
+                  "scope": "unscoped",
+                  "version": "1.0.2",
+                  "description": "Id equality assertions for chai",
+                  "keywords": [
+                    "chai",
+                    "chai-plugin",
+                    "browser",
+                    "plugin",
+                    "id",
+                    "equality",
+                    "assertion",
+                    "mongo",
+                    "mongodb",
+                    "objectid"
+                  ],
+                  "date": "2015-11-19T03:56:05.397Z",
+                  "links": {
+                    "npm": "https://www.npmjs.com/package/chaid",
+                    "homepage": "https://github.com/hurrymaplelad/chaid",
+                    "repository": "https://github.com/hurrymaplelad/chaid",
+                    "bugs": "https://github.com/hurrymaplelad/chaid/issues"
+                  },
+                  "author": {
+                    "name": "Adam Hull",
+                    "email": "adam@hmlad.com",
+                    "username": "hurrymaplelad"
+                  },
+                  "publisher": {
+                    "username": "hurrymaplelad",
+                    "email": "adam@hmlad.com"
+                  },
+                  "maintainers": [
+                    {
+                      "username": "hurrymaplelad",
+                      "email": "adam@hmlad.com"
+                    }
+                  ]
+                },
+                "evaluation": {
+                  "quality": {
+                    "carefulness": 0.9199999999999999,
+                    "tests": 0.85,
+                    "health": 1,
+                    "branding": 0.3
+                  },
+                  "popularity": {
+                    "communityInterest": 4,
+                    "downloadsCount": 889.6666666666666,
+                    "downloadsAcceleration": 5.921404109589042,
+                    "dependentsCount": 1
+                  },
+                  "maintenance": {
+                    "releasesFrequency": 0.9,
+                    "commitsFrequency": 0.9,
+                    "openIssues": 0.9,
+                    "issuesDistribution": 0.9
+                  }
+                },
+                "score": {
+                  "final": 0.6659643667895766,
+                  "detail": {
+                    "quality": 0.9631048526880389,
+                    "popularity": 0.07747243749939547,
+                    "maintenance": 0.999764451023933
+                  }
+                }
+              }
+            },
+            {
+              "_index": "npms-1503693256008",
+              "_type": "score",
+              "_id": "chaik",
+              "_score": 10.582002,
+              "_source": {
+                "package": {
+                  "name": "chaik",
+                  "scope": "unscoped",
+                  "version": "0.0.4",
+                  "description": "can be used in unittest to compare json data format or to check existance in db",
+                  "keywords": [
+                    "unittest",
+                    "check data existance in database",
+                    "compare json structure"
+                  ],
+                  "date": "2017-02-08T03:30:47.260Z",
+                  "links": {
+                    "npm": "https://www.npmjs.com/package/chaik",
+                    "homepage": "https://github.com/dragon753/chaik#readme",
+                    "repository": "https://github.com/dragon753/chaik",
+                    "bugs": "https://github.com/dragon753/chaik/issues"
+                  },
+                  "author": {
+                    "name": "dragon753"
+                  },
+                  "publisher": {
+                    "username": "dragon753",
+                    "email": "dragon753@gmail.com"
+                  },
+                  "maintainers": [
+                    {
+                      "username": "dragon753",
+                      "email": "dragon753@gmail.com"
+                    }
+                  ]
+                },
+                "flags": {
+                  "unstable": true
+                },
+                "evaluation": {
+                  "quality": {
+                    "carefulness": 0.355,
+                    "tests": 0.6,
+                    "health": 0.75,
+                    "branding": 0
+                  },
+                  "popularity": {
+                    "communityInterest": 2,
+                    "downloadsCount": 24.666666666666668,
+                    "downloadsAcceleration": 0.19429223744292237,
+                    "dependentsCount": 0
+                  },
+                  "maintenance": {
+                    "releasesFrequency": 0.3698630136986302,
+                    "commitsFrequency": 0.17907534246575343,
+                    "openIssues": 0.7,
+                    "issuesDistribution": 0.7
+                  }
+                },
+                "score": {
+                  "final": 0.5179318816289368,
+                  "detail": {
+                    "quality": 0.6951480509761432,
+                    "popularity": 0.02262137581147453,
+                    "maintenance": 0.861342813720222
+                  }
+                }
+              }
+            },
+            {
+              "_index": "npms-1503693256008",
+              "_type": "score",
+              "_id": "chain",
+              "_score": 6.3325176,
+              "_source": {
+                "package": {
+                  "name": "chain",
+                  "scope": "unscoped",
+                  "version": "0.1.3",
+                  "description": "A microframework for handling async JS",
+                  "keywords": [
+                    "async",
+                    "asynchronous",
+                    "events",
+                    "parallel"
+                  ],
+                  "date": "2011-02-19T01:00:17.936Z",
+                  "links": {
+                    "npm": "https://www.npmjs.com/package/chain",
+                    "homepage": "http://github.com/chriso/chain.js",
+                    "repository": "https://github.com/chriso/chain.js",
+                    "bugs": "http://github.com/chriso/chain.js/issues"
+                  },
+                  "author": {
+                    "name": "Chris O'Hara",
+                    "email": "cohara87@gmail.com",
+                    "username": "cohara87"
+                  },
+                  "publisher": {
+                    "username": "cohara87",
+                    "email": "cohara87@gmail.com"
+                  },
+                  "maintainers": [
+                    {
+                      "username": "cohara87",
+                      "email": "cohara87@gmail.com"
+                    }
+                  ]
+                },
+                "flags": {
+                  "unstable": true
+                },
+                "evaluation": {
+                  "quality": {
+                    "carefulness": 0.165,
+                    "tests": 0.3,
+                    "health": 1,
+                    "branding": 0
+                  },
+                  "popularity": {
+                    "communityInterest": 159,
+                    "downloadsCount": 178.33333333333334,
+                    "downloadsAcceleration": -1.7720509893455099,
+                    "dependentsCount": 1
+                  },
+                  "maintenance": {
+                    "releasesFrequency": 0.06164383561643837,
+                    "commitsFrequency": 0,
+                    "openIssues": 1,
+                    "issuesDistribution": 1
+                  }
+                },
+                "score": {
+                  "final": 0.38742815535645925,
+                  "detail": {
+                    "quality": 0.5225684799071498,
+                    "popularity": 0.11070544436870669,
+                    "maintenance": 0.54831630244362
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "rawHeaders": [
+        "Content-Type",
+        "application/json; charset=UTF-8",
+        "Content-Length",
+        "6520"
+      ]
+    }
+]
