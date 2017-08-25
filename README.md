@@ -91,9 +91,13 @@ queries.search.similar('chaik', esClient)
 
 Available options:
 
-- `size`: The total number of results to return, defaults to `5`
-- `analyzerWeight`: How much should we weight the analyzer values by?
-- `scoreWeight`: How much should we weight the fuzzy score by?
+- `size`: The total number of results to return, defaults to `5`.
+- `analyzerWeight`: How much should we weight the analyzer values by? defaults to `2.2`.
+- `scoreWeight`: How much should we weight the fuzzy score by? defaults to `1.5`.
+- `minScore`: defaults to `6.0`.
+
+_the above default values were based on trial and error examining the
+ top npm modules, they will likely change over time._
 
 ## Tests
 
