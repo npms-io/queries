@@ -4,10 +4,10 @@
       "method": "POST",
       "path": "/npms-current/score/_search",
       "body": {
-        "size": 5,
+        "size": 10,
         "query": {
           "function_score": {
-            "min_score": 6,
+            "min_score": 4.5,
             "boost_mode": "replace",
             "query": {
               "fuzzy": {
