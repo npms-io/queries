@@ -9,3 +9,4 @@ nockBack.fixtures = `${__dirname}/fixtures`;
 require('./spec/util/parseSearchQuery');
 require('./spec/search');
 require('./spec/searchSuggestions');
+require('./spec/searchSimilar');

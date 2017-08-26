@@ -73,6 +73,31 @@ Available options:
 
 - `size`: The total number of results to return, defaults to `25`
 
+#### .search.similar(q, esClient, [options]) -> Promise
+
+Perform a fuzzy search for similarly named packages.
+
+Results are ranked based on a combination of analyzer weightings (`quality`, `popularity`, `maintenance`) and the `_score` returned by the [fuzzy match](https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzzy-match-query.html).
+
+```js
+const queries = require('@npms/queries');
+
+// ...
+queries.search.similar('chaik', esClient)
+.then(results => {
+  // perhaps we were instead looking for chalk?
+});
+```
+
+Available options:
+
+- `size`: The total number of results to return, defaults to `10`.
+- `analyzerWeight`: How much should we weight the analyzer values by? defaults to `2.2`.
+- `scoreWeight`: How much should we weight the fuzzy score by? defaults to `1.5`.
+- `minScore`: defaults to `4.5`.
+
+_the above default values were based on trial and error examining the
+ top npm modules, they will likely change over time._
 
 ## Tests
 
