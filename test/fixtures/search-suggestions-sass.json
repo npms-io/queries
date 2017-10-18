@@ -58,10 +58,7 @@
                     },
                     "script_score": {
                         "lang": "groovy",
-                        "script": "doc[\"package.name.raw\"].value.equals(text) ? 100000 + _score : _score",
-                        "params": {
-                            "text": "sass"
-                        }
+                        "script": "(doc[\"score.final\"].value * 1) * (_score * 0.3)"
                     }
                 }
             }
