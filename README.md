@@ -72,6 +72,8 @@ queries.search.suggestions('gulp', esClient)
 Available options:
 
 - `size`: The total number of results to return, defaults to `25`
+- `analyzerWeight`: How much should we weight the analyzer's `score.final` by? defaults to `1.0`.
+- `scoreWeight`: How much should we weight the search `_score`? defaults to `0.3`.
 
 #### .search.similar(q, esClient, [options]) -> Promise
 
@@ -92,8 +94,8 @@ queries.search.similar('chaik', esClient)
 Available options:
 
 - `size`: The total number of results to return, defaults to `10`.
-- `analyzerWeight`: How much should we weight the analyzer values by? defaults to `2.2`.
-- `scoreWeight`: How much should we weight the fuzzy score by? defaults to `1.5`.
+- `analyzerWeight`: How much should we weight the analyzer's `score.final` by? defaults to `2.2`.
+- `scoreWeight`: How much should we weight the search `_score`? defaults to `1.5`.
 - `minScore`: defaults to `4.5`.
 
 _the above default values were based on trial and error examining the
