@@ -71,6 +71,7 @@ queries.search.suggestions('gulp', esClient)
 
 Available options:
 
+- `boostExact`: How much should the score of exact matches be boosted? defaults to `100000`.
 - `size`: The total number of results to return, defaults to `25`
 - `analyzerWeight`: How much should we weight the analyzer's `score.final` by? defaults to `1.0`.
 - `scoreWeight`: How much should we weight the search `_score`? defaults to `0.3`.
@@ -96,7 +97,6 @@ Available options:
 - `size`: The total number of results to return, defaults to `10`.
 - `analyzerWeight`: How much should we weight the analyzer's `score.final` by? defaults to `2.2`.
 - `scoreWeight`: How much should we weight the search `_score`? defaults to `1.5`.
-- `boostExact`: How much should the score of exact matches be boosted? defaults to `100000`.
 - `minScore`: defaults to `4.5`.
 
 _the above default values were based on trial and error examining the
