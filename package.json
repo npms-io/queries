@@ -8,7 +8,8 @@
     "test": "NOCK_BACK_MODE=record mocha --bail",
     "test-cov": "NOCK_BACK_MODE=record istanbul cover --dir test/coverage _mocha -- --bail && echo Coverage lies in test/coverage/lcov-report/index.html",
     "test-travis": "NOCK_BACK_MODE=lockdown istanbul cover _mocha --report lcovonly -- --bail && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "postpublish": "greenkeeper-postpublish"
+    "postpublish": "greenkeeper-postpublish",
+    "release": "standard-version"
   },
   "bugs": "https://github.com/npms-io/queries/issues/",
   "repository": {
@@ -39,6 +40,7 @@
     "greenkeeper-postpublish": "^1.0.1",
     "istanbul": "^0.4.1",
     "mocha": "^3.1.2",
-    "nock": "^9.0.2"
+    "nock": "^9.0.2",
+    "standard-version": "^4.2.0"
   }
 }
