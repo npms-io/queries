@@ -21,4 +21,11 @@ describe('search.similar()', () => {
             nockDone();
         });
     });
+
+    it('should return empty if searched without any text', () => (
+        queries.search.similar('', localEsClient)
+        .then((similar) => {
+            expect(similar).to.have.length(0);
+        })
+    ));
 });
