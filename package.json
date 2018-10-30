@@ -8,7 +8,8 @@
     "test": "NOCK_BACK_MODE=record mocha --bail",
     "test-cov": "NOCK_BACK_MODE=record istanbul cover --dir test/coverage _mocha -- --bail && echo Coverage lies in test/coverage/lcov-report/index.html",
     "test-travis": "NOCK_BACK_MODE=lockdown istanbul cover _mocha --report lcovonly -- --bail && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "release": "standard-version"
+    "release": "standard-version",
+    "postrelease": "git push --follow-tags origin master && npm publish"
   },
   "bugs": "https://github.com/npms-io/queries/issues/",
   "repository": {
