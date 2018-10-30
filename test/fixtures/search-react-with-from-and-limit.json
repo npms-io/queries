@@ -1,0 +1,195 @@
+[
+    {
+        "scope": "http://127.0.0.1:9200",
+        "method": "POST",
+        "path": "/npms-current/score/_search",
+        "body": {
+            "size": 1,
+            "from": 1,
+            "query": {
+                "function_score": {
+                    "boost_mode": "replace",
+                    "query": {
+                        "bool": {
+                            "must": [],
+                            "must_not": [],
+                            "should": [
+                                {
+                                    "multi_match": {
+                                        "query": "react",
+                                        "operator": "and",
+                                        "fields": [
+                                            "package.name.standard^4",
+                                            "package.description.standard",
+                                            "package.keywords.standard^2"
+                                        ],
+                                        "type": "cross_fields",
+                                        "boost": 6,
+                                        "tie_breaker": 0.5
+                                    }
+                                },
+                                {
+                                    "multi_match": {
+                                        "query": "react",
+                                        "operator": "and",
+                                        "fields": [
+                                            "package.name.edge_ngram^4",
+                                            "package.description.edge_ngram",
+                                            "package.keywords.edge_ngram^2"
+                                        ],
+                                        "type": "phrase",
+                                        "slop": 3,
+                                        "boost": 3,
+                                        "tie_breaker": 0.5
+                                    }
+                                },
+                                {
+                                    "multi_match": {
+                                        "query": "react",
+                                        "operator": "and",
+                                        "fields": [
+                                            "package.name.english_docs^4",
+                                            "package.description.english_docs",
+                                            "package.keywords.english_docs^2"
+                                        ],
+                                        "type": "cross_fields",
+                                        "boost": 3,
+                                        "tie_breaker": 0.5
+                                    }
+                                },
+                                {
+                                    "multi_match": {
+                                        "query": "react",
+                                        "operator": "and",
+                                        "fields": [
+                                            "package.name.english_aggressive_docs^4",
+                                            "package.description.english_aggressive_docs",
+                                            "package.keywords.english_aggressive_docs^2"
+                                        ],
+                                        "type": "cross_fields",
+                                        "tie_breaker": 0.5
+                                    }
+                                }
+                            ],
+                            "minimum_should_match": 1
+                        }
+                    },
+                    "script_score": {
+                        "script": {
+                            "source": "doc[\"package.name.raw\"].value.equals(params.text) ? 100000 + (doc[\"score.detail.popularity\"].value * params.popularityWeight + doc[\"score.detail.quality\"].value * params.qualityWeight + doc[\"score.detail.maintenance\"].value * params.maintenanceWeight) : _score * Math.pow((doc[\"score.detail.popularity\"].value * params.popularityWeight + doc[\"score.detail.quality\"].value * params.qualityWeight + doc[\"score.detail.maintenance\"].value * params.maintenanceWeight), params.scoreEffect)",
+                            "params": {
+                                "text": "react",
+                                "scoreEffect": 13.5,
+                                "qualityWeight": 0.26027397260273977,
+                                "popularityWeight": 0.452054794520548,
+                                "maintenanceWeight": 0.28767123287671237
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "status": 200,
+        "response": {
+            "took": 100,
+            "timed_out": false,
+            "_shards": {
+                "total": 1,
+                "successful": 1,
+                "skipped": 0,
+                "failed": 0
+            },
+            "hits": {
+                "total": 70234,
+                "max_score": 100000.664,
+                "hits": [
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "react-redux",
+                        "_score": 39.81534,
+                        "_source": {
+                            "package": {
+                                "name": "react-redux",
+                                "scope": "unscoped",
+                                "version": "5.1.0",
+                                "description": "Official React bindings for Redux",
+                                "keywords": [
+                                    "react",
+                                    "reactjs",
+                                    "hot",
+                                    "reload",
+                                    "hmr",
+                                    "live",
+                                    "edit",
+                                    "flux",
+                                    "redux"
+                                ],
+                                "date": "2018-10-25T20:27:08.893Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/react-redux",
+                                    "homepage": "https://github.com/reduxjs/react-redux",
+                                    "repository": "https://github.com/reduxjs/react-redux",
+                                    "bugs": "https://github.com/reduxjs/react-redux/issues"
+                                },
+                                "author": {
+                                    "name": "Dan Abramov",
+                                    "email": "dan.abramov@me.com",
+                                    "url": "https://github.com/gaearon"
+                                },
+                                "publisher": {
+                                    "username": "timdorr",
+                                    "email": "timdorr@timdorr.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "gaearon",
+                                        "email": "dan.abramov@gmail.com"
+                                    },
+                                    {
+                                        "username": "timdorr",
+                                        "email": "timdorr@timdorr.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.9517499999999999,
+                                    "health": 1,
+                                    "branding": 0.44999999999999996
+                                },
+                                "popularity": {
+                                    "communityInterest": 17256,
+                                    "downloadsCount": 5301270.333333333,
+                                    "downloadsAcceleration": 18264.148287671225,
+                                    "dependentsCount": 3854
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 1,
+                                    "commitsFrequency": 1,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9509047014544721
+                                }
+                            },
+                            "score": {
+                                "final": 0.9228346951263682,
+                                "detail": {
+                                    "quality": 0.991519386102799,
+                                    "popularity": 0.7868035584053833,
+                                    "maintenance": 0.9999932395818413
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "rawHeaders": [
+            "content-type",
+            "application/json; charset=UTF-8",
+            "content-length",
+            "1510"
+        ]
+    }
+]

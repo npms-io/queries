@@ -7,9 +7,7 @@
             "size": 25,
             "highlight": {
                 "fields": {
-                    "package.name.autocomplete_highlight": {
-                        "type": "postings"
-                    }
+                    "package.name.autocomplete_highlight": {}
                 }
             },
             "query": {
@@ -57,10 +55,13 @@
                         }
                     },
                     "script_score": {
-                        "lang": "groovy",
-                        "script": "(doc[\"score.final\"].value * 1) * (_score * 0.3) + (doc[\"package.name.raw\"].value.equals(text) ? 100000 : 0)",
-                        "params":  {
-                          "text": "sass"
+                        "script": {
+                            "source": "(doc[\"score.final\"].value * params.analyzerWeight) * (_score * params.scoreWeight) + (doc[\"package.name.raw\"].value.equals(params.text) ? 1000 : 0)",
+                            "params": {
+                                "text": "sass",
+                                "scoreWeight": 0.3,
+                                "analyzerWeight": 1
+                            }
                         }
                     }
                 }
@@ -68,81 +69,101 @@
         },
         "status": 200,
         "response": {
-            "took": 26,
+            "took": 21,
             "timed_out": false,
             "_shards": {
                 "total": 1,
                 "successful": 1,
+                "skipped": 0,
                 "failed": 0
             },
             "hits": {
-                "total": 1003,
-                "max_score": 100011,
+                "total": 1883,
+                "max_score": 1017.43677,
                 "hits": [
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "sass",
-                        "_score": 100011,
+                        "_score": 1017.43677,
                         "_source": {
                             "package": {
                                 "name": "sass",
-                                "version": "0.5.0",
-                                "description": "Syntactically Awesome Stylesheets (compiles to css)",
+                                "scope": "unscoped",
+                                "version": "1.14.3",
+                                "description": "A pure JavaScript implementation of Sass.",
                                 "keywords": [
+                                    "style",
+                                    "scss",
                                     "sass",
-                                    "template",
-                                    "css",
-                                    "view"
+                                    "preprocessor",
+                                    "css"
                                 ],
+                                "date": "2018-10-18T00:26:39.479Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass"
+                                    "npm": "https://www.npmjs.com/package/sass",
+                                    "homepage": "https://github.com/sass/dart-sass",
+                                    "repository": "https://github.com/sass/dart-sass",
+                                    "bugs": "https://github.com/sass/dart-sass/issues"
                                 },
                                 "author": {
-                                    "name": "TJ Holowaychuk",
-                                    "email": "tj@vision-media.ca",
-                                    "username": "tjholowaychuk"
+                                    "name": "Natalie Weizenbaum",
+                                    "email": "nweiz@google.com",
+                                    "url": "https://github.com/nex3"
                                 },
                                 "publisher": {
-                                    "username": "tjholowaychuk",
-                                    "email": "tj@vision-media.ca"
+                                    "username": "sassbot",
+                                    "email": "sass.bot.beep.boop@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "tjholowaychuk",
-                                        "email": "tj@vision-media.ca"
+                                        "username": "chriseppstein",
+                                        "email": "chris@eppsteins.net"
+                                    },
+                                    {
+                                        "username": "hcatlin",
+                                        "email": "hcatlin@gmail.com"
+                                    },
+                                    {
+                                        "username": "nex3",
+                                        "email": "nex342@gmail.com"
+                                    },
+                                    {
+                                        "username": "sassbot",
+                                        "email": "sass.bot.beep.boop@gmail.com"
+                                    },
+                                    {
+                                        "username": "xzyfer",
+                                        "email": "xzyfer@gmail.com"
                                     }
                                 ]
                             },
-                            "flags": {
-                                "unstable": true
-                            },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.04,
-                                    "tests": 0.3,
+                                    "carefulness": 0.41000000000000003,
+                                    "tests": 0.55,
                                     "health": 1,
-                                    "branding": 0
+                                    "branding": 0.3
                                 },
                                 "popularity": {
-                                    "communityInterest": 13,
-                                    "downloadsCount": 23370.666666666668,
-                                    "downloadsAcceleration": 48.730289193302895,
-                                    "dependentsCount": 39
+                                    "communityInterest": 838,
+                                    "downloadsCount": 138974,
+                                    "downloadsAcceleration": 811.2323059360732,
+                                    "dependentsCount": 136
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0,
-                                    "commitsFrequency": 0,
-                                    "openIssues": 0,
-                                    "issuesDistribution": 0
+                                    "releasesFrequency": 1,
+                                    "commitsFrequency": 1,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.7985232400241409
                                 }
                             },
                             "score": {
-                                "final": 0.2064923162400647,
+                                "final": 0.7167474711137762,
                                 "detail": {
-                                    "quality": 0.43991680685101286,
-                                    "popularity": 0.21290649767074532,
-                                    "maintenance": 0
+                                    "quality": 0.81306036486773,
+                                    "popularity": 0.3515619025752978,
+                                    "maintenance": 0.9993791307202945
                                 }
                             }
                         },
@@ -153,163 +174,1038 @@
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "sass-svg",
-                        "_score": 10.60829,
+                        "_id": "sass-loader",
+                        "_score": 19.944256,
                         "_source": {
                             "package": {
-                                "name": "sass-svg",
-                                "version": "1.0.0",
-                                "description": "Inline SVG for Sass.",
-                                "date": "2016-05-20T13:51:18.609Z",
+                                "name": "sass-loader",
+                                "scope": "unscoped",
+                                "version": "7.1.0",
+                                "description": "Sass loader for webpack",
+                                "keywords": [
+                                    "sass",
+                                    "libsass",
+                                    "webpack",
+                                    "loader"
+                                ],
+                                "date": "2018-08-01T16:05:40.114Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-svg",
-                                    "homepage": "https://github.com/davidkpiano/sass-svg#readme",
-                                    "repository": "https://github.com/davidkpiano/sass-svg",
-                                    "bugs": "https://github.com/davidkpiano/sass-svg/issues"
+                                    "npm": "https://www.npmjs.com/package/sass-loader",
+                                    "homepage": "https://github.com/webpack-contrib/sass-loader",
+                                    "repository": "https://github.com/webpack-contrib/sass-loader",
+                                    "bugs": "https://github.com/webpack-contrib/sass-loader/issues"
                                 },
                                 "author": {
-                                    "name": "David Khourshid",
-                                    "email": "davidkpiano@gmail.com",
-                                    "username": "davidkpiano"
+                                    "name": "J. Tangelder"
                                 },
                                 "publisher": {
-                                    "username": "davidkpiano",
-                                    "email": "davidkpiano@gmail.com"
+                                    "username": "jhnns",
+                                    "email": "mail@johannesewald.de"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "davidkpiano",
-                                        "email": "davidkpiano@gmail.com"
+                                        "username": "akiran",
+                                        "email": "kiran@neostack.com"
+                                    },
+                                    {
+                                        "username": "bebraw",
+                                        "email": "bebraw@gmail.com"
+                                    },
+                                    {
+                                        "username": "d3viant0ne",
+                                        "email": "wiens.joshua@gmail.com"
+                                    },
+                                    {
+                                        "username": "jhnns",
+                                        "email": "mail@johannesewald.de"
+                                    },
+                                    {
+                                        "username": "jtangelder",
+                                        "email": "j.tangelder@gmail.com"
+                                    },
+                                    {
+                                        "username": "michael-ciniawsky",
+                                        "email": "michael.ciniawsky@gmail.com"
+                                    },
+                                    {
+                                        "username": "peeri",
+                                        "email": "developers@peerigon.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.9954999999999999,
+                                    "health": 0.5,
+                                    "branding": 0.6
+                                },
+                                "popularity": {
+                                    "communityInterest": 3156,
+                                    "downloadsCount": 7351705,
+                                    "downloadsAcceleration": 27968.74267503804,
+                                    "dependentsCount": 2319
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.8328767123287671,
+                                    "commitsFrequency": 0.7263356164383561,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.5208620450561439
+                                }
+                            },
+                            "score": {
+                                "final": 0.8756390813061206,
+                                "detail": {
+                                    "quality": 0.9353771433962456,
+                                    "popularity": 0.7172265325782514,
+                                    "maintenance": 0.9828475768138827
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-loader"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-graph",
+                        "_score": 18.759235,
+                        "_source": {
+                            "package": {
+                                "name": "sass-graph",
+                                "scope": "unscoped",
+                                "version": "3.0.3",
+                                "description": "Parse sass files and extract a graph of imports",
+                                "keywords": [
+                                    "sass",
+                                    "graph"
+                                ],
+                                "date": "2018-10-16T08:02:52.362Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-graph",
+                                    "homepage": "https://github.com/xzyfer/sass-graph#readme",
+                                    "repository": "https://github.com/xzyfer/sass-graph",
+                                    "bugs": "https://github.com/xzyfer/sass-graph/issues"
+                                },
+                                "author": {
+                                    "name": "xzyfer"
+                                },
+                                "publisher": {
+                                    "username": "xzyfer",
+                                    "email": "xzyfer@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "lox",
+                                        "email": "lachlan@ljd.cc"
+                                    },
+                                    {
+                                        "username": "xzyfer",
+                                        "email": "xzyfer@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.994,
+                                    "health": 1,
+                                    "branding": 0.6
+                                },
+                                "popularity": {
+                                    "communityInterest": 131,
+                                    "downloadsCount": 8388203.666666667,
+                                    "downloadsAcceleration": 23690.88011796042,
+                                    "dependentsCount": 50
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 1,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.8210699059292168,
+                                "detail": {
+                                    "quality": 0.998659251186278,
+                                    "popularity": 0.4899976620892087,
+                                    "maintenance": 0.9999227109774583
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-graph"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-mq",
+                        "_score": 17.378963,
+                        "_source": {
+                            "package": {
+                                "name": "sass-mq",
+                                "scope": "unscoped",
+                                "version": "5.0.0",
+                                "description": "mq() is a Sass mixin that helps manipulating media queries in an elegant way.",
+                                "keywords": [
+                                    "responsive",
+                                    "sass",
+                                    "rwd",
+                                    "mediaquery",
+                                    "query",
+                                    "queries",
+                                    "media",
+                                    "eyeglass-module"
+                                ],
+                                "date": "2018-05-29T19:19:16.146Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-mq",
+                                    "homepage": "https://sass-mq.github.io/sass-mq/",
+                                    "repository": "https://github.com/sass-mq/sass-mq",
+                                    "bugs": "https://github.com/sass-mq/sass-mq/issues"
+                                },
+                                "publisher": {
+                                    "username": "kaelig",
+                                    "email": "kaelig@deloumeau.fr"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "kaelig",
+                                        "email": "kaelig@deloumeau.fr"
+                                    },
+                                    {
+                                        "username": "sndrs",
+                                        "email": "a@snd.rs"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.55
+                                },
+                                "popularity": {
+                                    "communityInterest": 1718,
+                                    "downloadsCount": 58593,
+                                    "downloadsAcceleration": 197.347907153729,
+                                    "dependentsCount": 65
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.7526294220979779,
+                                "detail": {
+                                    "quality": 0.9679620562715955,
+                                    "popularity": 0.32081996162331156,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-mq"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-resources-loader",
+                        "_score": 16.38159,
+                        "_source": {
+                            "package": {
+                                "name": "sass-resources-loader",
+                                "scope": "unscoped",
+                                "version": "1.3.4",
+                                "description": "SASS resources loader for Webpack",
+                                "keywords": [
+                                    "css",
+                                    "sass",
+                                    "webpack"
+                                ],
+                                "date": "2018-10-14T21:33:53.486Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-resources-loader",
+                                    "homepage": "https://github.com/shakacode/sass-resources-loader#readme",
+                                    "repository": "https://github.com/shakacode/sass-resources-loader",
+                                    "bugs": "https://github.com/shakacode/sass-resources-loader/issues"
+                                },
+                                "publisher": {
+                                    "username": "justin808",
+                                    "email": "justin.gordon@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "alex.fedoseev",
+                                        "email": "alex.fedoseev@gmail.com"
+                                    },
+                                    {
+                                        "username": "justin808",
+                                        "email": "justin.gordon@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.75,
+                                    "branding": 0.44999999999999996
+                                },
+                                "popularity": {
+                                    "communityInterest": 636,
+                                    "downloadsCount": 254856,
+                                    "downloadsAcceleration": 1241.2531392694063,
+                                    "dependentsCount": 55
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.7597844911808189,
+                                "detail": {
+                                    "quality": 0.9666160056503948,
+                                    "popularity": 0.34241677382102936,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-resources-loader"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-true",
+                        "_score": 16.276947,
+                        "_source": {
+                            "package": {
+                                "name": "sass-true",
+                                "scope": "unscoped",
+                                "version": "4.0.0",
+                                "description": "Unit testing for Sass.",
+                                "keywords": [
+                                    "unit-test",
+                                    "test",
+                                    "sass",
+                                    "libsass",
+                                    "TDD",
+                                    "eyeglass-module"
+                                ],
+                                "date": "2018-04-09T14:22:02.323Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-true",
+                                    "homepage": "http://oddbird.net/true",
+                                    "repository": "https://github.com/oddbird/true",
+                                    "bugs": "https://github.com/oddbird/true/issues"
+                                },
+                                "author": {
+                                    "name": "Miriam Suzanne",
+                                    "email": "miriam@oddbird.net",
+                                    "username": "mirisuzanne"
+                                },
+                                "publisher": {
+                                    "username": "jgerigmeyer",
+                                    "email": "jonny@oddbird.net"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "jgerigmeyer",
+                                        "email": "jonny@oddbird.net"
+                                    },
+                                    {
+                                        "username": "mirisuzanne",
+                                        "email": "miriam@oddbird.net"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.7899999999999999,
+                                    "tests": 1,
+                                    "health": 1,
+                                    "branding": 0.7
+                                },
+                                "popularity": {
+                                    "communityInterest": 605,
+                                    "downloadsCount": 4310.666666666667,
+                                    "downloadsAcceleration": 7.641837899543383,
+                                    "dependentsCount": 13
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.7100768755280555,
+                                "detail": {
+                                    "quality": 0.9726304350145527,
+                                    "popularity": 0.195239789643856,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-true"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-extract",
+                        "_score": 16.009241,
+                        "_source": {
+                            "package": {
+                                "name": "sass-extract",
+                                "scope": "unscoped",
+                                "version": "2.1.0",
+                                "description": "Extract structured variables from sass files. Fast and accurate.",
+                                "keywords": [
+                                    "sass",
+                                    "scss",
+                                    "variables",
+                                    "convert",
+                                    "extract",
+                                    "import",
+                                    "json"
+                                ],
+                                "date": "2018-01-17T13:04:52.795Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-extract",
+                                    "homepage": "https://github.com/jgranstrom/sass-extract#readme",
+                                    "repository": "https://github.com/jgranstrom/sass-extract",
+                                    "bugs": "https://github.com/jgranstrom/sass-extract/issues"
+                                },
+                                "author": {
+                                    "name": "John Granström",
+                                    "email": "granstrom.john@gmail.com",
+                                    "username": "jgranstrom"
+                                },
+                                "publisher": {
+                                    "username": "jgranstrom",
+                                    "email": "granstrom.john@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "jgranstrom",
+                                        "email": "granstrom.john@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.6
+                                },
+                                "popularity": {
+                                    "communityInterest": 153,
+                                    "downloadsCount": 15348.333333333334,
+                                    "downloadsAcceleration": 125.66674277016743,
+                                    "dependentsCount": 4
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9059829059829061,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.7049174243032452,
+                                "detail": {
+                                    "quality": 0.9783596506741647,
+                                    "popularity": 0.17562298264193754,
+                                    "maintenance": 0.999832814789479
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-extract"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-toolkit",
+                        "_score": 15.749399,
+                        "_source": {
+                            "package": {
+                                "name": "sass-toolkit",
+                                "scope": "unscoped",
+                                "version": "2.10.2",
+                                "description": "Think of Toolkit as your swiss army knife for modern design and development.",
+                                "keywords": [
+                                    "sass",
+                                    "design",
+                                    "typography",
+                                    "fed",
+                                    "rwd",
+                                    "eyeglass-module",
+                                    "toolkit",
+                                    "design"
+                                ],
+                                "date": "2016-12-07T21:04:44.368Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-toolkit",
+                                    "homepage": "https://github.com/at-import/toolkit",
+                                    "repository": "https://github.com/at-import/toolkit",
+                                    "bugs": "https://github.com/at-import/toolkit/issues"
+                                },
+                                "publisher": {
+                                    "username": "snugug",
+                                    "email": "sam@snug.ug"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "snugug",
+                                        "email": "sam@snug.ug"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 1078,
+                                    "downloadsCount": 3325.3333333333335,
+                                    "downloadsAcceleration": 16.637823439878233,
+                                    "dependentsCount": 3
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6934761015595404,
+                                "detail": {
+                                    "quality": 0.9156716207878913,
+                                    "popularity": 0.19663084764237962,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-toolkit"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-lookup",
+                        "_score": 15.724404,
+                        "_source": {
+                            "package": {
+                                "name": "sass-lookup",
+                                "scope": "unscoped",
+                                "version": "2.0.0",
+                                "description": "Get the file associated with a Sass import",
+                                "keywords": [
+                                    "sass",
+                                    "lookup",
+                                    "dependency",
+                                    "import",
+                                    "resolution"
+                                ],
+                                "date": "2018-07-10T11:10:01.504Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-lookup",
+                                    "homepage": "https://github.com/mrjoelkemp/node-sass-lookup",
+                                    "repository": "https://github.com/mrjoelkemp/node-sass-lookup",
+                                    "bugs": "https://github.com/mrjoelkemp/node-sass-lookup/issues"
+                                },
+                                "author": {
+                                    "name": "Joel Kemp",
+                                    "email": "joel@mrjoelkemp.com",
+                                    "url": "http://www.mrjoelkemp.com/",
+                                    "username": "mrjoelkemp"
+                                },
+                                "publisher": {
+                                    "username": "mrjoelkemp",
+                                    "email": "joel@mrjoelkemp.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "mrjoelkemp",
+                                        "email": "joel@mrjoelkemp.com"
                                     }
                                 ]
                             },
                             "evaluation": {
                                 "quality": {
                                     "carefulness": 0.71,
-                                    "tests": 0.3,
+                                    "tests": 0.85,
                                     "health": 1,
-                                    "branding": 0
+                                    "branding": 0.3
                                 },
                                 "popularity": {
-                                    "communityInterest": 274,
-                                    "downloadsCount": 394.6666666666667,
-                                    "downloadsAcceleration": 1.1074010654490105,
-                                    "dependentsCount": 0
+                                    "communityInterest": 6,
+                                    "downloadsCount": 82702,
+                                    "downloadsAcceleration": 360.9588470319635,
+                                    "dependentsCount": 5
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0.6599315068493151,
-                                    "commitsFrequency": 0.29558219178082196,
-                                    "openIssues": 0.7777777777777778,
-                                    "issuesDistribution": 0.41834115898569
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.5748825269103179,
+                                "final": 0.6903693174038467,
                                 "detail": {
-                                    "quality": 0.7262990927949675,
-                                    "popularity": 0.11587868342098746,
-                                    "maintenance": 0.9041007424985203
+                                    "quality": 0.9350265549980933,
+                                    "popularity": 0.17116437787451,
+                                    "maintenance": 0.999868053280972
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-svg"
+                                "<em>sass</em>-lookup"
                             ]
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "sass-sandal",
-                        "_score": 10.526826,
+                        "_id": "sass-basis",
+                        "_score": 15.506068,
                         "_source": {
                             "package": {
-                                "name": "sass-sandal",
-                                "version": "3.3.1",
-                                "description": "a basic sass library, included reset css and some basic mixin and so on",
+                                "name": "sass-basis",
+                                "scope": "unscoped",
+                                "version": "9.2.0",
+                                "description": "A lightweight responsive Sass/CSS framework based on flexible box.",
                                 "keywords": [
+                                    "css",
                                     "sass",
-                                    "scss",
-                                    "sandal",
-                                    "sass mixin",
-                                    "sass library"
+                                    "mobile-first",
+                                    "responsive",
+                                    "front-end",
+                                    "framework",
+                                    "web"
                                 ],
-                                "date": "2016-11-03T07:37:56.575Z",
+                                "date": "2018-09-28T07:23:18.718Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-sandal",
-                                    "homepage": "https://github.com/marvin1023/sandal",
-                                    "repository": "https://github.com/marvin1023/sandal",
-                                    "bugs": "https://github.com/marvin1023/sandal/issues"
+                                    "npm": "https://www.npmjs.com/package/sass-basis",
+                                    "homepage": "https://sass-basis.github.io/",
+                                    "repository": "https://github.com/sass-basis/basis",
+                                    "bugs": "https://github.com/sass-basis/basis/issues"
                                 },
                                 "author": {
-                                    "name": "结一",
-                                    "email": "xuyc_brother@foxmail.com",
-                                    "url": "https://github.com/marvin1023",
-                                    "username": "marvin1023"
+                                    "name": "inc2734"
                                 },
                                 "publisher": {
-                                    "username": "marvin1023",
-                                    "email": "xuyc_brother@foxmail.com"
+                                    "username": "inc2734",
+                                    "email": "inc@2inc.org"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "marvin1023",
-                                        "email": "xuyc_brother@foxmail.com"
+                                        "username": "inc2734",
+                                        "email": "inc@2inc.org"
                                     }
                                 ]
                             },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.41000000000000003,
-                                    "tests": 0,
-                                    "health": 0,
-                                    "branding": 0
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.4
                                 },
                                 "popularity": {
-                                    "communityInterest": 0,
-                                    "downloadsCount": 128,
-                                    "downloadsAcceleration": 1.2318302891933028,
-                                    "dependentsCount": 0
+                                    "communityInterest": 125,
+                                    "downloadsCount": 491.3333333333333,
+                                    "downloadsAcceleration": -1.34482496194825,
+                                    "dependentsCount": 1
                                 },
                                 "maintenance": {
                                     "releasesFrequency": 1,
-                                    "commitsFrequency": 0,
-                                    "openIssues": 0,
-                                    "issuesDistribution": 0
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.1958172448168528,
+                                "final": 0.6786825753174526,
                                 "detail": {
-                                    "quality": 0.24118030403122032,
-                                    "popularity": 0.019418534116628847,
-                                    "maintenance": 0.33333333333333326
+                                    "quality": 0.9763958329634195,
+                                    "popularity": 0.1022596473894751,
+                                    "maintenance": 0.9999227109774583
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-sandal"
+                                "<em>sass</em>-basis"
                             ]
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-export",
+                        "_score": 15.228198,
+                        "_source": {
+                            "package": {
+                                "name": "sass-export",
+                                "scope": "unscoped",
+                                "version": "1.0.2",
+                                "description": "Exports Sass files to Json format, able to manage sections with annotations in comments.",
+                                "keywords": [
+                                    "Sass",
+                                    "Sass Utilities",
+                                    "Scss",
+                                    "Sass Annotations",
+                                    "Sass to JS",
+                                    "Scss Json",
+                                    "Sass to Json",
+                                    "sass variables exporting",
+                                    "Node Sass"
+                                ],
+                                "date": "2017-12-22T15:58:08.950Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-export",
+                                    "homepage": "https://github.com/plentycode/sass-export#readme",
+                                    "repository": "https://github.com/plentycode/sass-export",
+                                    "bugs": "https://github.com/plentycode/sass-export/issues"
+                                },
+                                "author": {
+                                    "name": "Carlos I Mercado",
+                                    "email": "civan.cim@gmail.com",
+                                    "username": "civanm"
+                                },
+                                "publisher": {
+                                    "username": "civanm",
+                                    "email": "civan.cim@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "civanm",
+                                        "email": "civan.cim@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.3
+                                },
+                                "popularity": {
+                                    "communityInterest": 30,
+                                    "downloadsCount": 621,
+                                    "downloadsAcceleration": 2.477340182648401,
+                                    "dependentsCount": 1
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6685837096375521,
+                                "detail": {
+                                    "quality": 0.9636986159234581,
+                                    "popularity": 0.08434373203478429,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-export"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-deprecate",
+                        "_score": 15.181713,
+                        "_source": {
+                            "package": {
+                                "name": "sass-deprecate",
+                                "scope": "unscoped",
+                                "version": "1.1.3",
+                                "description": "Sass Deprecate: deprecate with confidence",
+                                "keywords": [
+                                    "sass",
+                                    "eyeglass-module"
+                                ],
+                                "date": "2017-02-23T20:34:03.557Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-deprecate",
+                                    "homepage": "https://github.com/salesforce-ux/sass-deprecate#readme",
+                                    "repository": "https://github.com/salesforce-ux/sass-deprecate",
+                                    "bugs": "https://github.com/salesforce-ux/sass-deprecate/issues"
+                                },
+                                "author": {
+                                    "name": "Salesforce and contributors"
+                                },
+                                "publisher": {
+                                    "username": "salesforce-ux",
+                                    "email": "salesforce-ux-npm@salesforce.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "salesforce-ux",
+                                        "email": "salesforce-ux-npm@salesforce.com"
+                                    },
+                                    {
+                                        "username": "kaelig",
+                                        "email": "kaelig@deloumeau.fr"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 269,
+                                    "downloadsCount": 1162.3333333333333,
+                                    "downloadsAcceleration": -0.8261796042617942,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6720338468633853,
+                                "detail": {
+                                    "quality": 0.9530306095940687,
+                                    "popularity": 0.1033452723909272,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-deprecate"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-pack",
+                        "_score": 15.081597,
+                        "_source": {
+                            "package": {
+                                "name": "sass-pack",
+                                "scope": "unscoped",
+                                "version": "2.2.1",
+                                "description": "A simple sass compiler/minifier CLI tool with optional manifest options",
+                                "keywords": [
+                                    "sass",
+                                    "pack",
+                                    "precompiler",
+                                    "node-sass",
+                                    "css",
+                                    "clean css",
+                                    "fast",
+                                    "manifest",
+                                    "scss"
+                                ],
+                                "date": "2018-09-05T14:44:27.041Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-pack",
+                                    "homepage": "https://github.com/dhershman1/sass-pack#readme",
+                                    "repository": "https://github.com/dhershman1/sass-pack",
+                                    "bugs": "https://github.com/dhershman1/sass-pack/issues"
+                                },
+                                "author": {
+                                    "name": "Dustin Hershman"
+                                },
+                                "publisher": {
+                                    "username": "killparadise",
+                                    "email": "dustinh17@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "killparadise",
+                                        "email": "dustinh17@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.75,
+                                    "branding": 0.6
+                                },
+                                "popularity": {
+                                    "communityInterest": 4,
+                                    "downloadsCount": 157.66666666666666,
+                                    "downloadsAcceleration": -1.3918188736681887,
+                                    "dependentsCount": 1
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.6579301226967096,
+                                "detail": {
+                                    "quality": 0.9678205136160971,
+                                    "popularity": 0.05030938240413495,
+                                    "maintenance": 0.9999305279155237
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-pack"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-bem",
+                        "_score": 15.054546,
+                        "_source": {
+                            "package": {
+                                "name": "sass-bem",
+                                "scope": "unscoped",
+                                "version": "2.6.5",
+                                "description": "Amazing package for sass to write bem classes, with namespaces and more advanced features.",
+                                "keywords": [
+                                    "bem",
+                                    "sass",
+                                    "scss",
+                                    "mixins",
+                                    "helpers"
+                                ],
+                                "date": "2016-12-18T17:26:26.824Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-bem",
+                                    "homepage": "https://github.com/zgabievi/sass-bem#readme",
+                                    "repository": "https://github.com/zgabievi/sass-bem",
+                                    "bugs": "https://github.com/zgabievi/sass-bem/issues"
+                                },
+                                "author": {
+                                    "name": "zgabievi",
+                                    "email": "zura.gabievi@gmail.com",
+                                    "username": "npm-zgabievi"
+                                },
+                                "publisher": {
+                                    "username": "zgabievi",
+                                    "email": "zura.gabievi@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "npm-zgabievi",
+                                        "email": "zura.gabievi@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.84,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 62,
+                                    "downloadsCount": 291.6666666666667,
+                                    "downloadsAcceleration": 0.5397640791476404,
+                                    "dependentsCount": 2
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6544369644808847,
+                                "detail": {
+                                    "quality": 0.9053326086356502,
+                                    "popularity": 0.09395246640528435,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-bem"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "sass-spec",
-                        "_score": 10.526826,
+                        "_score": 15.0270405,
                         "_source": {
                             "package": {
                                 "name": "sass-spec",
-                                "version": "3.3.6-3",
+                                "scope": "unscoped",
+                                "version": "3.5.4-1",
                                 "description": "Test suite for testing compatibility with the Sass Stylesheet language.",
                                 "keywords": [
                                     "sass"
                                 ],
-                                "date": "2016-09-06T12:06:50.808Z",
+                                "date": "2018-04-25T10:13:23.918Z",
                                 "links": {
                                     "npm": "https://www.npmjs.com/package/sass-spec",
                                     "homepage": "https://github.com/sass/sass-spec#readme",
@@ -340,24 +1236,24 @@
                                     "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 190,
-                                    "downloadsCount": 1114.3333333333333,
-                                    "downloadsAcceleration": 23.438603500761033,
+                                    "communityInterest": 238,
+                                    "downloadsCount": 1148.3333333333333,
+                                    "downloadsAcceleration": -2.3444254185692515,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0.9299657534246576,
-                                    "commitsFrequency": 1,
+                                    "releasesFrequency": 0.8174657534246575,
+                                    "commitsFrequency": 0.9257945205479452,
                                     "openIssues": 1,
-                                    "issuesDistribution": 0.9362879566599367
+                                    "issuesDistribution": 0.8313485342661027
                                 }
                             },
                             "score": {
-                                "final": 0.6611540265502573,
+                                "final": 0.6518795808319977,
                                 "detail": {
-                                    "quality": 0.8876371792750682,
-                                    "popularity": 0.1282315808912468,
-                                    "maintenance": 0.9999480555880018
+                                    "quality": 0.8902028190459129,
+                                    "popularity": 0.10021511795366043,
+                                    "maintenance": 0.9992669823841218
                                 }
                             }
                         },
@@ -368,736 +1264,89 @@
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "sass-stream",
-                        "_score": 10.526826,
+                        "_id": "sass-flexbox",
+                        "_score": 14.923793,
                         "_source": {
                             "package": {
-                                "name": "sass-stream",
-                                "version": "0.1.8",
-                                "description": "Simple streaming sass compiler. Handles .scss and .sass - converts .sass files to .scss before compiling via node-sass",
+                                "name": "sass-flexbox",
+                                "scope": "unscoped",
+                                "version": "2.0.0",
+                                "description": "Manage Flexbox in Sass easily.",
                                 "keywords": [
                                     "sass",
-                                    "scss",
-                                    "stream",
-                                    "transpiler",
-                                    "node-sass"
+                                    "flexbox"
                                 ],
-                                "date": "2014-08-19T20:49:38.998Z",
+                                "date": "2017-08-16T13:48:22.524Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-stream",
-                                    "homepage": "https://github.com/davidrekow/sass-stream",
-                                    "repository": "https://github.com/davidrekow/sass-stream",
-                                    "bugs": "https://github.com/davidrekow/sass-stream/issues"
+                                    "npm": "https://www.npmjs.com/package/sass-flexbox",
+                                    "homepage": "https://github.com/zessx/sass-flexbox#readme",
+                                    "repository": "https://github.com/zessx/sass-flexbox",
+                                    "bugs": "https://github.com/zessx/sass-flexbox/issues"
                                 },
                                 "author": {
-                                    "name": "David Rekow",
-                                    "email": "d@davidrekow.com",
-                                    "url": "http://github.com/davidrekow",
-                                    "username": "davidrekow"
+                                    "name": "Samuel Marchal",
+                                    "email": "contact@zes.sx",
+                                    "url": "http://zes.sx",
+                                    "username": "zessx"
                                 },
                                 "publisher": {
-                                    "username": "davidrekow",
-                                    "email": "d@davidrekow.com"
+                                    "username": "zessx",
+                                    "email": "contact@zes.sx"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "davidrekow",
-                                        "email": "d@davidrekow.com"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "insecure": 3,
-                                "unstable": true
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.355,
-                                    "tests": 0,
-                                    "health": 0,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 3,
-                                    "downloadsCount": 110,
-                                    "downloadsAcceleration": 0.08510273972602722,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0,
-                                    "commitsFrequency": 0,
-                                    "openIssues": 0.33333333333333337,
-                                    "issuesDistribution": 0
-                                }
-                            },
-                            "score": {
-                                "final": 0.11319543198378529,
-                                "detail": {
-                                    "quality": 0.21704982512804202,
-                                    "popularity": 0.0320447482646423,
-                                    "maintenance": 0.10532806443642252
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-stream"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-scale",
-                        "_score": 10.526826,
-                        "_source": {
-                            "package": {
-                                "name": "sass-scale",
-                                "version": "1.1.0",
-                                "description": "Responsive css properties",
-                                "date": "2016-05-21T14:13:57.678Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-scale",
-                                    "homepage": "https://github.com/hkvalvik/sass-scale",
-                                    "repository": "https://github.com/hkvalvik/sass-scale",
-                                    "bugs": "https://github.com/hkvalvik/sass-scale/issues"
-                                },
-                                "publisher": {
-                                    "username": "hkvalvik",
-                                    "email": "hkvalvik@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "hkvalvik",
-                                        "email": "hkvalvik@gmail.com"
+                                        "username": "zessx",
+                                        "email": "contact@zes.sx"
                                     }
                                 ]
                             },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 2,
-                                    "downloadsCount": 92.66666666666667,
-                                    "downloadsAcceleration": 0.793607305936073,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.6599315068493151,
-                                    "commitsFrequency": 0.43006849315068496,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.5076196295542821,
-                                "detail": {
-                                    "quality": 0.512736796333986,
-                                    "popularity": 0.03286188312759059,
-                                    "maintenance": 0.9779912330269418
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-scale"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-semver",
-                        "_score": 10.526826,
-                        "_source": {
-                            "package": {
-                                "name": "sass-semver",
-                                "version": "1.0.3",
-                                "description": "A lightweight semantic version parser in Sass.",
-                                "date": "2016-01-20T16:10:04.784Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-semver",
-                                    "homepage": "https://github.com/HugoGiraudel/sass-semver#readme",
-                                    "repository": "https://github.com/HugoGiraudel/sass-semver",
-                                    "bugs": "https://github.com/HugoGiraudel/sass-semver/issues"
-                                },
-                                "author": {
-                                    "name": "Hugo Giraudel"
-                                },
-                                "publisher": {
-                                    "username": "hugogiraudel",
-                                    "email": "hugo.giraudel@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "hugogiraudel",
-                                        "email": "hugo.giraudel@gmail.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.71,
+                                    "carefulness": 0.9199999999999999,
                                     "tests": 0.6,
                                     "health": 1,
-                                    "branding": 0
+                                    "branding": 0.44999999999999996
                                 },
                                 "popularity": {
-                                    "communityInterest": 16,
-                                    "downloadsCount": 45.333333333333336,
-                                    "downloadsAcceleration": 0.06293759512937597,
+                                    "communityInterest": 58,
+                                    "downloadsCount": 1033.3333333333333,
+                                    "downloadsAcceleration": 8.911777016742771,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
                                     "releasesFrequency": 0.9,
                                     "commitsFrequency": 0.9,
                                     "openIssues": 1,
-                                    "issuesDistribution": 1
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.6064090001303994,
+                                "final": 0.6571230847709164,
                                 "detail": {
-                                    "quality": 0.8015921938963968,
-                                    "popularity": 0.04562407247629472,
-                                    "maintenance": 0.9998940474136493
+                                    "quality": 0.9296721391152277,
+                                    "popularity": 0.08076464110859413,
+                                    "maintenance": 0.999868053280972
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-semver"
+                                "<em>sass</em>-flexbox"
                             ]
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-shady",
-                        "_score": 10.526826,
-                        "_source": {
-                            "package": {
-                                "name": "sass-shady",
-                                "version": "0.1.1",
-                                "description": "Configurable vignettes as scss mixins",
-                                "keywords": [
-                                    "vignette",
-                                    "sass",
-                                    "scss"
-                                ],
-                                "date": "2016-03-03T14:29:35.471Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-shady",
-                                    "homepage": "https://github.com/fspoettel/shady#readme",
-                                    "repository": "https://github.com/fspoettel/shady",
-                                    "bugs": "https://github.com/fspoettel/shady/issues"
-                                },
-                                "author": {
-                                    "name": "Felix Spöttel"
-                                },
-                                "publisher": {
-                                    "username": "felics",
-                                    "email": "hi@felics.me"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "fspoettel",
-                                        "email": "hi@felics.me"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "unstable": true
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.42,
-                                    "tests": 0.3,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 1,
-                                    "downloadsCount": 23.333333333333332,
-                                    "downloadsAcceleration": 0.05211187214611873,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.24657534246575347,
-                                    "commitsFrequency": 0.09205479452054795,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.4590664655767654,
-                                "detail": {
-                                    "quality": 0.6586542901020389,
-                                    "popularity": 0.017986222891588338,
-                                    "maintenance": 0.7290714300974224
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-shady"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-spring",
-                        "_score": 10.526826,
-                        "_source": {
-                            "package": {
-                                "name": "sass-spring",
-                                "version": "1.0.1",
-                                "description": "pure CSS spring animations",
-                                "keywords": [
-                                    "sass",
-                                    "scss",
-                                    "css",
-                                    "animation",
-                                    "framer",
-                                    "spring",
-                                    "curve"
-                                ],
-                                "date": "2016-07-15T18:08:51.726Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-spring",
-                                    "homepage": "https://github.com/remitly/sass-spring",
-                                    "repository": "https://github.com/remitly/sass-spring",
-                                    "bugs": "https://github.com/remitly/sass-spring/issues"
-                                },
-                                "author": {
-                                    "name": "Cameron Little",
-                                    "email": "cameron@camlittle.com",
-                                    "url": "https://github.com/apexskier",
-                                    "username": "apexskier"
-                                },
-                                "publisher": {
-                                    "username": "apexskier",
-                                    "email": "cameron@camlittle.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "apexskier",
-                                        "email": "cameron@camlittle.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.54,
-                                    "tests": 0.6,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 24,
-                                    "downloadsCount": 16,
-                                    "downloadsAcceleration": 0.20156012176560123,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.6799657534246576,
-                                    "commitsFrequency": 0.7414383561643836,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 1
-                                }
-                            },
-                            "score": {
-                                "final": 0.5968165530858651,
-                                "detail": {
-                                    "quality": 0.770511778935921,
-                                    "popularity": 0.04994272236224448,
-                                    "maintenance": 0.9948087616522951
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-spring"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-slicer",
-                        "_score": 10.526826,
-                        "_source": {
-                            "package": {
-                                "name": "sass-slicer",
-                                "version": "2.1.4",
-                                "description": "Sass Responsive 'slicer', a tool set for breakpoints",
-                                "keywords": [
-                                    "sass",
-                                    "breakpoints",
-                                    "responsive"
-                                ],
-                                "date": "2015-12-17T22:54:47.773Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-slicer",
-                                    "homepage": "https://github.com/teriu/sass-slicer#readme",
-                                    "repository": "https://github.com/teriu/sass-slicer",
-                                    "bugs": "https://github.com/teriu/sass-slicer/issues"
-                                },
-                                "author": {
-                                    "name": "Te Riu Warren",
-                                    "email": "teriu@teriu.name",
-                                    "url": "https://github.com/teriu",
-                                    "username": "teriu"
-                                },
-                                "publisher": {
-                                    "username": "teriu",
-                                    "email": "teriu@teriu.name"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "teriu",
-                                        "email": "teriu@teriu.name"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.84,
-                                    "tests": 0.3,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 8,
-                                    "downloadsCount": 53,
-                                    "downloadsAcceleration": -0.12281202435312039,
-                                    "dependentsCount": 1
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.43150684931506855,
-                                    "commitsFrequency": 0.12657534246575344,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 1
-                                }
-                            },
-                            "score": {
-                                "final": 0.5457078416978209,
-                                "detail": {
-                                    "quality": 0.7438438561505556,
-                                    "popularity": 0.06349175728836856,
-                                    "maintenance": 0.858093056576358
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-slicer"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-space",
-                        "_score": 10.526826,
-                        "_source": {
-                            "package": {
-                                "name": "sass-space",
-                                "version": "1.0.2",
-                                "description": "a set of css class names for quick and easy spacing using css classes.",
-                                "keywords": [
-                                    "css",
-                                    "sass",
-                                    "spacing",
-                                    "padding",
-                                    "margin"
-                                ],
-                                "date": "2016-04-25T14:09:00.981Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-space"
-                                },
-                                "author": {
-                                    "name": "Ben Tatum bentatum@me.com",
-                                    "url": "http://github.com/bentatum"
-                                },
-                                "publisher": {
-                                    "username": "bentatum",
-                                    "email": "bentatum@me.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "bentatum",
-                                        "email": "bentatum@me.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 0,
-                                    "downloadsCount": 312.3333333333333,
-                                    "downloadsAcceleration": 6.090106544901065,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.5273972602739726,
-                                    "commitsFrequency": 0,
-                                    "openIssues": 0,
-                                    "issuesDistribution": 0
-                                }
-                            },
-                            "score": {
-                                "final": 0.2728687772852149,
-                                "detail": {
-                                    "quality": 0.512736796333986,
-                                    "popularity": 0.03016083526982342,
-                                    "maintenance": 0.30997556011594557
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-space"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-spacing",
-                        "_score": 10.445363,
-                        "_source": {
-                            "package": {
-                                "name": "sass-spacing",
-                                "version": "1.1.0",
-                                "description": "SASS mixins for margin and padding. Plus a compiled set of responsive margin and padding classes.",
-                                "keywords": [
-                                    "margin",
-                                    "padding",
-                                    "spacing",
-                                    "sass",
-                                    "libsass",
-                                    "scss",
-                                    "style",
-                                    "npm",
-                                    "import",
-                                    "sass-composer"
-                                ],
-                                "date": "2016-09-29T00:55:54.998Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-spacing",
-                                    "homepage": "https://github.com/digitaledgeit/sass-spacing#readme",
-                                    "repository": "https://github.com/digitaledgeit/sass-spacing",
-                                    "bugs": "https://github.com/digitaledgeit/sass-spacing/issues"
-                                },
-                                "author": {
-                                    "name": "James Newell",
-                                    "email": "james@digitaledgeit.com.au",
-                                    "username": "jameslnewell"
-                                },
-                                "publisher": {
-                                    "username": "jameslnewell",
-                                    "email": "james@digitaledgeit.com.au"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "jameslnewell",
-                                        "email": "james@digitaledgeit.com.au"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 8,
-                                    "downloadsCount": 538.6666666666666,
-                                    "downloadsAcceleration": 5.368093607305935,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 1,
-                                    "commitsFrequency": 0.5120547945205479,
-                                    "openIssues": 0.7777777777777778,
-                                    "issuesDistribution": 0.9660353084415585
-                                }
-                            },
-                            "score": {
-                                "final": 0.5234110212488302,
-                                "detail": {
-                                    "quality": 0.512736796333986,
-                                    "popularity": 0.061358633696868774,
-                                    "maintenance": 0.9946127444420867
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-spacing"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-stylesheet",
-                        "_score": 10.445363,
-                        "_source": {
-                            "package": {
-                                "name": "sass-stylesheet",
-                                "version": "1.0.4",
-                                "description": "Package all scss code into one file",
-                                "keywords": [
-                                    "sass",
-                                    "package",
-                                    "cli"
-                                ],
-                                "date": "2016-05-09T19:28:22.241Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-stylesheet",
-                                    "homepage": "https://github.com/shanshanyang/sass-stylesheet#readme",
-                                    "repository": "https://github.com/shanshanyang/sass-stylesheet",
-                                    "bugs": "https://github.com/shanshanyang/sass-stylesheet/issues"
-                                },
-                                "author": {
-                                    "name": "Shanshan Yang",
-                                    "email": "shanshanyang.ny@gmail.com",
-                                    "username": "shanshanyang"
-                                },
-                                "publisher": {
-                                    "username": "shanshanyang",
-                                    "email": "shanshanyang.ny@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "shanshanyang",
-                                        "email": "shanshanyang.ny@gmail.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0.3,
-                                    "health": 0.5,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 5,
-                                    "downloadsCount": 71,
-                                    "downloadsAcceleration": 0.6398972602739726,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.9761986301369863,
-                                    "commitsFrequency": 0.7109760273972602,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.5617983926419632,
-                                "detail": {
-                                    "quality": 0.6695471572597219,
-                                    "popularity": 0.03896444476580444,
-                                    "maintenance": 0.9922762565600429
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-stylesheet"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-ast",
-                        "_score": 10.1203575,
-                        "_source": {
-                            "package": {
-                                "name": "sass-ast",
-                                "version": "0.0.2",
-                                "description": "Sass abstract syntax tree generator",
-                                "date": "2015-07-07T22:16:57.636Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-ast"
-                                },
-                                "publisher": {
-                                    "username": "gmacwilliam",
-                                    "email": "gmacwill77@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "gmacwilliam",
-                                        "email": "gmacwill77@gmail.com"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "unstable": true
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.39499999999999996,
-                                    "tests": 0.03,
-                                    "health": 0.75,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 0,
-                                    "downloadsCount": 27.666666666666668,
-                                    "downloadsAcceleration": 0.03955479452054797,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0,
-                                    "commitsFrequency": 0,
-                                    "openIssues": 0,
-                                    "issuesDistribution": 0
-                                }
-                            },
-                            "score": {
-                                "final": 0.13859049580923188,
-                                "detail": {
-                                    "quality": 0.45368960493323485,
-                                    "popularity": 0.0070960409407470094,
-                                    "maintenance": 0
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-ast"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "sass-dry",
-                        "_score": 10.1203575,
+                        "_score": 14.865809,
                         "_source": {
                             "package": {
                                 "name": "sass-dry",
-                                "version": "0.3.0",
+                                "scope": "unscoped",
+                                "version": "1.0.0",
                                 "description": "DRY your SASS code.",
                                 "keywords": [
                                     "dry",
@@ -1110,10 +1359,10 @@
                                     "placeholder",
                                     "sass"
                                 ],
-                                "date": "2016-02-21T17:47:19.485Z",
+                                "date": "2016-11-30T18:34:17.463Z",
                                 "links": {
                                     "npm": "https://www.npmjs.com/package/sass-dry",
-                                    "homepage": "https://github.com/ngryman/sass-dry",
+                                    "homepage": "https://github.com/ngryman/sass-dry#readme",
                                     "repository": "https://github.com/ngryman/sass-dry",
                                     "bugs": "https://github.com/ngryman/sass-dry/issues"
                                 },
@@ -1134,392 +1383,17 @@
                                     }
                                 ]
                             },
-                            "flags": {
-                                "unstable": true
-                            },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.45999999999999996,
+                                    "carefulness": 0.9199999999999999,
                                     "tests": 0.85,
                                     "health": 1,
                                     "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 7,
-                                    "downloadsCount": 33.333333333333336,
-                                    "downloadsAcceleration": 0.08188736681887365,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.3082191780821918,
-                                    "commitsFrequency": 0.08054794520547946,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.5404403156323814,
-                                "detail": {
-                                    "quality": 0.8711401090307646,
-                                    "popularity": 0.0355214729479496,
-                                    "maintenance": 0.7619021925467704
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-dry"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-mq",
-                        "_score": 10.1203575,
-                        "_source": {
-                            "package": {
-                                "name": "sass-mq",
-                                "version": "3.3.1",
-                                "description": "mq() is a Sass mixin that helps manipulating media queries in an elegant way.",
-                                "keywords": [
-                                    "responsive",
-                                    "sass",
-                                    "rwd",
-                                    "mediaquery",
-                                    "query",
-                                    "queries",
-                                    "media",
-                                    "eyeglass-module"
-                                ],
-                                "date": "2016-11-02T05:20:26.788Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-mq",
-                                    "homepage": "http://sass-mq.github.io/sass-mq/",
-                                    "repository": "https://github.com/sass-mq/sass-mq",
-                                    "bugs": "https://github.com/sass-mq/sass-mq/issues"
-                                },
-                                "publisher": {
-                                    "username": "kaelig",
-                                    "email": "kaelig@deloumeau.fr"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "kaelig",
-                                        "email": "kaelig@deloumeau.fr"
-                                    },
-                                    {
-                                        "username": "sndrs",
-                                        "email": "a@snd.rs"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.9199999999999999,
-                                    "tests": 0.6749999999999999,
-                                    "health": 1,
-                                    "branding": 0.55
-                                },
-                                "popularity": {
-                                    "communityInterest": 1131,
-                                    "downloadsCount": 7337.333333333333,
-                                    "downloadsAcceleration": 59.37109969558599,
-                                    "dependentsCount": 7
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.9,
-                                    "commitsFrequency": 0.9,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 0.9990864512132605
-                                }
-                            },
-                            "score": {
-                                "final": 0.7236598154795362,
-                                "detail": {
-                                    "quality": 0.9407122462644391,
-                                    "popularity": 0.2613806429339005,
-                                    "maintenance": 0.9998940473523978
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-mq"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-rem",
-                        "_score": 10.1203575,
-                        "_source": {
-                            "package": {
-                                "name": "sass-rem",
-                                "version": "1.2.3",
-                                "description": "Sass mixin and function to use rem units with pixel fallback.",
-                                "keywords": [
-                                    "sass",
-                                    "rem",
-                                    "responsive",
-                                    "fallback"
-                                ],
-                                "date": "2016-09-12T13:58:54.913Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-rem",
-                                    "homepage": "https://github.com/pierreburel/sass-rem",
-                                    "repository": "https://github.com/pierreburel/sass-rem",
-                                    "bugs": "https://github.com/pierreburel/sass-rem/issues"
-                                },
-                                "author": {
-                                    "name": "Pierre Burel",
-                                    "email": "pierre.burel@gmail.com",
-                                    "username": "pierreburel"
-                                },
-                                "publisher": {
-                                    "username": "pierreburel",
-                                    "email": "pierre.burel@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "pierreburel",
-                                        "email": "pierre.burel@gmail.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 79,
-                                    "downloadsCount": 494.6666666666667,
-                                    "downloadsAcceleration": -1.6973173515981723,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.5366438356164384,
-                                    "commitsFrequency": 0.19202054794520546,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 1
-                                }
-                            },
-                            "score": {
-                                "final": 0.5043733254474787,
-                                "detail": {
-                                    "quality": 0.512736796333986,
-                                    "popularity": 0.0810573255758161,
-                                    "maintenance": 0.9205206359878497
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-rem"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-yiq",
-                        "_score": 10.1203575,
-                        "_source": {
-                            "package": {
-                                "name": "sass-yiq",
-                                "version": "1.0.0",
-                                "description": "Create more natural color contrasts",
-                                "keywords": [
-                                    "sass",
-                                    "color",
-                                    "contrast"
-                                ],
-                                "date": "2015-09-27T23:24:58.075Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-yiq",
-                                    "homepage": "https://github.com/timhettler/sass-fpo",
-                                    "repository": "https://github.com/timhettler/sass-fpo",
-                                    "bugs": "https://github.com/timhettler/sass-fpo/issues"
-                                },
-                                "author": {
-                                    "name": "Tim Hettler",
-                                    "email": "me+github@timhettler.com"
-                                },
-                                "publisher": {
-                                    "username": "timhettler",
-                                    "email": "me@timhettler.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "timhettler",
-                                        "email": "me@timhettler.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.84,
-                                    "tests": 0.6,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 3,
-                                    "downloadsCount": 13.333333333333334,
-                                    "downloadsAcceleration": 0.027968036529680357,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.9,
-                                    "commitsFrequency": 0.9,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 1
-                                }
-                            },
-                            "score": {
-                                "final": 0.6041387661752446,
-                                "detail": {
-                                    "quality": 0.8191369572519849,
-                                    "popularity": 0.024099321156776852,
-                                    "maintenance": 0.9998940474136493
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-yiq"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-mix",
-                        "_score": 10.1203575,
-                        "_source": {
-                            "package": {
-                                "name": "sass-mix",
-                                "version": "0.1.2",
-                                "description": "Library of useful sass mixins",
-                                "keywords": [
-                                    "sass",
-                                    "mix",
-                                    "mixin",
-                                    "bbe",
-                                    "utility"
-                                ],
-                                "date": "2016-05-04T23:27:44.928Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-mix",
-                                    "homepage": "https://github.com/bbe-io/sass-mix#readme",
-                                    "repository": "https://github.com/bbe-io/sass-mix",
-                                    "bugs": "https://github.com/bbe-io/sass-mix/issues"
-                                },
-                                "author": {
-                                    "name": "BBE"
-                                },
-                                "publisher": {
-                                    "username": "jamesgrose",
-                                    "email": "grose.james@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "jamesgrose",
-                                        "email": "grose.james@gmail.com"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "unstable": true
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.39499999999999996,
-                                    "tests": 0,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 4,
-                                    "downloadsCount": 250.33333333333334,
-                                    "downloadsAcceleration": 3.0939687975646883,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.6291095890410959,
-                                    "commitsFrequency": 0.16253424657534246,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.46670777441183675,
-                                "detail": {
-                                    "quality": 0.43503683577206537,
-                                    "popularity": 0.04761662900517766,
-                                    "maintenance": 0.9129454386525857
-                                }
-                            }
-                        },
-                        "highlight": {
-                            "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-mix"
-                            ]
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "sass-npm",
-                        "_score": 10.1203575,
-                        "_source": {
-                            "package": {
-                                "name": "sass-npm",
-                                "version": "1.0.2",
-                                "description": "Include SASS files using their NPM module name",
-                                "keywords": [
-                                    "sass",
-                                    "npm",
-                                    "includes",
-                                    "require"
-                                ],
-                                "date": "2015-11-23T14:47:40.670Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-npm",
-                                    "homepage": "https://github.com/mikemaccana/sass-npm#readme",
-                                    "repository": "https://github.com/mikemaccana/sass-npm",
-                                    "bugs": "https://github.com/mikemaccana/sass-npm/issues"
-                                },
-                                "author": {
-                                    "name": "Mike MacCana",
-                                    "email": "mike@certsimple.com"
-                                },
-                                "publisher": {
-                                    "username": "mikemaccana",
-                                    "email": "mike.maccana@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "mikemaccana",
-                                        "email": "mike.maccana@gmail.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.84,
-                                    "tests": 0,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 8,
-                                    "downloadsCount": 137,
-                                    "downloadsAcceleration": 0.10475646879756484,
+                                    "communityInterest": 9,
+                                    "downloadsCount": 10.333333333333334,
+                                    "downloadsAcceleration": -0.06369863013698629,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
@@ -1530,120 +1404,269 @@
                                 }
                             },
                             "score": {
-                                "final": 0.523868026687254,
+                                "final": 0.6462323785736686,
                                 "detail": {
-                                    "quality": 0.530281559689574,
-                                    "popularity": 0.04250743042927859,
-                                    "maintenance": 0.9997313089432407
+                                    "quality": 0.9530306095940687,
+                                    "popularity": 0.029669704260662202,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-npm"
+                                "<em>sass</em>-dry"
                             ]
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "sass-fpo",
-                        "_score": 10.1203575,
+                        "_id": "sass-to-js",
+                        "_score": 14.810868,
                         "_source": {
                             "package": {
-                                "name": "sass-fpo",
-                                "version": "1.0.0",
-                                "description": "Sass mixin to create CSS-Only placeholder images",
+                                "name": "sass-to-js",
+                                "scope": "unscoped",
+                                "version": "1.3.1",
+                                "description": "Library to pass Sass variables via CSS to JavaScript",
                                 "keywords": [
                                     "sass",
-                                    "images",
-                                    "placeholder"
+                                    "scss",
+                                    "json",
+                                    "javascript"
                                 ],
-                                "date": "2015-04-17T15:44:36.223Z",
+                                "date": "2017-07-16T20:11:46.242Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-fpo",
-                                    "homepage": "https://github.com/timhettler/sass-fpo",
-                                    "repository": "https://github.com/timhettler/sass-fpo",
-                                    "bugs": "https://github.com/timhettler/sass-fpo/issues"
+                                    "npm": "https://www.npmjs.com/package/sass-to-js",
+                                    "homepage": "https://github.com/malyw/sass-to-js",
+                                    "repository": "https://github.com/malyw/sass-to-js",
+                                    "bugs": "https://github.com/malyw/sass-to-js/issues"
                                 },
                                 "author": {
-                                    "name": "Tim Hettler",
-                                    "email": "me+github@timhettler.com"
+                                    "name": "Sergey Hospodarets"
                                 },
                                 "publisher": {
-                                    "username": "timhettler",
-                                    "email": "me@timhettler.com"
+                                    "username": "malyw",
+                                    "email": "sgospodarets@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "timhettler",
-                                        "email": "me@timhettler.com"
+                                        "username": "malyw",
+                                        "email": "sgospodarets@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.7899999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.3
+                                },
+                                "popularity": {
+                                    "communityInterest": 52,
+                                    "downloadsCount": 2551,
+                                    "downloadsAcceleration": -45.253443683409444,
+                                    "dependentsCount": 1
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.6677610471062637,
+                                "detail": {
+                                    "quality": 0.9466334242160829,
+                                    "popularity": 0.096558100202873,
+                                    "maintenance": 0.9999305279155237
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-to-js"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-griddle",
+                        "_score": 14.745399,
+                        "_source": {
+                            "package": {
+                                "name": "sass-griddle",
+                                "scope": "unscoped",
+                                "version": "2.0.0",
+                                "description": "Simple set of Sass abstractions for CSS Grid",
+                                "keywords": [
+                                    "eyeglass-module",
+                                    "sass",
+                                    "grid",
+                                    "css",
+                                    "grid",
+                                    "css-grid",
+                                    "singularity"
+                                ],
+                                "date": "2017-03-16T22:14:46.242Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-griddle",
+                                    "homepage": "https://github.com/at-import/griddle#readme",
+                                    "repository": "https://github.com/at-import/griddle",
+                                    "bugs": "https://github.com/at-import/griddle/issues"
+                                },
+                                "author": {
+                                    "name": "Sam Richard",
+                                    "email": "sam@snug.ug",
+                                    "username": "snugug"
+                                },
+                                "publisher": {
+                                    "username": "snugug",
+                                    "email": "sam@snug.ug"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "snugug",
+                                        "email": "sam@snug.ug"
                                     }
                                 ]
                             },
                             "evaluation": {
                                 "quality": {
                                     "carefulness": 0.84,
-                                    "tests": 0,
+                                    "tests": 0.85,
                                     "health": 1,
-                                    "branding": 0
+                                    "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 3,
-                                    "downloadsCount": 12.666666666666666,
-                                    "downloadsAcceleration": 0.0044140030441400385,
+                                    "communityInterest": 9,
+                                    "downloadsCount": 542.3333333333334,
+                                    "downloadsAcceleration": 2.276940639269406,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0,
-                                    "commitsFrequency": 0,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 1
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.34231361339124666,
+                                "final": 0.6492680998856264,
                                 "detail": {
-                                    "quality": 0.530281559689574,
-                                    "popularity": 0.02351184424106995,
-                                    "maintenance": 0.5
+                                    "quality": 0.9426915974418276,
+                                    "popularity": 0.04720520413960575,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-fpo"
+                                "<em>sass</em>-griddle"
                             ]
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "sass-bem",
-                        "_score": 10.1203575,
+                        "_id": "sass-bem-constructor",
+                        "_score": 14.740682,
                         "_source": {
                             "package": {
-                                "name": "sass-bem",
-                                "version": "2.5.3",
-                                "description": "Amazing package for sass to write bem classes, with namespaces and more advanced features.",
+                                "name": "sass-bem-constructor",
+                                "scope": "unscoped",
+                                "version": "1.1.0",
+                                "description": "BEM Constructor is a Sass library for building immutable and namespaced BEM-style CSS objects.",
+                                "date": "2016-07-24T09:23:53.266Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-bem-constructor",
+                                    "homepage": "https://github.com/danielguillan/bem-constructor",
+                                    "repository": "https://github.com/danielguillan/bem-constructor",
+                                    "bugs": "https://github.com/danielguillan/bem-constructor/issues"
+                                },
+                                "author": {
+                                    "name": "Daniel Guillan",
+                                    "email": "daniel.guillan@gmail.com",
+                                    "url": "http://danielguillan.com/",
+                                    "username": "danielguillan"
+                                },
+                                "publisher": {
+                                    "username": "danielguillan",
+                                    "email": "daniel.guillan@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "danielguillan",
+                                        "email": "daniel.guillan@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.7899999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 519,
+                                    "downloadsCount": 516,
+                                    "downloadsAcceleration": -2.3226978691019795,
+                                    "dependentsCount": 3
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6823625425465282,
+                                "detail": {
+                                    "quality": 0.9359654178866935,
+                                    "popularity": 0.14748313866337132,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-bem-constructor"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-config",
+                        "_score": 14.656598,
+                        "_source": {
+                            "package": {
+                                "name": "sass-config",
+                                "scope": "unscoped",
+                                "version": "1.1.2",
+                                "description": "DotConfig for SASS",
                                 "keywords": [
-                                    "bem",
+                                    "dot-config",
                                     "sass",
                                     "scss",
-                                    "mixins",
-                                    "helpers"
+                                    "config"
                                 ],
-                                "date": "2016-04-12T07:36:55.284Z",
+                                "date": "2016-12-14T10:51:06.796Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-bem",
-                                    "homepage": "https://github.com/zgabievi/sass-bem#readme",
-                                    "repository": "https://github.com/zgabievi/sass-bem",
-                                    "bugs": "https://github.com/zgabievi/sass-bem/issues"
+                                    "npm": "https://www.npmjs.com/package/sass-config",
+                                    "homepage": "https://github.com/zgabievi/sass-config#readme",
+                                    "repository": "https://github.com/zgabievi/sass-config",
+                                    "bugs": "https://github.com/zgabievi/sass-config/issues"
                                 },
                                 "author": {
                                     "name": "zgabievi",
                                     "email": "zura.gabievi@gmail.com",
-                                    "username": "zgabievi"
+                                    "username": "npm-zgabievi"
                                 },
                                 "publisher": {
                                     "username": "zgabievi",
@@ -1651,265 +1674,351 @@
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "zgabievi",
+                                        "username": "npm-zgabievi",
                                         "email": "zura.gabievi@gmail.com"
                                     }
                                 ]
                             },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0,
+                                    "carefulness": 0.84,
+                                    "tests": 0.6,
                                     "health": 1,
                                     "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 30,
-                                    "downloadsCount": 336.3333333333333,
-                                    "downloadsAcceleration": 1.4801179604261798,
-                                    "dependentsCount": 0
+                                    "communityInterest": 8,
+                                    "downloadsCount": 269.6666666666667,
+                                    "downloadsAcceleration": 1.2820966514459666,
+                                    "dependentsCount": 1
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0.8236301369863015,
-                                    "commitsFrequency": 0.7772431506849315,
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
                                     "openIssues": 1,
                                     "issuesDistribution": 1
                                 }
                             },
                             "score": {
-                                "final": 0.5532677060931529,
+                                "final": 0.6434880210199938,
                                 "detail": {
-                                    "quality": 0.5965993069155472,
-                                    "popularity": 0.07020318452263062,
-                                    "maintenance": 0.9991908555301943
+                                    "quality": 0.9053326086356502,
+                                    "popularity": 0.06260729616818714,
+                                    "maintenance": 0.9999305279155237
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-bem"
+                                "<em>sass</em>-config"
                             ]
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "sass-em",
-                        "_score": 10.1203575,
+                        "_id": "sass-extract-loader",
+                        "_score": 14.593634,
                         "_source": {
                             "package": {
-                                "name": "sass-em",
-                                "version": "1.0.2",
-                                "description": "Sass function and mixin to convert px in em.",
+                                "name": "sass-extract-loader",
+                                "scope": "unscoped",
+                                "version": "1.1.0",
+                                "description": "Webpack loader for sass-extract. Extract structured variables when importing sass files.",
                                 "keywords": [
+                                    "webpack",
+                                    "loader",
+                                    "sass-extract",
                                     "sass",
-                                    "em",
-                                    "responsive"
+                                    "scss",
+                                    "variables",
+                                    "convert",
+                                    "extract",
+                                    "import",
+                                    "json"
                                 ],
-                                "date": "2015-09-17T07:30:58.670Z",
+                                "date": "2017-12-02T19:15:14.708Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-em",
-                                    "homepage": "https://github.com/pierreburel/sass-em",
-                                    "repository": "https://github.com/pierreburel/sass-em",
-                                    "bugs": "https://github.com/pierreburel/sass-em/issues"
+                                    "npm": "https://www.npmjs.com/package/sass-extract-loader",
+                                    "homepage": "https://github.com/jgranstrom/sass-extract-loader#readme",
+                                    "repository": "https://github.com/jgranstrom/sass-extract-loader",
+                                    "bugs": "https://github.com/jgranstrom/sass-extract-loader/issues"
                                 },
                                 "author": {
-                                    "name": "Pierre Burel",
-                                    "email": "pierre.burel@gmail.com",
-                                    "username": "pierreburel"
+                                    "name": "John Granström",
+                                    "email": "granstrom.john@gmail.com",
+                                    "username": "jgranstrom"
                                 },
                                 "publisher": {
-                                    "username": "pierreburel",
-                                    "email": "pierre.burel@gmail.com"
+                                    "username": "jgranstrom",
+                                    "email": "granstrom.john@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "pierreburel",
-                                        "email": "pierre.burel@gmail.com"
+                                        "username": "jgranstrom",
+                                        "email": "granstrom.john@gmail.com"
                                     }
                                 ]
                             },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0,
+                                    "carefulness": 0.8699999999999999,
+                                    "tests": 0.85,
                                     "health": 1,
-                                    "branding": 0
+                                    "branding": 0.6
                                 },
                                 "popularity": {
-                                    "communityInterest": 5,
-                                    "downloadsCount": 37,
-                                    "downloadsAcceleration": 0.06567732115677316,
+                                    "communityInterest": 27,
+                                    "downloadsCount": 9499.666666666666,
+                                    "downloadsAcceleration": 88.07140410958904,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0,
-                                    "commitsFrequency": 0,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.3375945144487946,
+                                "final": 0.6741881779824299,
                                 "detail": {
-                                    "quality": 0.512736796333986,
-                                    "popularity": 0.03219464390773028,
-                                    "maintenance": 0.49287242908826656
+                                    "quality": 0.9618178119609289,
+                                    "popularity": 0.1020115291141006,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-em"
+                                "<em>sass</em>-extract-loader"
                             ]
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "sass-kit",
-                        "_score": 10.1203575,
+                        "_id": "sass-module-importer",
+                        "_score": 14.586025,
                         "_source": {
                             "package": {
-                                "name": "sass-kit",
-                                "version": "0.1.0",
-                                "description": "A collection of Sass functions & mixins",
+                                "name": "sass-module-importer",
+                                "scope": "unscoped",
+                                "version": "1.4.0",
+                                "description": "Import Sass files from NPM and Bower Modules",
                                 "keywords": [
                                     "sass",
                                     "scss",
-                                    "mixins",
-                                    "functions",
-                                    "helpers"
+                                    "importer",
+                                    "module",
+                                    "npm",
+                                    "node-sass",
+                                    "bower"
                                 ],
-                                "date": "2016-09-24T21:46:46.870Z",
+                                "date": "2016-11-16T12:03:34.670Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-kit",
-                                    "homepage": "https://github.com/methodgrab/sass-kit#readme",
-                                    "repository": "https://github.com/methodgrab/sass-kit",
-                                    "bugs": "https://github.com/methodgrab/sass-kit/issues"
+                                    "npm": "https://www.npmjs.com/package/sass-module-importer",
+                                    "homepage": "https://github.com/lucasmotta/sass-module-importer#readme",
+                                    "repository": "https://github.com/lucasmotta/sass-module-importer",
+                                    "bugs": "https://github.com/lucasmotta/sass-module-importer/issues"
                                 },
                                 "author": {
-                                    "name": "MethodGrab"
+                                    "name": "Lucas Motta",
+                                    "email": "mail@lucasmotta.com",
+                                    "url": "lucasmotta.com",
+                                    "username": "lucasmotta"
                                 },
                                 "publisher": {
-                                    "username": "methodgrab",
-                                    "email": "methodgr4b@gmail.com"
+                                    "username": "lucasmotta",
+                                    "email": "mail@lucasmotta.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "methodgrab",
-                                        "email": "methodgr4b@gmail.com"
+                                        "username": "lucasmotta",
+                                        "email": "mail@lucasmotta.com"
                                     }
                                 ]
                             },
-                            "flags": {
-                                "unstable": true
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.5,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 85,
+                                    "downloadsCount": 12515.333333333334,
+                                    "downloadsAcceleration": 15.31318493150684,
+                                    "dependentsCount": 17
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6752033362950316,
+                                "detail": {
+                                    "quality": 0.8895378556876898,
+                                    "popularity": 0.16686622967002435,
+                                    "maintenance": 0.9998251405834746
+                                }
+                            }
+                        },
+                        "highlight": {
+                            "package.name.autocomplete_highlight": [
+                                "<em>sass</em>-module-importer"
+                            ]
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "sass-shake",
+                        "_score": 14.49044,
+                        "_source": {
+                            "package": {
+                                "name": "sass-shake",
+                                "scope": "unscoped",
+                                "version": "1.1.2",
+                                "description": "A command line utility to remove unused sass files",
+                                "keywords": [
+                                    "sass",
+                                    "tree-shaking"
+                                ],
+                                "date": "2018-08-30T15:07:37.165Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/sass-shake",
+                                    "homepage": "https://github.com/sliptype/sass-shake#readme",
+                                    "repository": "https://github.com/sliptype/sass-shake",
+                                    "bugs": "https://github.com/sliptype/sass-shake/issues"
+                                },
+                                "author": {
+                                    "name": "Sebastian Klingler"
+                                },
+                                "publisher": {
+                                    "username": "sliptype",
+                                    "email": "sliptype@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sklingler93",
+                                        "email": "sklingler93@gmail.com"
+                                    }
+                                ]
                             },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.42,
+                                    "carefulness": 0.84,
                                     "tests": 0.6,
-                                    "health": 1,
-                                    "branding": 0.3
+                                    "health": 0.75,
+                                    "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 3,
-                                    "downloadsCount": 13.666666666666666,
-                                    "downloadsAcceleration": 0.3424467275494673,
+                                    "communityInterest": 11,
+                                    "downloadsCount": 41.666666666666664,
+                                    "downloadsAcceleration": 0.06230974124809746,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
                                     "releasesFrequency": 1,
-                                    "commitsFrequency": 0.8541609589041096,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
                                 }
                             },
                             "score": {
-                                "final": 0.6058880723563086,
+                                "final": 0.63066693249883,
                                 "detail": {
-                                    "quality": 0.8288030713016312,
-                                    "popularity": 0.027893465042978835,
-                                    "maintenance": 0.9928126805736477
+                                    "quality": 0.8947934715775826,
+                                    "popularity": 0.034954503032433436,
+                                    "maintenance": 0.9999851856120101
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-kit"
+                                "<em>sass</em>-shake"
                             ]
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "sass-map",
-                        "_score": 10.1203575,
+                        "_id": "sass-bootstrap",
+                        "_score": 14.4735775,
                         "_source": {
                             "package": {
-                                "name": "sass-map",
-                                "version": "0.3.4",
-                                "description": "Sass Unpack cut a sass project in multiple css files",
+                                "name": "sass-bootstrap",
+                                "scope": "unscoped",
+                                "version": "4.0.0-alpha.6.4",
+                                "description": "Bootstrap. Simply converted to sass syntax.",
                                 "keywords": [
+                                    "css",
                                     "sass",
-                                    "map"
+                                    "mobile-first",
+                                    "responsive",
+                                    "front-end",
+                                    "framework",
+                                    "web"
                                 ],
-                                "date": "2016-04-29T20:00:52.154Z",
+                                "date": "2017-04-05T13:21:55.446Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/sass-map",
-                                    "homepage": "https://github.com/StudioLabs/sass-map",
-                                    "repository": "https://github.com/StudioLabs/sass-map",
-                                    "bugs": "https://github.com/StudioLabs/sass-map/issues"
+                                    "npm": "https://www.npmjs.com/package/sass-bootstrap",
+                                    "homepage": "https://github.com/m8ms/sass-bootstrap#readme",
+                                    "repository": "https://github.com/m8ms/sass-bootstrap",
+                                    "bugs": "https://github.com/m8ms/sass-bootstrap/issues"
                                 },
                                 "author": {
-                                    "name": "StudioLabs"
+                                    "name": "The Bootstrap Authors",
+                                    "url": "https://github.com/twbs/bootstrap/graphs/contributors"
                                 },
                                 "publisher": {
-                                    "username": "steed",
-                                    "email": "steed.monteiro@gmail.com"
+                                    "username": "m8ms",
+                                    "email": "piotr.m.martyniak@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "steed",
-                                        "email": "steed.monteiro@gmail.com"
+                                        "username": "m8ms",
+                                        "email": "piotr.m.martyniak@gmail.com"
                                     }
                                 ]
                             },
-                            "flags": {
-                                "unstable": true
-                            },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.27,
+                                    "carefulness": 0.9999999999999999,
                                     "tests": 0.6,
                                     "health": 0.5,
-                                    "branding": 0
+                                    "branding": 0.44999999999999996
                                 },
                                 "popularity": {
-                                    "communityInterest": 12,
-                                    "downloadsCount": 69.33333333333333,
-                                    "downloadsAcceleration": 0.20928462709284634,
-                                    "dependentsCount": 1
+                                    "communityInterest": 101,
+                                    "downloadsCount": 317.6666666666667,
+                                    "downloadsAcceleration": 2.082191780821918,
+                                    "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0.6799657534246576,
-                                    "commitsFrequency": 0.011506849315068493,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.4965312304930153,
+                                "final": 0.6406875170161562,
                                 "detail": {
-                                    "quality": 0.6040556752427633,
-                                    "popularity": 0.07225010888645639,
-                                    "maintenance": 0.8286485423140759
+                                    "quality": 0.8763033999959062,
+                                    "popularity": 0.07959342232333798,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         },
                         "highlight": {
                             "package.name.autocomplete_highlight": [
-                                "<em>sass</em>-map"
+                                "<em>sass</em>-bootstrap"
                             ]
                         }
                     }
@@ -1917,10 +2026,10 @@
             }
         },
         "rawHeaders": [
-            "Content-Type",
+            "content-type",
             "application/json; charset=UTF-8",
-            "Content-Length",
-            "32007"
+            "content-length",
+            "34397"
         ]
     }
 ]

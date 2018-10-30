@@ -27,13 +27,28 @@
                                         "query": "sass",
                                         "operator": "and",
                                         "fields": [
+                                            "package.name.standard^4",
+                                            "package.description.standard",
+                                            "package.keywords.standard^2"
+                                        ],
+                                        "type": "cross_fields",
+                                        "boost": 6,
+                                        "tie_breaker": 0.5
+                                    }
+                                },
+                                {
+                                    "multi_match": {
+                                        "query": "sass",
+                                        "operator": "and",
+                                        "fields": [
                                             "package.name.edge_ngram^4",
                                             "package.description.edge_ngram",
                                             "package.keywords.edge_ngram^2"
                                         ],
                                         "type": "phrase",
                                         "slop": 3,
-                                        "boost": 3
+                                        "boost": 3,
+                                        "tie_breaker": 0.5
                                     }
                                 },
                                 {
@@ -46,7 +61,8 @@
                                             "package.keywords.english_docs^2"
                                         ],
                                         "type": "cross_fields",
-                                        "boost": 3
+                                        "boost": 3,
+                                        "tie_breaker": 0.5
                                     }
                                 },
                                 {
@@ -58,7 +74,8 @@
                                             "package.description.english_aggressive_docs",
                                             "package.keywords.english_aggressive_docs^2"
                                         ],
-                                        "type": "cross_fields"
+                                        "type": "cross_fields",
+                                        "tie_breaker": 0.5
                                     }
                                 }
                             ],
@@ -66,14 +83,15 @@
                         }
                     },
                     "script_score": {
-                        "lang": "groovy",
-                        "script": "doc[\"package.name.raw\"].value.equals(text) ? 100000 + (doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight) : _score * pow((doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight), scoreEffect)",
-                        "params": {
-                            "text": "sass",
-                            "scoreEffect": 15.3,
-                            "qualityWeight": 0.26027397260273977,
-                            "popularityWeight": 0.452054794520548,
-                            "maintenanceWeight": 0.28767123287671237
+                        "script": {
+                            "source": "doc[\"package.name.raw\"].value.equals(params.text) ? 100000 + (doc[\"score.detail.popularity\"].value * params.popularityWeight + doc[\"score.detail.quality\"].value * params.qualityWeight + doc[\"score.detail.maintenance\"].value * params.maintenanceWeight) : _score * Math.pow((doc[\"score.detail.popularity\"].value * params.popularityWeight + doc[\"score.detail.quality\"].value * params.qualityWeight + doc[\"score.detail.maintenance\"].value * params.maintenanceWeight), params.scoreEffect)",
+                            "params": {
+                                "text": "sass",
+                                "scoreEffect": 13.5,
+                                "qualityWeight": 0.26027397260273977,
+                                "popularityWeight": 0.452054794520548,
+                                "maintenanceWeight": 0.28767123287671237
+                            }
                         }
                     }
                 }
@@ -81,33 +99,35 @@
         },
         "status": 200,
         "response": {
-            "took": 177,
+            "took": 10,
             "timed_out": false,
             "_shards": {
                 "total": 1,
                 "successful": 1,
+                "skipped": 0,
                 "failed": 0
             },
             "hits": {
-                "total": 68,
-                "max_score": 0.1838624,
+                "total": 108,
+                "max_score": 8.741531,
                 "hits": [
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "gulp-sass",
-                        "_score": 0.1838624,
+                        "_score": 8.741531,
                         "_source": {
                             "package": {
                                 "name": "gulp-sass",
-                                "version": "2.3.2",
+                                "scope": "unscoped",
+                                "version": "4.0.2",
                                 "description": "Gulp plugin for sass",
                                 "keywords": [
                                     "gulpplugin",
                                     "sass",
                                     "gulp"
                                 ],
-                                "date": "2016-06-15T10:59:07.630Z",
+                                "date": "2018-10-16T08:02:28.320Z",
                                 "links": {
                                     "npm": "https://www.npmjs.com/package/gulp-sass",
                                     "homepage": "https://github.com/dlmanning/gulp-sass#readme",
@@ -140,90 +160,14 @@
                                 "quality": {
                                     "carefulness": 0.9999999999999999,
                                     "tests": 0.85,
-                                    "health": 1,
+                                    "health": 0.75,
                                     "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 1616,
-                                    "downloadsCount": 840016.6666666666,
-                                    "downloadsAcceleration": 2462.2071727549474,
-                                    "dependentsCount": 568
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.5474315068493152,
-                                    "commitsFrequency": 0.35815068493150687,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 0.6745308867501427
-                                }
-                            },
-                            "score": {
-                                "final": 0.8292307056017352,
-                                "detail": {
-                                    "quality": 0.9618370515816311,
-                                    "popularity": 0.5857945056553313,
-                                    "maintenance": 0.959004323279657
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-ruby-sass",
-                        "_score": 0.008889448,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-ruby-sass",
-                                "version": "2.1.0",
-                                "description": "Compile Sass to CSS with Ruby Sass",
-                                "keywords": [
-                                    "gulpplugin",
-                                    "scss",
-                                    "sass",
-                                    "css",
-                                    "compile",
-                                    "preprocessor",
-                                    "style",
-                                    "ruby",
-                                    "source-map",
-                                    "source-maps",
-                                    "sourcemap",
-                                    "sourcemaps"
-                                ],
-                                "date": "2016-08-13T00:28:39.632Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-ruby-sass",
-                                    "homepage": "https://github.com/sindresorhus/gulp-ruby-sass#readme",
-                                    "repository": "https://github.com/sindresorhus/gulp-ruby-sass",
-                                    "bugs": "https://github.com/sindresorhus/gulp-ruby-sass/issues"
-                                },
-                                "publisher": {
-                                    "username": "sindresorhus",
-                                    "email": "sindresorhus@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "sindresorhus",
-                                        "email": "sindresorhus@gmail.com"
-                                    },
-                                    {
-                                        "username": "robwierzbowski",
-                                        "email": "hello@robwierzbowski.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.9199999999999999,
-                                    "tests": 0.85,
-                                    "health": 0.6923076923076923,
-                                    "branding": 0.15
-                                },
-                                "popularity": {
-                                    "communityInterest": 664,
-                                    "downloadsCount": 40580,
-                                    "downloadsAcceleration": -70.19804033485536,
-                                    "dependentsCount": 42
+                                    "communityInterest": 2224,
+                                    "downloadsCount": 1163697.6666666667,
+                                    "downloadsAcceleration": 69.62798706240392,
+                                    "dependentsCount": 1130
                                 },
                                 "maintenance": {
                                     "releasesFrequency": 0.9,
@@ -233,24 +177,95 @@
                                 }
                             },
                             "score": {
-                                "final": 0.7299973441972911,
+                                "final": 0.8127212684708948,
                                 "detail": {
-                                    "quality": 0.9372866073210253,
-                                    "popularity": 0.2825218336503364,
-                                    "maintenance": 0.9997963434953308
+                                    "quality": 0.9526154873230585,
+                                    "popularity": 0.505665153216106,
+                                    "maintenance": 0.999868053280972
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-sass-glob",
+                        "_score": 0.5083255,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-sass-glob",
+                                "scope": "unscoped",
+                                "version": "1.0.9",
+                                "description": "Gulp task to use glob imports in your sass/scss files.",
+                                "keywords": [
+                                    "gulp",
+                                    "sass",
+                                    "glob",
+                                    "gulpplugin"
+                                ],
+                                "date": "2018-04-05T09:41:40.008Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-glob",
+                                    "homepage": "https://github.com/mikevercoelen/gulp-sass-glob#readme",
+                                    "repository": "https://github.com/mikevercoelen/gulp-sass-glob",
+                                    "bugs": "https://github.com/mikevercoelen/gulp-sass-glob/issues"
+                                },
+                                "author": {
+                                    "name": "Mike Vercoelen",
+                                    "email": "mike.vercoelen@gmail.com",
+                                    "username": "mikevercoelen"
+                                },
+                                "publisher": {
+                                    "username": "mikevercoelen",
+                                    "email": "mike.vercoelen@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "mikevercoelen",
+                                        "email": "mike.vercoelen@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 92,
+                                    "downloadsCount": 43788.333333333336,
+                                    "downloadsAcceleration": 115.31286149162855,
+                                    "dependentsCount": 43
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.7013245450881755,
+                                "detail": {
+                                    "quality": 0.9156716207878913,
+                                    "popularity": 0.21905497200990837,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "gulp-svg-sprite",
-                        "_score": 0.002925483,
+                        "_score": 0.27613223,
                         "_source": {
                             "package": {
                                 "name": "gulp-svg-sprite",
-                                "version": "1.3.6",
+                                "scope": "unscoped",
+                                "version": "1.5.0",
                                 "description": "SVG sprites & stacks galore — Gulp plugin wrapping around svg-sprite that reads in a bunch of SVG files, optimizes them and creates SVG sprites and CSS resources in various flavours",
                                 "keywords": [
                                     "gulpplugin",
@@ -274,7 +289,7 @@
                                     "retina",
                                     "mustache"
                                 ],
-                                "date": "2016-08-29T17:25:19.479Z",
+                                "date": "2018-09-18T10:47:27.817Z",
                                 "links": {
                                     "npm": "https://www.npmjs.com/package/gulp-svg-sprite",
                                     "homepage": "https://github.com/jkphl/gulp-svg-sprite",
@@ -302,14 +317,14 @@
                                 "quality": {
                                     "carefulness": 0.9999999999999999,
                                     "tests": 0.958,
-                                    "health": 0.75,
+                                    "health": 1,
                                     "branding": 0.6
                                 },
                                 "popularity": {
-                                    "communityInterest": 461,
-                                    "downloadsCount": 41914.333333333336,
-                                    "downloadsAcceleration": 119.64693683409433,
-                                    "dependentsCount": 22
+                                    "communityInterest": 680,
+                                    "downloadsCount": 77643.33333333333,
+                                    "downloadsAcceleration": 80.18719558599696,
+                                    "dependentsCount": 46
                                 },
                                 "maintenance": {
                                     "releasesFrequency": 1,
@@ -319,256 +334,49 @@
                                 }
                             },
                             "score": {
-                                "final": 0.7481939822243099,
+                                "final": 0.7458492057329011,
                                 "detail": {
-                                    "quality": 0.9859733926189466,
-                                    "popularity": 0.2926926929549202,
-                                    "maintenance": 0.9998843482982966
+                                    "quality": 0.9936023477865719,
+                                    "popularity": 0.27941586444234057,
+                                    "maintenance": 0.9999227109774583
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "gulp-sass-lint",
-                        "_score": 0.002380705,
+                        "_id": "mango-gulp-sass",
+                        "_score": 0.26835945,
                         "_source": {
                             "package": {
-                                "name": "gulp-sass-lint",
-                                "version": "1.2.0",
-                                "description": "Gulp plugin for Sass Lint",
-                                "keywords": [
-                                    "gulpplugin",
-                                    "sass",
-                                    "gulp",
-                                    "lint"
-                                ],
-                                "date": "2016-06-17T14:37:27.529Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-lint",
-                                    "homepage": "https://github.com/sasstools/gulp-sass-lint#readme",
-                                    "repository": "https://github.com/sasstools/gulp-sass-lint",
-                                    "bugs": "https://github.com/sasstools/gulp-sass-lint/issues"
-                                },
-                                "author": {
-                                    "name": "Sam Richard"
-                                },
-                                "publisher": {
-                                    "username": "snugug",
-                                    "email": "sam@snug.ug"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "danpurdy",
-                                        "email": "danjpurdy@gmail.com"
-                                    },
-                                    {
-                                        "username": "snugug",
-                                        "email": "sam@snug.ug"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0.3,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 133,
-                                    "downloadsCount": 60177.333333333336,
-                                    "downloadsAcceleration": 382.7349695585998,
-                                    "dependentsCount": 28
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.8616438356164384,
-                                    "commitsFrequency": 0.6271232876712328,
-                                    "openIssues": 0.9885057471264368,
-                                    "issuesDistribution": 0.6982743143993817
-                                }
-                            },
-                            "score": {
-                                "final": 0.6670464330730478,
-                                "detail": {
-                                    "quality": 0.7262990927949675,
-                                    "popularity": 0.28937798877962,
-                                    "maintenance": 0.9939268833191159
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-glob",
-                        "_score": 0.0018682976,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-glob",
-                                "version": "1.0.6",
-                                "description": "Gulp task to use glob imports in your sass/scss files.",
-                                "keywords": [
-                                    "gulp",
-                                    "sass",
-                                    "glob",
-                                    "gulpplugin"
-                                ],
-                                "date": "2016-04-12T11:32:34.583Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-glob",
-                                    "homepage": "https://github.com/tomgrooffer/gulp-sass-glob#readme",
-                                    "repository": "https://github.com/tomgrooffer/gulp-sass-glob",
-                                    "bugs": "https://github.com/tomgrooffer/gulp-sass-glob/issues"
-                                },
-                                "author": {
-                                    "name": "Mike Vercoelen",
-                                    "email": "mike.vercoelen@gmail.com",
-                                    "username": "mikevercoelen"
-                                },
-                                "publisher": {
-                                    "username": "mikevercoelen",
-                                    "email": "mike.vercoelen@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "mikevercoelen",
-                                        "email": "mike.vercoelen@gmail.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.9199999999999999,
-                                    "tests": 0.6,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 61,
-                                    "downloadsCount": 12056.666666666666,
-                                    "downloadsAcceleration": 86.79528158295281,
-                                    "dependentsCount": 12
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.9749143835616438,
-                                    "commitsFrequency": 0.9,
-                                    "openIssues": 0.9,
-                                    "issuesDistribution": 0.9211202671409473
-                                }
-                            },
-                            "score": {
-                                "final": 0.6700639723687409,
-                                "detail": {
-                                    "quality": 0.8290932599028382,
-                                    "popularity": 0.20394721836768315,
-                                    "maintenance": 0.9998699084834295
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-glob-2",
-                        "_score": 0.0006715758,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-glob-2",
-                                "version": "1.0.8",
-                                "description": "Gulp task to use glob imports in your sass/scss files.",
-                                "keywords": [
-                                    "gulp",
-                                    "sass",
-                                    "glob",
-                                    "gulpplugin"
-                                ],
-                                "date": "2016-06-28T11:37:30.978Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-glob-2",
-                                    "homepage": "https://github.com/tomgrooffer/gulp-sass-glob#readme",
-                                    "repository": "https://github.com/tomgrooffer/gulp-sass-glob",
-                                    "bugs": "https://github.com/tomgrooffer/gulp-sass-glob/issues"
-                                },
-                                "author": {
-                                    "name": "Mike Vercoelen",
-                                    "email": "mike.vercoelen@gmail.com"
-                                },
-                                "publisher": {
-                                    "username": "danielavalero",
-                                    "email": "danielavalero255@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "danielavalero",
-                                        "email": "danielavalero255@gmail.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.9199999999999999,
-                                    "tests": 0.6,
-                                    "health": 1,
-                                    "branding": 0.15
-                                },
-                                "popularity": {
-                                    "communityInterest": 51,
-                                    "downloadsCount": 67,
-                                    "downloadsAcceleration": 0.7384322678843227,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.9,
-                                    "commitsFrequency": 0.9,
-                                    "openIssues": 0.9292929292929293,
-                                    "issuesDistribution": 0.9175371347402598
-                                }
-                            },
-                            "score": {
-                                "final": 0.6481001197555843,
-                                "detail": {
-                                    "quality": 0.9129557704843995,
-                                    "popularity": 0.06936142609445042,
-                                    "maintenance": 0.9998196842205913
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-china",
-                        "_score": 0.0006681554,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-china",
-                                "version": "2.3.1",
-                                "description": "Gulp plugin for sass(免翻墙国情版)",
+                                "name": "mango-gulp-sass",
+                                "scope": "unscoped",
+                                "version": "3.2.0",
+                                "description": "Gulp plugin for sass",
                                 "keywords": [
                                     "gulpplugin",
                                     "sass",
                                     "gulp"
                                 ],
-                                "date": "2016-05-11T08:29:59.592Z",
+                                "date": "2017-11-09T10:26:23.066Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-china",
-                                    "homepage": "https://github.com/EdwonLim/gulp-sass-china#readme",
-                                    "repository": "https://github.com/EdwonLim/gulp-sass-china",
+                                    "npm": "https://www.npmjs.com/package/mango-gulp-sass",
+                                    "homepage": "https://github.com/dlmanning/gulp-sass#readme",
+                                    "repository": "https://github.com/dlmanning/gulp-sass",
                                     "bugs": "https://github.com/dlmanning/gulp-sass/issues"
                                 },
                                 "author": {
-                                    "name": "EdwonLim"
+                                    "name": "David Manning"
                                 },
                                 "publisher": {
-                                    "username": "edwonlim",
-                                    "email": "edwon.lim@gmail.com"
+                                    "username": "matejsimek",
+                                    "email": "email@matejsimek.cz"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "edwonlim",
-                                        "email": "edwon.lim@gmail.com"
+                                        "username": "matejsimek",
+                                        "email": "email@matejsimek.cz"
                                     }
                                 ]
                             },
@@ -580,9 +388,291 @@
                                     "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 32,
-                                    "downloadsCount": 97.33333333333333,
-                                    "downloadsAcceleration": 0.7681887366818874,
+                                    "communityInterest": 1748,
+                                    "downloadsCount": 10.666666666666666,
+                                    "downloadsAcceleration": -1.6502473363774732,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6786197494693411,
+                                "detail": {
+                                    "quality": 0.9257956355749487,
+                                    "popularity": 0.1455064004243324,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-watch-sass",
+                        "_score": 0.12691538,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-watch-sass",
+                                "scope": "unscoped",
+                                "version": "1.4.1",
+                                "description": "Watches SASS files, adding @import-ing files to the stream",
+                                "keywords": [
+                                    "gulpplugin",
+                                    "gulp",
+                                    "watch",
+                                    "sass",
+                                    "import"
+                                ],
+                                "date": "2018-03-21T10:28:36.065Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-watch-sass",
+                                    "homepage": "https://github.com/sp00m/gulp-watch-sass#readme",
+                                    "repository": "https://github.com/sp00m/gulp-watch-sass",
+                                    "bugs": "https://github.com/sp00m/gulp-watch-sass/issues"
+                                },
+                                "author": {
+                                    "name": "sp00m",
+                                    "email": "christophe.maillard@rocketmail.com",
+                                    "username": "sp00m"
+                                },
+                                "publisher": {
+                                    "username": "sp00m",
+                                    "email": "christophe.maillard@rocketmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "sp00m",
+                                        "email": "christophe.maillard@rocketmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.84,
+                                    "tests": 0.994,
+                                    "health": 1,
+                                    "branding": 0.6
+                                },
+                                "popularity": {
+                                    "communityInterest": 10,
+                                    "downloadsCount": 1414.6666666666667,
+                                    "downloadsAcceleration": -7.160616438356165,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9364028814935065
+                                }
+                            },
+                            "score": {
+                                "final": 0.6604408852367527,
+                                "detail": {
+                                    "quality": 0.9781962242469795,
+                                    "popularity": 0.04860458986911865,
+                                    "maintenance": 0.9999154614527638
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-sass-variables",
+                        "_score": 0.10819918,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-sass-variables",
+                                "scope": "unscoped",
+                                "version": "1.2.0",
+                                "description": "Define Sass variables in your gulp task",
+                                "keywords": [
+                                    "gulpplugin",
+                                    "gulp-sass-variables",
+                                    "environment variabes",
+                                    "sass",
+                                    "scss"
+                                ],
+                                "date": "2018-05-08T06:33:35.355Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-variables",
+                                    "homepage": "https://github.com/osaton/gulp-sass-variables",
+                                    "repository": "https://github.com/osaton/gulp-sass-variables",
+                                    "bugs": "https://github.com/osaton/gulp-sass-variables/issues"
+                                },
+                                "author": {
+                                    "name": "osaton"
+                                },
+                                "publisher": {
+                                    "username": "osaton",
+                                    "email": "npm@sploosh.org"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "osaton",
+                                        "email": "npm@sploosh.org"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.7899999999999999,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 14,
+                                    "downloadsCount": 14856.333333333334,
+                                    "downloadsAcceleration": 15.453025114155253,
+                                    "dependentsCount": 5
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9166666666666667,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6380139056539258,
+                                "detail": {
+                                    "quality": 0.8143096250422663,
+                                    "popularity": 0.12507316708158245,
+                                    "maintenance": 0.9998440276076915
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-sass-inheritance",
+                        "_score": 0.10213668,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-sass-inheritance",
+                                "scope": "unscoped",
+                                "version": "1.1.0",
+                                "description": "Rebuild only changed sass/scss files and all it's dependencies",
+                                "keywords": [
+                                    "gulpplugin",
+                                    "sass",
+                                    "sass-inheritance",
+                                    "sass-graph",
+                                    "gulp-sass-graph",
+                                    "sass-dependencies",
+                                    "gulp-cached"
+                                ],
+                                "date": "2017-05-12T22:52:58.960Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-inheritance",
+                                    "homepage": "https://github.com/berstend/gulp-sass-inheritance",
+                                    "repository": "https://github.com/berstend/gulp-sass-inheritance",
+                                    "bugs": "https://github.com/berstend/gulp-sass-inheritance/issues"
+                                },
+                                "author": {
+                                    "name": "berstend & Juanfran Alcántara"
+                                },
+                                "publisher": {
+                                    "username": "berstend",
+                                    "email": "e.ndze.it@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "berstend",
+                                        "email": "e.ndze.it@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.84,
+                                    "tests": 0.6,
+                                    "health": 0.5,
+                                    "branding": 0.3
+                                },
+                                "popularity": {
+                                    "communityInterest": 41,
+                                    "downloadsCount": 1789.3333333333333,
+                                    "downloadsAcceleration": -14.461206240487064,
+                                    "dependentsCount": 2
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6391186734123746,
+                                "detail": {
+                                    "quality": 0.8525078610586607,
+                                    "popularity": 0.09550718825874376,
+                                    "maintenance": 0.9998251405834746
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-sass-china",
+                        "_score": 0.10069816,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-sass-china",
+                                "scope": "unscoped",
+                                "version": "3.1.0",
+                                "description": "Gulp plugin for sass(免翻墙国情版)",
+                                "keywords": [
+                                    "gulpplugin",
+                                    "sass",
+                                    "gulp"
+                                ],
+                                "date": "2017-02-07T07:04:19.535Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-china",
+                                    "homepage": "https://github.com/EdwonLim/gulp-sass-china#readme",
+                                    "repository": "https://github.com/EdwonLim/gulp-sass-china",
+                                    "bugs": "https://github.com/dlmanning/gulp-sass/issues"
+                                },
+                                "author": {
+                                    "name": "EdwonLim"
+                                },
+                                "publisher": {
+                                    "username": "ymfe",
+                                    "email": "ymfe.team@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "edwonlim",
+                                        "email": "edwon.lim@gmail.com"
+                                    },
+                                    {
+                                        "username": "ymfe",
+                                        "email": "ymfe.team@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 34,
+                                    "downloadsCount": 157,
+                                    "downloadsAcceleration": 0.5926940639269407,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
@@ -593,171 +683,135 @@
                                 }
                             },
                             "score": {
-                                "final": 0.6488544170685095,
+                                "final": 0.6469678253390598,
                                 "detail": {
-                                    "quality": 0.9227179081439715,
-                                    "popularity": 0.06323738998623993,
-                                    "maintenance": 0.9997313089432407
+                                    "quality": 0.9257956355749487,
+                                    "popularity": 0.05511524417816888,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "gulp-scss-lint",
-                        "_score": 0.0006118604,
+                        "_id": "gulp-sass-vendor",
+                        "_score": 0.093830235,
                         "_source": {
                             "package": {
-                                "name": "gulp-scss-lint",
-                                "version": "0.4.0",
-                                "description": "Validate `.scss` files with `scss-lint`",
-                                "keywords": [
-                                    "gulpplugin",
-                                    "scss-lint",
-                                    "scsslint",
-                                    "sass-lint",
-                                    "scss",
-                                    "lint",
-                                    "gulp"
-                                ],
-                                "date": "2016-05-18T15:58:32.541Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-scss-lint",
-                                    "homepage": "http://github.com/juanfran/gulp-scss-lint",
-                                    "repository": "https://github.com/juanfran/gulp-scss-lint",
-                                    "bugs": "https://github.com/juanfran/gulp-scss-lint/issues"
-                                },
-                                "author": {
-                                    "name": "Juanfran Alcántara"
-                                },
-                                "publisher": {
-                                    "username": "juanfran",
-                                    "email": "juanfran.ag@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "juanfran",
-                                        "email": "juanfran.ag@gmail.com"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "unstable": true
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.355,
-                                    "tests": 0.85,
-                                    "health": 0.6363636363636364,
-                                    "branding": 0.15
-                                },
-                                "popularity": {
-                                    "communityInterest": 165,
-                                    "downloadsCount": 51684,
-                                    "downloadsAcceleration": 91.58108828006084,
-                                    "dependentsCount": 29
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.8616438356164384,
-                                    "commitsFrequency": 0.30205479452054795,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 0.45243162764570044
-                                }
-                            },
-                            "score": {
-                                "final": 0.660978774419327,
-                                "detail": {
-                                    "quality": 0.8041461727359293,
-                                    "popularity": 0.273239077983175,
-                                    "maintenance": 0.9260035580126773
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-partials-imported",
-                        "_score": 0.0005857563,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-partials-imported",
-                                "version": "1.0.4",
-                                "description": "It process scss partials files and add the files that import them to the pipe.",
+                                "name": "gulp-sass-vendor",
+                                "scope": "unscoped",
+                                "version": "3.1.0",
+                                "description": "Gulp plugin for sass",
                                 "keywords": [
                                     "gulpplugin",
                                     "sass",
-                                    "import",
-                                    "imported",
-                                    "cache"
+                                    "gulp"
                                 ],
-                                "date": "2016-05-23T14:56:31.979Z",
+                                "date": "2017-07-16T12:39:05.536Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-partials-imported",
-                                    "homepage": "https://github.com/g100g/gulp-sass-partials-imported#readme",
-                                    "repository": "https://github.com/g100g/gulp-sass-partials-imported",
-                                    "bugs": "https://github.com/g100g/gulp-sass-partials-imported/issues"
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-vendor",
+                                    "homepage": "https://github.com/joy-web/gulp-sass#readme",
+                                    "repository": "https://github.com/joy-web/gulp-sass",
+                                    "bugs": "https://github.com/joy-web/gulp-sass/issues"
                                 },
                                 "author": {
-                                    "name": "G100g",
-                                    "email": "giorgio@g100g.net",
-                                    "url": "http://g100g.net",
-                                    "username": "g100g"
+                                    "name": "David Manning"
                                 },
                                 "publisher": {
-                                    "username": "g100g",
-                                    "email": "giorgio@g100g.net"
+                                    "username": "princetoad",
+                                    "email": "princetoad@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "cant89",
-                                        "email": "cant1989@gmail.com"
+                                        "username": "zzy_enetf",
+                                        "email": "zzy_enetf@163.com"
                                     },
                                     {
-                                        "username": "g100g",
-                                        "email": "giorgio@g100g.net"
+                                        "username": "linder0209",
+                                        "email": "bd_wyj@sina.com"
+                                    },
+                                    {
+                                        "username": "johnsonqz",
+                                        "email": "zqstudy2011@163.com"
+                                    },
+                                    {
+                                        "username": "tedyhy",
+                                        "email": "916610351@qq.com"
+                                    },
+                                    {
+                                        "username": "lizhiyang",
+                                        "email": "jeriah_lee@163.com"
+                                    },
+                                    {
+                                        "username": "duooduo",
+                                        "email": "duooduo@sina.com"
+                                    },
+                                    {
+                                        "username": "webpansy",
+                                        "email": "webpansy@163.com"
+                                    },
+                                    {
+                                        "username": "senyawang",
+                                        "email": "senyawangg@gmail.com"
+                                    },
+                                    {
+                                        "username": "princetoad",
+                                        "email": "tom@tfan.org"
+                                    },
+                                    {
+                                        "username": "txy920",
+                                        "email": "txy920@163.com"
+                                    },
+                                    {
+                                        "username": "hopefuture",
+                                        "email": "linder0209@126.com"
+                                    },
+                                    {
+                                        "username": "joy-web",
+                                        "email": "joy-web@jd.com"
                                     }
                                 ]
                             },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.7899999999999999,
-                                    "tests": 0.85,
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.6,
                                     "health": 1,
                                     "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 6,
-                                    "downloadsCount": 128,
-                                    "downloadsAcceleration": 1.341324200913242,
+                                    "communityInterest": 39,
+                                    "downloadsCount": 4.666666666666667,
+                                    "downloadsAcceleration": -0.056487823439878244,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 1,
+                                    "releasesFrequency": 0.9,
                                     "commitsFrequency": 0.9,
-                                    "openIssues": 1,
+                                    "openIssues": 0.9,
                                     "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.6464910862804581,
+                                "final": 0.6441519964277764,
                                 "detail": {
-                                    "quality": 0.9356592252798356,
-                                    "popularity": 0.04523941940601047,
-                                    "maintenance": 0.9998843482982966
+                                    "quality": 0.9257956355749487,
+                                    "popularity": 0.04707001871735946,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "gulp-scss",
-                        "_score": 0.0005678123,
+                        "_score": 0.08536369,
                         "_source": {
                             "package": {
                                 "name": "gulp-scss",
+                                "scope": "unscoped",
                                 "version": "1.4.0",
                                 "description": "Gulp plugin for sass stylesheet compiler by standard approach",
                                 "keywords": [
@@ -789,188 +843,477 @@
                             },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.7899999999999999,
+                                    "carefulness": 0.9199999999999999,
                                     "tests": 0.85,
                                     "health": 0.7777777777777778,
-                                    "branding": 0.3
+                                    "branding": 0.44999999999999996
                                 },
                                 "popularity": {
-                                    "communityInterest": 11,
-                                    "downloadsCount": 2248,
-                                    "downloadsAcceleration": 6.262500000000001,
-                                    "dependentsCount": 2
+                                    "communityInterest": 16,
+                                    "downloadsCount": 2575,
+                                    "downloadsAcceleration": 6.630555555555556,
+                                    "dependentsCount": 3
                                 },
                                 "maintenance": {
                                     "releasesFrequency": 0.9,
                                     "commitsFrequency": 0.9,
                                     "openIssues": 1,
-                                    "issuesDistribution": 0.9764595982142857
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.6714111838007126,
+                                "final": 0.672332918705443,
                                 "detail": {
-                                    "quality": 0.9417574699318941,
-                                    "popularity": 0.11120402589997311,
-                                    "maintenance": 0.9998929535890109
+                                    "quality": 0.9598290076578674,
+                                    "popularity": 0.09837256502783615,
+                                    "maintenance": 0.999868053280972
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "gulp-angular2-embed-sass",
-                        "_score": 0.0003212544,
+                        "_id": "gulp-sass-pedigree",
+                        "_score": 0.082436346,
                         "_source": {
                             "package": {
-                                "name": "gulp-angular2-embed-sass",
-                                "version": "0.3.0",
-                                "description": "A gulp plugin to compile styleUrls with sass to css and include them as strings under style.",
+                                "name": "gulp-sass-pedigree",
+                                "scope": "unscoped",
+                                "version": "2.1.7",
+                                "description": "Incremental Caching System for Gulp and NodeSass",
+                                "keywords": [
+                                    "gulpplugin",
+                                    "sass",
+                                    "libsass",
+                                    "gulp",
+                                    "cache",
+                                    "incremental cache"
+                                ],
+                                "date": "2017-05-10T18:14:26.643Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-pedigree",
+                                    "homepage": "https://github.com/hitmands/gulp-sass-pedigree#readme",
+                                    "repository": "https://github.com/hitmands/gulp-sass-pedigree",
+                                    "bugs": "https://github.com/hitmands/gulp-sass-pedigree/issues"
+                                },
+                                "author": {
+                                    "name": "Giuseppe Mandato",
+                                    "email": "gius.mand.developer@gmail.com",
+                                    "url": "https://github.com/hitmands",
+                                    "username": "code-y"
+                                },
+                                "publisher": {
+                                    "username": "code-y",
+                                    "email": "gius.mand.developer@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "code-y",
+                                        "email": "gius.mand.developer@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 1,
+                                    "branding": 0.44999999999999996
+                                },
+                                "popularity": {
+                                    "communityInterest": 3,
+                                    "downloadsCount": 35.666666666666664,
+                                    "downloadsAcceleration": -0.8609208523592085,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6478185320903959,
+                                "detail": {
+                                    "quality": 0.9670311279214051,
+                                    "popularity": 0.02215821447324053,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-sass-bulk-import",
+                        "_score": 0.08199197,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-sass-bulk-import",
+                                "scope": "unscoped",
+                                "version": "1.0.1",
+                                "description": "import directories in your SCSS",
+                                "keywords": [
+                                    "gulpplugin",
+                                    "scss",
+                                    "sass",
+                                    "glob",
+                                    "import",
+                                    "directory",
+                                    "bulk",
+                                    "import",
+                                    "sass"
+                                ],
+                                "date": "2016-02-29T22:53:18.535Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-bulk-import",
+                                    "homepage": "https://github.com/mathisonian/gulp-sass-bulk-import",
+                                    "repository": "https://github.com/mathisonian/gulp-sass-bulk-import",
+                                    "bugs": "https://github.com/mathisonian/gulp-sass-bulk-import/issues"
+                                },
+                                "author": {
+                                    "name": "Matthew Conlen"
+                                },
+                                "publisher": {
+                                    "username": "mathisonian",
+                                    "email": "mc@mathisonian.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "mathisonian",
+                                        "email": "mc@mathisonian.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.71,
+                                    "tests": 0.85,
+                                    "health": 0.5,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 66,
+                                    "downloadsCount": 5289,
+                                    "downloadsAcceleration": 15.415410958904111,
+                                    "dependentsCount": 7
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6316049937449933,
+                                "detail": {
+                                    "quality": 0.7765689907240753,
+                                    "popularity": 0.1391299923530133,
+                                    "maintenance": 0.9998251405834746
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-dart-sass",
+                        "_score": 0.07801066,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-dart-sass",
+                                "scope": "unscoped",
+                                "version": "0.9.1",
+                                "description": "Gulp plugin for sass",
+                                "keywords": [
+                                    "gulpplugin",
+                                    "sass",
+                                    "gulp"
+                                ],
+                                "date": "2018-08-06T01:32:12.463Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-dart-sass",
+                                    "homepage": "https://github.com/mattdsteele/gulp-dart-sass#readme",
+                                    "repository": "https://github.com/mattdsteele/gulp-dart-sass",
+                                    "bugs": "https://github.com/mattdsteele/gulp-dart-sass/issues"
+                                },
+                                "author": {
+                                    "name": "David Manning"
+                                },
+                                "publisher": {
+                                    "username": "mattdsteele",
+                                    "email": "orphum@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "mattdsteele",
+                                        "email": "orphum@gmail.com"
+                                    }
+                                ]
+                            },
+                            "flags": {
+                                "unstable": true
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.49999999999999994,
+                                    "tests": 0.85,
+                                    "health": 0.75,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 47,
+                                    "downloadsCount": 276,
+                                    "downloadsAcceleration": 2.935673515981735,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.7866438356164384,
+                                    "commitsFrequency": 0.6781849315068493,
+                                    "openIssues": 0.7,
+                                    "issuesDistribution": 0.7
+                                }
+                            },
+                            "score": {
+                                "final": 0.6321338073388165,
+                                "detail": {
+                                    "quality": 0.86964932254521,
+                                    "popularity": 0.06640149434649123,
+                                    "maintenance": 0.9942813930113763
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-sass-partials-imported",
+                        "_score": 0.06493715,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-sass-partials-imported",
+                                "scope": "unscoped",
+                                "version": "1.0.6",
+                                "description": "It process scss partials files and add the files that import them to the pipe.",
+                                "keywords": [
+                                    "gulpplugin",
+                                    "sass",
+                                    "import",
+                                    "imported",
+                                    "cache"
+                                ],
+                                "date": "2018-07-06T07:58:08.828Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-partials-imported",
+                                    "homepage": "https://github.com/g100g/gulp-sass-partials-imported#readme",
+                                    "repository": "https://github.com/g100g/gulp-sass-partials-imported",
+                                    "bugs": "https://github.com/g100g/gulp-sass-partials-imported/issues"
+                                },
+                                "author": {
+                                    "name": "G100g",
+                                    "email": "giorgio@g100g.net",
+                                    "url": "http://g100g.net",
+                                    "username": "g100g"
+                                },
+                                "publisher": {
+                                    "username": "cant89",
+                                    "email": "cant1989@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "cant89",
+                                        "email": "cant1989@gmail.com"
+                                    },
+                                    {
+                                        "username": "g100g",
+                                        "email": "giorgio@g100g.net"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.85,
+                                    "health": 0.5,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 18,
+                                    "downloadsCount": 774.3333333333334,
+                                    "downloadsAcceleration": 1.284189497716894,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6362094974726031,
+                                "detail": {
+                                    "quality": 0.8895378556876898,
+                                    "popularity": 0.05541234890844578,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-sass-monster",
+                        "_score": 0.063906975,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-sass-monster",
+                                "scope": "unscoped",
+                                "version": "1.1.0",
+                                "description": "Gulp plugin for node-sass with steroids. The project is a revised version of gulp-sass and updated gulp-sass-extended",
                                 "keywords": [
                                     "gulpplugin",
                                     "gulp",
-                                    "plugin",
-                                    "angular2",
-                                    "embed",
                                     "sass",
-                                    "style",
-                                    "styleUrls"
+                                    "scss",
+                                    "gulp4",
+                                    "sass-variables",
+                                    "gulp-sass",
+                                    "node-sass",
+                                    "libsass"
                                 ],
-                                "date": "2016-10-17T21:47:17.482Z",
+                                "date": "2018-01-04T06:27:17.679Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-angular2-embed-sass",
-                                    "homepage": "https://github.com/amritk/gulp-angular2-embed-sass",
-                                    "repository": "https://github.com/amritk/gulp-angular2-embed-sass",
-                                    "bugs": "https://github.com/amritk/gulp-angular2-embed-sass/issues"
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-monster",
+                                    "homepage": "https://github.com/dutchenkoOleg/gulp-sass-monster#readme",
+                                    "repository": "https://github.com/dutchenkoOleg/gulp-sass-monster",
+                                    "bugs": "https://github.com/dutchenkoOleg/gulp-sass-monster/issues"
                                 },
                                 "author": {
-                                    "name": "Amrit Kahlon",
-                                    "email": "amrit@hockey-community.com",
-                                    "username": "amritk"
+                                    "name": "Oleg Dutchenko",
+                                    "email": "dutchenko.o.dev@gmail.com",
+                                    "username": "dutchenkooleg"
                                 },
                                 "publisher": {
-                                    "username": "amritk",
-                                    "email": "amrit@hockey-community.com"
+                                    "username": "801s",
+                                    "email": "dutchenko.o.dev@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "amritk",
-                                        "email": "amrit@hockey-community.com"
+                                        "username": "dutchenkooleg",
+                                        "email": "dutchenko.o.dev@gmail.com"
                                     }
                                 ]
                             },
-                            "flags": {
-                                "unstable": true
-                            },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.39499999999999996,
+                                    "carefulness": 0.9999999999999999,
                                     "tests": 0.85,
-                                    "health": 0.75,
+                                    "health": 0.5,
                                     "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 12,
-                                    "downloadsCount": 336.6666666666667,
-                                    "downloadsAcceleration": 3.2649923896499247,
+                                    "communityInterest": 5,
+                                    "downloadsCount": 36.333333333333336,
+                                    "downloadsAcceleration": -0.47633181126331814,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 1,
-                                    "commitsFrequency": 0.7746575342465754,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 0.892159525742115
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.6230244111751762,
+                                "final": 0.6291275187685275,
                                 "detail": {
-                                    "quality": 0.8394984026708217,
-                                    "popularity": 0.06087566944512081,
-                                    "maintenance": 0.9996240173375355
+                                    "quality": 0.8996618704747472,
+                                    "popularity": 0.0265433097768206,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "gulp-shopify-sass",
-                        "_score": 0.00026604885,
+                        "_id": "gulp-sass-newer",
+                        "_score": 0.057695568,
                         "_source": {
                             "package": {
-                                "name": "gulp-shopify-sass",
-                                "version": "0.3.2",
-                                "description": "Concatenate Sass files defined by the @import order",
+                                "name": "gulp-sass-newer",
+                                "scope": "unscoped",
+                                "version": "1.3.4-newer",
+                                "description": "Gulp plugin for sass with dependency on current version of node-sass",
                                 "keywords": [
                                     "gulpplugin",
-                                    "shopify"
+                                    "sass",
+                                    "gulp"
                                 ],
-                                "date": "2016-09-19T11:41:06.418Z",
+                                "date": "2015-05-04T12:55:21.869Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-shopify-sass",
-                                    "homepage": "https://github.com/thejian/gulp-shopify-sass#readme",
-                                    "repository": "https://github.com/thejian/gulp-shopify-sass",
-                                    "bugs": "https://github.com/thejian/gulp-shopify-sass/issues"
+                                    "npm": "https://www.npmjs.com/package/gulp-sass-newer",
+                                    "homepage": "https://github.com/altmind/gulp-sass",
+                                    "repository": "https://github.com/altmind/gulp-sass",
+                                    "bugs": "https://github.com/dlmanning/gulp-sass/issues"
                                 },
                                 "author": {
-                                    "name": "theJian",
-                                    "email": "thejianmail@gmail.com",
-                                    "username": "thejian"
+                                    "name": "David Manning"
                                 },
                                 "publisher": {
-                                    "username": "thejian",
-                                    "email": "thejianmail@gmail.com"
+                                    "username": "altmind",
+                                    "email": "altmind@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "thejian",
-                                        "email": "thejianmail@gmail.com"
+                                        "username": "altmind",
+                                        "email": "altmind@gmail.com"
                                     }
                                 ]
                             },
-                            "flags": {
-                                "unstable": true
-                            },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.355,
-                                    "tests": 0.85,
-                                    "health": 0.75,
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.6,
+                                    "health": 0.5,
                                     "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 11,
-                                    "downloadsCount": 146.66666666666666,
-                                    "downloadsAcceleration": 0.8804223744292237,
+                                    "communityInterest": 23,
+                                    "downloadsCount": 14.333333333333334,
+                                    "downloadsAcceleration": -0.1753234398782344,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0.8791095890410959,
-                                    "commitsFrequency": 0.6961643835616438,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 1
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.614025390614008,
+                                "final": 0.6230904556647621,
                                 "detail": {
-                                    "quality": 0.8215113920267983,
-                                    "popularity": 0.05107906507283803,
-                                    "maintenance": 0.9991265720870719
+                                    "quality": 0.8623028816685698,
+                                    "popularity": 0.04131654845707145,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "gulp-sass-unicode",
-                        "_score": 0.0002447284,
+                        "_score": 0.057412464,
                         "_source": {
                             "package": {
                                 "name": "gulp-sass-unicode",
+                                "scope": "unscoped",
                                 "version": "1.0.1",
                                 "description": "Fix unicode usage in 'content'",
                                 "keywords": [
@@ -1010,184 +1353,123 @@
                                     "branding": 0
                                 },
                                 "popularity": {
-                                    "communityInterest": 4,
-                                    "downloadsCount": 381.3333333333333,
-                                    "downloadsAcceleration": 3.407191780821918,
-                                    "dependentsCount": 0
+                                    "communityInterest": 10,
+                                    "downloadsCount": 1761.6666666666667,
+                                    "downloadsAcceleration": 5.544520547945208,
+                                    "dependentsCount": 1
                                 },
                                 "maintenance": {
                                     "releasesFrequency": 0.9,
                                     "commitsFrequency": 0.9,
                                     "openIssues": 0.9,
-                                    "issuesDistribution": 0.9
-                                }
-                            },
-                            "score": {
-                                "final": 0.6113497299127807,
-                                "detail": {
-                                    "quality": 0.8126775712606147,
-                                    "popularity": 0.05040142972703457,
-                                    "maintenance": 0.9997313089432407
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-to-postcss-mixins",
-                        "_score": 0.0002321013,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-to-postcss-mixins",
-                                "version": "0.0.3",
-                                "description": "Converts sass syntax mixins(+func) to PostCSS compatible mixins.",
-                                "keywords": [
-                                    "gulpplugin",
-                                    "sass",
-                                    "postcss",
-                                    "mixins"
-                                ],
-                                "date": "2016-09-07T14:54:16.250Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-to-postcss-mixins",
-                                    "homepage": "https://github.com/akella/gulp-sass-to-postcss-mixins#readme",
-                                    "repository": "https://github.com/akella/gulp-sass-to-postcss-mixins",
-                                    "bugs": "https://github.com/akella/gulp-sass-to-postcss-mixins/issues"
-                                },
-                                "author": {
-                                    "name": "Yuri Artiukh",
-                                    "email": "akella.a@gmail.com",
-                                    "url": "http://riverco.de",
-                                    "username": "akella"
-                                },
-                                "publisher": {
-                                    "username": "akella",
-                                    "email": "akella.a@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "akella",
-                                        "email": "akella.a@gmail.com"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "unstable": true
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.355,
-                                    "tests": 0.85,
-                                    "health": 0.75,
-                                    "branding": 0.15
-                                },
-                                "popularity": {
-                                    "communityInterest": 13,
-                                    "downloadsCount": 57.666666666666664,
-                                    "downloadsAcceleration": 0.42829147640791476,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.858304794520548,
-                                    "commitsFrequency": 0.5760616438356164,
-                                    "openIssues": 1,
                                     "issuesDistribution": 1
                                 }
                             },
                             "score": {
-                                "final": 0.612072649494551,
+                                "final": 0.6222713703853021,
                                 "detail": {
-                                    "quality": 0.8215113920267983,
-                                    "popularity": 0.04738390653849123,
-                                    "maintenance": 0.997242470280113
+                                    "quality": 0.8143096250422663,
+                                    "popularity": 0.08005090727518029,
+                                    "maintenance": 0.9998876152180263
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "gulp-sass-bulk-import",
-                        "_score": 0.00022742224,
+                        "_id": "gulp-svg-sprite_l",
+                        "_score": 0.041254416,
                         "_source": {
                             "package": {
-                                "name": "gulp-sass-bulk-import",
-                                "version": "1.0.1",
-                                "description": "import directories in your SCSS",
+                                "name": "gulp-svg-sprite_l",
+                                "scope": "unscoped",
+                                "version": "1.3.6",
+                                "description": "SVG sprites & stacks galore — Gulp plugin wrapping around svg-sprite that reads in a bunch of SVG files, optimizes them and creates SVG sprites and CSS resources in various flavours",
                                 "keywords": [
                                     "gulpplugin",
-                                    "scss",
+                                    "icon",
+                                    "icons",
+                                    "svg",
+                                    "png",
+                                    "sprite",
+                                    "spritesheet",
+                                    "stack",
+                                    "generator",
+                                    "css",
                                     "sass",
-                                    "glob",
-                                    "import",
-                                    "directory",
-                                    "bulk",
-                                    "import",
-                                    "sass"
+                                    "less",
+                                    "stylus",
+                                    "stylesheet",
+                                    "inline",
+                                    "html",
+                                    "vector",
+                                    "rwd",
+                                    "retina",
+                                    "mustache"
                                 ],
-                                "date": "2016-02-29T22:53:18.535Z",
+                                "date": "2016-12-25T17:26:48.723Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-bulk-import",
-                                    "homepage": "https://github.com/mathisonian/gulp-sass-bulk-import",
-                                    "repository": "https://github.com/mathisonian/gulp-sass-bulk-import",
-                                    "bugs": "https://github.com/mathisonian/gulp-sass-bulk-import/issues"
+                                    "npm": "https://www.npmjs.com/package/gulp-svg-sprite_l",
+                                    "homepage": "https://github.com/jkphl/gulp-svg-sprite",
+                                    "repository": "https://github.com/jkphl/gulp-svg-sprite",
+                                    "bugs": "https://github.com/jkphl/gulp-svg-sprite/issues"
                                 },
                                 "author": {
-                                    "name": "Matthew Conlen"
+                                    "name": "Joschi Kuphal",
+                                    "email": "joschi@kuphal.net",
+                                    "url": "https://jkphl.is"
                                 },
                                 "publisher": {
-                                    "username": "mathisonian",
-                                    "email": "mc@mathisonian.com"
+                                    "username": "r10t",
+                                    "email": "xriotmanx@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "mathisonian",
-                                        "email": "mc@mathisonian.com"
+                                        "username": "r10t",
+                                        "email": "xriotmanx@gmail.com"
                                     }
                                 ]
                             },
-                            "flags": {
-                                "insecure": 3
-                            },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0.85,
-                                    "health": 0,
-                                    "branding": 0
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.708,
+                                    "health": 0.75,
+                                    "branding": 0.6
                                 },
                                 "popularity": {
-                                    "communityInterest": 54,
-                                    "downloadsCount": 2735,
-                                    "downloadsAcceleration": 18.357629375951294,
-                                    "dependentsCount": 3
+                                    "communityInterest": 638,
+                                    "downloadsCount": 8.333333333333334,
+                                    "downloadsAcceleration": 0.006659056316590556,
+                                    "dependentsCount": 0
                                 },
                                 "maintenance": {
                                     "releasesFrequency": 0.9,
                                     "commitsFrequency": 0.9,
-                                    "openIssues": 0.9,
+                                    "openIssues": 1,
                                     "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.5935805102428336,
+                                "final": 0.6728729079232937,
                                 "detail": {
-                                    "quality": 0.6407113373340565,
-                                    "popularity": 0.14703185974995,
-                                    "maintenance": 0.9997313089432407
+                                    "quality": 0.947227096427333,
+                                    "popularity": 0.11071702956215312,
+                                    "maintenance": 0.999868053280972
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "gulp-inline-image",
-                        "_score": 0.00019111036,
+                        "_score": 0.024140222,
                         "_source": {
                             "package": {
                                 "name": "gulp-inline-image",
+                                "scope": "unscoped",
                                 "version": "1.0.0",
                                 "description": "Gulp implementation of Compass's inline-image function",
                                 "keywords": [
@@ -1234,103 +1516,258 @@
                                 },
                                 "popularity": {
                                     "communityInterest": 10,
-                                    "downloadsCount": 605.6666666666666,
-                                    "downloadsAcceleration": 2.2513698630136982,
+                                    "downloadsCount": 798,
+                                    "downloadsAcceleration": -9.42800608828006,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 1,
+                                    "releasesFrequency": 0.9,
                                     "commitsFrequency": 0.9,
                                     "openIssues": 1,
                                     "issuesDistribution": 1
                                 }
                             },
                             "score": {
-                                "final": 0.6534567682498735,
+                                "final": 0.6475950963505855,
                                 "detail": {
-                                    "quality": 0.9402047936368194,
-                                    "popularity": 0.061147462522892576,
-                                    "maintenance": 0.9999820522166152
+                                    "quality": 0.9395635749617426,
+                                    "popularity": 0.045000968833227045,
+                                    "maintenance": 0.9999305279155237
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
-                        "_id": "gulp-sass-variables",
-                        "_score": 0.00018959562,
+                        "_id": "gulp-spcolor2scss",
+                        "_score": 0.023871204,
                         "_source": {
                             "package": {
-                                "name": "gulp-sass-variables",
-                                "version": "1.1.1",
-                                "description": "Define Sass variables in your gulp task",
+                                "name": "gulp-spcolor2scss",
+                                "scope": "unscoped",
+                                "version": "1.0.1",
+                                "description": "Convert SharePoint spcolor-files to Sass-partials",
                                 "keywords": [
                                     "gulpplugin",
-                                    "gulp-sass-variables",
-                                    "environment variabes",
-                                    "sass",
-                                    "scss"
+                                    "sharepoint",
+                                    "spcolor",
+                                    "sass"
                                 ],
-                                "date": "2016-09-27T06:56:18.284Z",
+                                "date": "2016-04-26T14:30:18.535Z",
                                 "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-variables",
-                                    "homepage": "https://github.com/osaton/gulp-sass-variables",
-                                    "repository": "https://github.com/osaton/gulp-sass-variables",
-                                    "bugs": "https://github.com/osaton/gulp-sass-variables/issues"
+                                    "npm": "https://www.npmjs.com/package/gulp-spcolor2scss",
+                                    "homepage": "https://github.com/artokai/gulp-spcolor2scss",
+                                    "repository": "https://github.com/artokai/gulp-spcolor2scss",
+                                    "bugs": "https://github.com/artokai/gulp-spcolor2scss/issues"
                                 },
                                 "author": {
-                                    "name": "osaton"
+                                    "name": "Arto Kaitosaari",
+                                    "email": "arto.kaitosaari@gmail.com",
+                                    "url": "http://artokai.net/",
+                                    "username": "artokai"
                                 },
                                 "publisher": {
-                                    "username": "osaton",
-                                    "email": "npm@sploosh.org"
+                                    "username": "artokai",
+                                    "email": "arto.kaitosaari@gmail.com"
                                 },
                                 "maintainers": [
                                     {
-                                        "username": "osaton",
-                                        "email": "npm@sploosh.org"
+                                        "username": "artokai",
+                                        "email": "arto.kaitosaari@gmail.com"
                                     }
                                 ]
                             },
                             "evaluation": {
                                 "quality": {
-                                    "carefulness": 0.7899999999999999,
+                                    "carefulness": 0.71,
                                     "tests": 0.6,
-                                    "health": 1,
-                                    "branding": 0
+                                    "health": 0.75,
+                                    "branding": 0.15
                                 },
                                 "popularity": {
-                                    "communityInterest": 2,
-                                    "downloadsCount": 53.333333333333336,
-                                    "downloadsAcceleration": 0.9530441400304414,
+                                    "communityInterest": 6,
+                                    "downloadsCount": 7.666666666666667,
+                                    "downloadsAcceleration": -0.0443683409436834,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 1,
+                                    "releasesFrequency": 0.9,
                                     "commitsFrequency": 0.9,
                                     "openIssues": 0.9,
                                     "issuesDistribution": 0.9
                                 }
                             },
                             "score": {
-                                "final": 0.6046924015672451,
+                                "final": 0.6216834522981067,
                                 "detail": {
-                                    "quality": 0.8126775712606147,
-                                    "popularity": 0.03129248679396704,
-                                    "maintenance": 0.9998193137462066
+                                    "quality": 0.8764604228044589,
+                                    "popularity": 0.025161503578722936,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-style-aliases",
+                        "_score": 0.022812296,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-style-aliases",
+                                "scope": "unscoped",
+                                "version": "1.1.11",
+                                "description": "Gulp plugin that lets you create custom aliases for CSS,less and SASS properties with an @alias rule",
+                                "keywords": [
+                                    "aliases",
+                                    "style",
+                                    "gulp",
+                                    "gulpplugin",
+                                    "css",
+                                    "less",
+                                    "sass",
+                                    "url",
+                                    "import"
+                                ],
+                                "date": "2017-06-03T05:37:43.160Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-style-aliases",
+                                    "homepage": "https://github.com/RobinCK/gulp-style-aliases#readme",
+                                    "repository": "https://github.com/RobinCK/gulp-style-aliases",
+                                    "bugs": "https://github.com/RobinCK/gulp-style-aliases/issues"
+                                },
+                                "author": {
+                                    "name": "Igor Ognichenko",
+                                    "email": "ognichenko.igor@gmail.com",
+                                    "username": "robinck"
+                                },
+                                "publisher": {
+                                    "username": "robinck",
+                                    "email": "ognichenko.igor@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "robinck",
+                                        "email": "ognichenko.igor@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.25,
+                                    "health": 1,
+                                    "branding": 0.3
+                                },
+                                "popularity": {
+                                    "communityInterest": 6,
+                                    "downloadsCount": 2133.3333333333335,
+                                    "downloadsAcceleration": 22.172678843226787,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6251051874860996,
+                                "detail": {
+                                    "quality": 0.8459096477372309,
+                                    "popularity": 0.06112426845918351,
+                                    "maintenance": 0.9998251405834746
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-happiness-scss",
+                        "_score": 0.018514328,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-happiness-scss",
+                                "scope": "unscoped",
+                                "version": "5.2.2",
+                                "description": "gulp plugin for happiness-scss",
+                                "keywords": [
+                                    "gulp",
+                                    "gulpplugin",
+                                    "code-style",
+                                    "happiness",
+                                    "happiness-scss",
+                                    "scss",
+                                    "sass",
+                                    "linter",
+                                    "scss-lint",
+                                    "sass-lint"
+                                ],
+                                "date": "2017-12-15T11:19:32.717Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-happiness-scss",
+                                    "homepage": "https://github.com/dutchenkoOleg/gulp-happiness-scss#readme",
+                                    "repository": "https://github.com/dutchenkoOleg/gulp-happiness-scss",
+                                    "bugs": "https://github.com/dutchenkoOleg/gulp-happiness-scss/issues"
+                                },
+                                "author": {
+                                    "name": "Oleg Dutchenko",
+                                    "email": "dutchenko.o.dev@gmail.com",
+                                    "username": "dutchenkooleg"
+                                },
+                                "publisher": {
+                                    "username": "801s",
+                                    "email": "dutchenko.o.dev@gmail.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "dutchenkooleg",
+                                        "email": "dutchenko.o.dev@gmail.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.8699999999999999,
+                                    "tests": 0.544,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 2,
+                                    "downloadsCount": 22,
+                                    "downloadsAcceleration": -0.7256088280060884,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.6262089461258449,
+                                "detail": {
+                                    "quality": 0.8998022280071994,
+                                    "popularity": 0.017978837009291038,
+                                    "maintenance": 0.9999305279155237
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "gulp-svg-sprite-plus",
-                        "_score": 0.00012372842,
+                        "_score": 0.01634093,
                         "_source": {
                             "package": {
                                 "name": "gulp-svg-sprite-plus",
+                                "scope": "unscoped",
                                 "version": "1.1.2",
                                 "description": "SVG sprites & stacks galore — Gulp plugin wrapping around svg-sprite that reads in a bunch of SVG files, optimizes them and creates SVG sprites and CSS resources in various flavours",
                                 "keywords": [
@@ -1382,8 +1819,8 @@
                                 },
                                 "popularity": {
                                     "communityInterest": 10,
-                                    "downloadsCount": 48.666666666666664,
-                                    "downloadsAcceleration": 0.12444824961948253,
+                                    "downloadsCount": 11,
+                                    "downloadsAcceleration": -0.3699581430745814,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
@@ -1394,459 +1831,24 @@
                                 }
                             },
                             "score": {
-                                "final": 0.6459586822817733,
+                                "final": 0.641881444784138,
                                 "detail": {
-                                    "quality": 0.9388286433542357,
-                                    "popularity": 0.04115466041533834,
-                                    "maintenance": 0.9997313089432407
+                                    "quality": 0.9371030816402757,
+                                    "popularity": 0.030890631679540436,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         }
                     },
                     {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-newer",
-                        "_score": 0.00012227053,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-newer",
-                                "version": "1.3.4-newer",
-                                "description": "Gulp plugin for sass with dependency on current version of node-sass",
-                                "keywords": [
-                                    "gulpplugin",
-                                    "sass",
-                                    "gulp"
-                                ],
-                                "date": "2015-05-04T12:55:21.869Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-newer",
-                                    "homepage": "https://github.com/altmind/gulp-sass",
-                                    "repository": "https://github.com/altmind/gulp-sass",
-                                    "bugs": "https://github.com/dlmanning/gulp-sass/issues"
-                                },
-                                "author": {
-                                    "name": "David Manning"
-                                },
-                                "publisher": {
-                                    "username": "altmind",
-                                    "email": "altmind@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "altmind",
-                                        "email": "altmind@gmail.com"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "insecure": 6
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.9999999999999999,
-                                    "tests": 0.6,
-                                    "health": 0,
-                                    "branding": 0.15
-                                },
-                                "popularity": {
-                                    "communityInterest": 23,
-                                    "downloadsCount": 78.66666666666667,
-                                    "downloadsAcceleration": 0.049010654490106664,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.9,
-                                    "commitsFrequency": 0.9,
-                                    "openIssues": 0.9,
-                                    "issuesDistribution": 0.9
-                                }
-                            },
-                            "score": {
-                                "final": 0.5850070346659731,
-                                "detail": {
-                                    "quality": 0.7227179081439715,
-                                    "popularity": 0.05224486883613567,
-                                    "maintenance": 0.9997313089432407
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-drinkbar",
-                        "_score": 0.00010895112,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-drinkbar",
-                                "version": "1.1.1",
-                                "description": "Simple task runner based on Gulp.",
-                                "keywords": [
-                                    "gulpplugin",
-                                    "gulp",
-                                    "jade",
-                                    "pug",
-                                    "stylus",
-                                    "sass",
-                                    "less",
-                                    "babel",
-                                    "coffeescript",
-                                    "typescript",
-                                    "json5",
-                                    "cson",
-                                    "yaml",
-                                    "browserify",
-                                    "webpack",
-                                    "rollup"
-                                ],
-                                "date": "2016-09-08T00:08:55.028Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-drinkbar",
-                                    "homepage": "https://github.com/jumilla/gulp-drinkbar",
-                                    "repository": "https://github.com/jumilla/gulp-drinkbar",
-                                    "bugs": "https://github.com/jumilla/gulp-drinkbar/issues"
-                                },
-                                "author": {
-                                    "name": "Fumio Furukawa"
-                                },
-                                "publisher": {
-                                    "username": "jumilla",
-                                    "email": "fumio@jumilla.me"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "jumilla",
-                                        "email": "fumio@jumilla.me"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.7899999999999999,
-                                    "tests": 0.6,
-                                    "health": 0.84,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 6,
-                                    "downloadsCount": 995,
-                                    "downloadsAcceleration": 12.244140030441399,
-                                    "dependentsCount": 3
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 1,
-                                    "commitsFrequency": 0.9,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 1
-                                }
-                            },
-                            "score": {
-                                "final": 0.6303474804882592,
-                                "detail": {
-                                    "quality": 0.8111306761355308,
-                                    "popularity": 0.10575588391938491,
-                                    "maintenance": 0.9999820522166152
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-lint-build",
-                        "_score": 0.000103393526,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-lint-build",
-                                "version": "1.1.0",
-                                "description": "Gulp plugin for Sass Lint",
-                                "keywords": [
-                                    "gulpplugin",
-                                    "sass",
-                                    "gulp",
-                                    "lint"
-                                ],
-                                "date": "2016-10-06T01:11:09.779Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-lint-build",
-                                    "homepage": "https://github.com/RafaPegorari/gulp-sass-lint#readme",
-                                    "repository": "https://github.com/RafaPegorari/gulp-sass-lint",
-                                    "bugs": "https://github.com/RafaPegorari/gulp-sass-lint/pulls"
-                                },
-                                "author": {
-                                    "name": "Rafael Pegorari"
-                                },
-                                "publisher": {
-                                    "username": "rafapegorari",
-                                    "email": "rafapegorari@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "rafapegorari",
-                                        "email": "rafapegorari@gmail.com"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.71,
-                                    "tests": 0.3,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 9,
-                                    "downloadsCount": 30.333333333333332,
-                                    "downloadsAcceleration": 0.7600646879756469,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 1,
-                                    "commitsFrequency": 0.783082191780822,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.5802040733134763,
-                                "detail": {
-                                    "quality": 0.7262990927949675,
-                                    "popularity": 0.042532436889940586,
-                                    "maintenance": 0.9926514073243053
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-globi",
-                        "_score": 0.000096231044,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-globi",
-                                "version": "0.1.0",
-                                "description": "Gulp plugin for gulp-sass to use glob imports in your sass/scss files",
-                                "keywords": [
-                                    "gulp",
-                                    "sass",
-                                    "glob",
-                                    "gulpplugin"
-                                ],
-                                "date": "2016-09-30T12:32:46.954Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-globi",
-                                    "homepage": "https://github.com/Nirazul/gulp-sass-globi#readme",
-                                    "repository": "https://github.com/Nirazul/gulp-sass-globi",
-                                    "bugs": "https://github.com/Nirazul/gulp-sass-globi/issues"
-                                },
-                                "author": {
-                                    "name": "Rouven Bühlmann",
-                                    "email": "rouven.buehlmann@dreipol.ch",
-                                    "username": "nirazul"
-                                },
-                                "publisher": {
-                                    "username": "nirazul",
-                                    "email": "rouven.buehlmann@dreipol.ch"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "nirazul",
-                                        "email": "rouven.buehlmann@dreipol.ch"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "unstable": true
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.45999999999999996,
-                                    "tests": 0.6,
-                                    "health": 1,
-                                    "branding": 0
-                                },
-                                "popularity": {
-                                    "communityInterest": 2,
-                                    "downloadsCount": 14,
-                                    "downloadsAcceleration": 0.3507990867579908,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 1,
-                                    "commitsFrequency": 0.7185787671232876,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.5804152815159784,
-                                "detail": {
-                                    "quality": 0.7481584550115437,
-                                    "popularity": 0.024719911979515834,
-                                    "maintenance": 0.9923307880562424
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-wt",
-                        "_score": 0.000042145435,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-wt",
-                                "version": "0.1.2",
-                                "description": "Use gulp with wellington",
-                                "keywords": [
-                                    "gulp",
-                                    "gulpplugin",
-                                    "wellington-bin",
-                                    "scss",
-                                    "sass",
-                                    "css",
-                                    "compile",
-                                    "preprocessor",
-                                    "style"
-                                ],
-                                "date": "2015-11-30T01:26:55.472Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-wt",
-                                    "homepage": "https://github.com/wellington/gulp-wt",
-                                    "repository": "https://github.com/wellington/gulp-wt",
-                                    "bugs": "https://github.com/wellington/gulp-wt/issues"
-                                },
-                                "author": {
-                                    "name": "Drew Wells"
-                                },
-                                "publisher": {
-                                    "username": "drewwells",
-                                    "email": "drew.wells00@gmail.com"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "andystalick",
-                                        "email": "andy@stalick.net"
-                                    },
-                                    {
-                                        "username": "drewwells",
-                                        "email": "drew.wells00@gmail.com"
-                                    }
-                                ]
-                            },
-                            "flags": {
-                                "unstable": true
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.45999999999999996,
-                                    "tests": 0.6,
-                                    "health": 0.75,
-                                    "branding": 0.44999999999999996
-                                },
-                                "popularity": {
-                                    "communityInterest": 21,
-                                    "downloadsCount": 48,
-                                    "downloadsAcceleration": -0.059227549467275487,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.8362157534246575,
-                                    "commitsFrequency": 0.1495890410958904,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.5886933682343578,
-                                "detail": {
-                                    "quality": 0.8390484873405631,
-                                    "popularity": 0.048208637035122674,
-                                    "maintenance": 0.9145879973425597
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
-                        "_type": "score",
-                        "_id": "gulp-sass-vars",
-                        "_score": 0.000032339416,
-                        "_source": {
-                            "package": {
-                                "name": "gulp-sass-vars",
-                                "version": "1.0.2",
-                                "description": "Inject variables in sass files",
-                                "keywords": [
-                                    "gulp",
-                                    "gulpplugin",
-                                    "sass",
-                                    "inject",
-                                    "variables"
-                                ],
-                                "date": "2016-08-29T15:57:40.704Z",
-                                "links": {
-                                    "npm": "https://www.npmjs.com/package/gulp-sass-vars",
-                                    "homepage": "https://github.com/giowe/gulp-sass-vars#readme",
-                                    "repository": "https://github.com/giowe/gulp-sass-vars",
-                                    "bugs": "https://github.com/giowe/gulp-sass-vars/issues"
-                                },
-                                "author": {
-                                    "name": "Giovanni Bruno",
-                                    "email": "giovanni.bruno@soluzionifutura.it",
-                                    "username": "giovanni.bruno"
-                                },
-                                "publisher": {
-                                    "username": "giovanni.bruno",
-                                    "email": "giovanni.bruno@soluzionifutura.it"
-                                },
-                                "maintainers": [
-                                    {
-                                        "username": "giovanni.bruno",
-                                        "email": "giovanni.bruno@soluzionifutura.it"
-                                    }
-                                ]
-                            },
-                            "evaluation": {
-                                "quality": {
-                                    "carefulness": 0.84,
-                                    "tests": 0,
-                                    "health": 0.75,
-                                    "branding": 0.44999999999999996
-                                },
-                                "popularity": {
-                                    "communityInterest": 3,
-                                    "downloadsCount": 65.66666666666667,
-                                    "downloadsAcceleration": 0.453748097412481,
-                                    "dependentsCount": 0
-                                },
-                                "maintenance": {
-                                    "releasesFrequency": 0.858304794520548,
-                                    "commitsFrequency": 0.3840410958904109,
-                                    "openIssues": 0.7,
-                                    "issuesDistribution": 0.7
-                                }
-                            },
-                            "score": {
-                                "final": 0.5409135588293968,
-                                "detail": {
-                                    "quality": 0.6211715920185934,
-                                    "popularity": 0.03327733391617766,
-                                    "maintenance": 0.9797571838661618
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "gulp-styleguidejs",
-                        "_score": 0.000027498036,
+                        "_score": 0.011004324,
                         "_source": {
                             "package": {
                                 "name": "gulp-styleguidejs",
+                                "scope": "unscoped",
                                 "version": "1.1.0",
                                 "description": "A gulp plugin for styleguide.js",
                                 "keywords": [
@@ -1862,9 +1864,9 @@
                                 "date": "2016-06-13T22:53:30.215Z",
                                 "links": {
                                     "npm": "https://www.npmjs.com/package/gulp-styleguidejs",
+                                    "homepage": "https://github.com/aptkf/gulp-styleguidejs#readme",
                                     "repository": "https://github.com/aptkf/gulp-styleguidejs",
-                                    "bugs": "https://github.com/aptkf/gulp-styleguidejs/issues",
-                                    "homepage": "https://github.com/aptkf/gulp-styleguidejs#readme"
+                                    "bugs": "https://github.com/aptkf/gulp-styleguidejs/issues"
                                 },
                                 "author": {
                                     "name": "Aaron Petcoff",
@@ -1882,20 +1884,17 @@
                                     }
                                 ]
                             },
-                            "flags": {
-                                "insecure": 7
-                            },
                             "evaluation": {
                                 "quality": {
                                     "carefulness": 0.84,
                                     "tests": 0.6,
-                                    "health": 0.25,
+                                    "health": 0.75,
                                     "branding": 0
                                 },
                                 "popularity": {
-                                    "communityInterest": 5,
-                                    "downloadsCount": 308,
-                                    "downloadsAcceleration": 0.6942161339421613,
+                                    "communityInterest": 8,
+                                    "downloadsCount": 127.33333333333333,
+                                    "downloadsAcceleration": -0.8586948249619486,
                                     "dependentsCount": 0
                                 },
                                 "maintenance": {
@@ -1906,11 +1905,85 @@
                                 }
                             },
                             "score": {
-                                "final": 0.5737015303035434,
+                                "final": 0.6052014057805405,
                                 "detail": {
-                                    "quality": 0.692393070401408,
-                                    "popularity": 0.04587111131358654,
-                                    "maintenance": 0.9997963434953308
+                                    "quality": 0.8104966675393328,
+                                    "popularity": 0.034567391058287045,
+                                    "maintenance": 0.999868053280972
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "gulp-css-spriter-dookay",
+                        "_score": 0.010954847,
+                        "_source": {
+                            "package": {
+                                "name": "gulp-css-spriter-dookay",
+                                "scope": "unscoped",
+                                "version": "1.0.3",
+                                "description": "Sprite Sheet Generation from CSS source files. The best and different approach to sprite sheets.",
+                                "keywords": [
+                                    "css",
+                                    "gulp",
+                                    "gulpplugin",
+                                    "gulpfriendly",
+                                    "sprite",
+                                    "spritesheet",
+                                    "sass",
+                                    "less"
+                                ],
+                                "date": "2017-11-17T10:08:32.725Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/gulp-css-spriter-dookay",
+                                    "homepage": "https://github.com/xiaopig123456/gulp-css-spriter-dookay#readme",
+                                    "repository": "https://github.com/xiaopig123456/gulp-css-spriter-dookay",
+                                    "bugs": "https://github.com/MadLittleMods/gulp-css-spriter/issues"
+                                },
+                                "author": {
+                                    "name": "Eric Eastwood",
+                                    "email": "contact@ericeastwood.com",
+                                    "url": "http://ericeastwood.com/"
+                                },
+                                "publisher": {
+                                    "username": "xiaopig123456",
+                                    "email": "xiaopig123456@qq.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "xiaopig123456",
+                                        "email": "xiaopig123456@qq.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.7899999999999999,
+                                    "tests": 0.6,
+                                    "health": 0.5,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 3,
+                                    "downloadsCount": 13,
+                                    "downloadsAcceleration": -0.38135464231354643,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.9,
+                                    "commitsFrequency": 0.9,
+                                    "openIssues": 0.9,
+                                    "issuesDistribution": 0.9
+                                }
+                            },
+                            "score": {
+                                "final": 0.6074874747762983,
+                                "detail": {
+                                    "quality": 0.8351136751741373,
+                                    "popularity": 0.02004163719954563,
+                                    "maintenance": 0.9998251405834746
                                 }
                             }
                         }
@@ -1919,10 +1992,10 @@
             }
         },
         "rawHeaders": [
-            "Content-Type",
+            "content-type",
             "application/json; charset=UTF-8",
-            "Content-Length",
-            "32923"
+            "content-length",
+            "34080"
         ]
     }
 ]

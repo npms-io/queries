@@ -4,243 +4,1210 @@
         "method": "POST",
         "path": "/npms-current/score/_search",
         "body": {
-          "size": 25,
-          "from": 0,
-          "query": {
-            "function_score": {
-              "boost_mode": "replace",
-              "query": {
-                "bool": {
-                  "must": [
-                    {
-                      "term": {
-                        "package.scope": "bcoe"
-                      }
+            "size": 25,
+            "from": 0,
+            "query": {
+                "function_score": {
+                    "boost_mode": "replace",
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "term": {
+                                        "package.scope": "bcoe"
+                                    }
+                                }
+                            ],
+                            "must_not": [],
+                            "should": [],
+                            "minimum_should_match": 0
+                        }
+                    },
+                    "script_score": {
+                        "script": {
+                            "source": "doc[\"package.name.raw\"].value.equals(params.text) ? 100000 + (doc[\"score.detail.popularity\"].value * params.popularityWeight + doc[\"score.detail.quality\"].value * params.qualityWeight + doc[\"score.detail.maintenance\"].value * params.maintenanceWeight) : _score * Math.pow((doc[\"score.detail.popularity\"].value * params.popularityWeight + doc[\"score.detail.quality\"].value * params.qualityWeight + doc[\"score.detail.maintenance\"].value * params.maintenanceWeight), params.scoreEffect)",
+                            "params": {
+                                "text": "",
+                                "scoreEffect": 13.5,
+                                "qualityWeight": 0.26027397260273977,
+                                "popularityWeight": 0.452054794520548,
+                                "maintenanceWeight": 0.28767123287671237
+                            }
+                        }
                     }
-                  ],
-                  "must_not": [],
-                  "should": [],
-                  "minimum_should_match": 1
                 }
-              },
-              "script_score": {
-                "lang": "groovy",
-                "script": "doc[\"package.name.raw\"].value.equals(text) ? 100000 + (doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight) : _score * pow((doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight), scoreEffect)",
-                "params": {
-                  "text": "",
-                  "scoreEffect": 15.3,
-                  "qualityWeight": 0.26027397260273977,
-                  "popularityWeight": 0.452054794520548,
-                  "maintenanceWeight": 0.28767123287671237
-                }
-              }
             }
-          }
         },
         "status": 200,
         "response": {
-          "took": 1,
-          "timed_out": false,
-          "_shards": {
-            "total": 1,
-            "successful": 1,
-            "failed": 0
-          },
-          "hits": {
-            "total": 3,
-            "max_score": 5.382989e-14,
-            "hits": [
-              {
-                "_index": "npms-1490562065235",
-                "_type": "score",
-                "_id": "@bcoe/scoped-search-3",
-                "_score": 5.382989e-14,
-                "_source": {
-                  "package": {
-                    "name": "@bcoe/scoped-search-3",
-                    "version": "1.0.1",
-                    "description": "testing a scoped package search (abc123)",
-                    "date": "2017-03-26T21:08:11.992Z",
-                    "links": {
-                      "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-3"
+            "took": 1,
+            "timed_out": false,
+            "_shards": {
+                "total": 1,
+                "successful": 1,
+                "skipped": 0,
+                "failed": 0
+            },
+            "hits": {
+                "total": 17,
+                "max_score": 0.00026368533,
+                "hits": [
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/awesomeify",
+                        "_score": 0.00026368533,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/awesomeify",
+                                "scope": "bcoe",
+                                "version": "29.0.0",
+                                "description": "testing publishes",
+                                "keywords": [
+                                    "argument",
+                                    "args",
+                                    "option",
+                                    "parser",
+                                    "parsing",
+                                    "cli",
+                                    "command"
+                                ],
+                                "date": "2015-05-20T17:54:02.232Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fawesomeify",
+                                    "homepage": "https://github.com/bcoe/yargs#readme",
+                                    "repository": "https://github.com/bcoe/yargs",
+                                    "bugs": "https://github.com/bcoe/yargs/issues"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    },
+                                    {
+                                        "username": "rockbot",
+                                        "email": "raquel@rckbt.me"
+                                    },
+                                    {
+                                        "username": "seldo",
+                                        "email": "laurie@npmjs.com"
+                                    },
+                                    {
+                                        "username": "ceejbot",
+                                        "email": "ceejceej@gmail.com"
+                                    },
+                                    {
+                                        "username": "isaacs",
+                                        "email": "i@izs.me"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.685,
+                                    "health": 0.6666666666666667,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 5920,
+                                    "downloadsCount": 74,
+                                    "downloadsAcceleration": -0.36740867579908665,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0.9546575342465754,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.2226871077408546
+                                }
+                            },
+                            "score": {
+                                "final": 0.500586463600304,
+                                "detail": {
+                                    "quality": 0.8302351528796899,
+                                    "popularity": 0.19895039506434245,
+                                    "maintenance": 0.5196665127539349
+                                }
+                            }
+                        }
                     },
-                    "author": {
-                      "name": "Ben Coe",
-                      "email": "ben@npmjs.com",
-                      "username": "bcoe"
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/test-dep-5",
+                        "_score": 0.00022934876,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/test-dep-5",
+                                "scope": "bcoe",
+                                "version": "1.0.42",
+                                "description": "A private module for testing.",
+                                "keywords": [
+                                    "argument",
+                                    "args",
+                                    "option",
+                                    "parser",
+                                    "parsing",
+                                    "cli",
+                                    "command"
+                                ],
+                                "date": "2017-06-15T06:00:22.257Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Ftest-dep-5",
+                                    "homepage": "https://github.com/yargs/yargs#readme",
+                                    "repository": "https://github.com/yargs/yargs",
+                                    "bugs": "https://github.com/yargs/yargs/issues"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9999999999999999,
+                                    "tests": 0.7000000000000001,
+                                    "health": 0.6666666666666667,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 5962,
+                                    "downloadsCount": 34.666666666666664,
+                                    "downloadsAcceleration": -0.19899162861491626,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0.9446575342465754,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0.20216308914018427
+                                }
+                            },
+                            "score": {
+                                "final": 0.495185033433555,
+                                "detail": {
+                                    "quality": 0.8324950621580586,
+                                    "popularity": 0.1972797055123642,
+                                    "maintenance": 0.5039674795908857
+                                }
+                            }
+                        }
                     },
-                    "publisher": {
-                      "username": "bcoe",
-                      "email": "ben@npmjs.com"
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/npme-auth-atlassian-stash",
+                        "_score": 0.0000065218132,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/npme-auth-atlassian-stash",
+                                "scope": "bcoe",
+                                "version": "0.4.0",
+                                "description": "Atlassian Stash authentication and authorization strategy for npm Enterprise.",
+                                "keywords": [
+                                    "npme",
+                                    "auth",
+                                    "stash"
+                                ],
+                                "date": "2017-01-13T18:35:40.711Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fnpme-auth-atlassian-stash",
+                                    "homepage": "https://github.com/eskypl/npme-auth-atlassian-stash#readme",
+                                    "repository": "https://github.com/eskypl/npme-auth-atlassian-stash",
+                                    "bugs": "https://github.com/eskypl/npme-auth-atlassian-stash/issues"
+                                },
+                                "author": {
+                                    "name": "Krzysztof Winiarski",
+                                    "email": "krzysztof.winiarski@esky.com"
+                                },
+                                "publisher": {
+                                    "username": "nexdrew",
+                                    "email": "andrew@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "nexdrew",
+                                        "email": "andrewbgoode@gmail.com"
+                                    },
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "flags": {
+                                "unstable": true
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.43499999999999994,
+                                    "tests": 0.6,
+                                    "health": 0.75,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 7,
+                                    "downloadsCount": 40.666666666666664,
+                                    "downloadsAcceleration": -0.18321917808219174,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 1
+                                }
+                            },
+                            "score": {
+                                "final": 0.403273563224441,
+                                "detail": {
+                                    "quality": 0.7259404480949245,
+                                    "popularity": 0.02997551084561055,
+                                    "maintenance": 0.5
+                                }
+                            }
+                        }
                     },
-                    "maintainers": [
-                      {
-                        "username": "bcoe",
-                        "email": "ben@npmjs.com"
-                      }
-                    ],
-                    "scope": "bcoe"
-                  },
-                  "evaluation": {
-                    "quality": {
-                      "carefulness": 0.41550000000000004,
-                      "tests": 0,
-                      "health": 1,
-                      "branding": 0
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/dotignore",
+                        "_score": 0.0000026121695,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/dotignore",
+                                "scope": "bcoe",
+                                "version": "0.1.2",
+                                "description": "ignorefile/includefile matching .gitignore spec",
+                                "keywords": [
+                                    "ignore",
+                                    "gitignore",
+                                    "npmignore",
+                                    "glob",
+                                    "pattern"
+                                ],
+                                "date": "2018-01-02T05:33:00.431Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fdotignore",
+                                    "homepage": "https://github.com/bmeck/dotignore#readme",
+                                    "repository": "https://github.com/bmeck/dotignore",
+                                    "bugs": "https://github.com/bmeck/dotignore/issues"
+                                },
+                                "author": {
+                                    "name": "bradleymeck"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "flags": {
+                                "unstable": true
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.45999999999999996,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 15,
+                                    "downloadsCount": 17,
+                                    "downloadsAcceleration": -0.1409436834094368,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.24657534246575347,
+                                    "commitsFrequency": 0.023013698630136987,
+                                    "openIssues": 0.5925925925925926,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.3740738361588498,
+                                "detail": {
+                                    "quality": 0.7456132285518662,
+                                    "popularity": 0.03627382128802631,
+                                    "maintenance": 0.39341151469280217
+                                }
+                            }
+                        }
                     },
-                    "popularity": {
-                      "communityInterest": 0,
-                      "downloadsCount": 0,
-                      "downloadsAcceleration": 0,
-                      "dependentsCount": 0
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/express-oauth-server",
+                        "_score": 0.000001827527,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/express-oauth-server",
+                                "scope": "bcoe",
+                                "version": "1.0.0",
+                                "description": "OAuth provider for express",
+                                "keywords": [
+                                    "express",
+                                    "oauth",
+                                    "oauth2"
+                                ],
+                                "date": "2016-03-29T02:00:30.766Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fexpress-oauth-server",
+                                    "homepage": "https://github.com/seegno/express-oauth-server#readme",
+                                    "repository": "https://github.com/seegno/express-oauth-server",
+                                    "bugs": "https://github.com/seegno/express-oauth-server/issues"
+                                },
+                                "author": {
+                                    "name": "Nuno Sousa",
+                                    "email": "nfs@seegno.com"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.51,
+                                    "tests": 0.6,
+                                    "health": 1,
+                                    "branding": 0.15
+                                },
+                                "popularity": {
+                                    "communityInterest": 494,
+                                    "downloadsCount": 26,
+                                    "downloadsAcceleration": 0.13772831050228312,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0.679324894514768,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.34823610490971985,
+                                "detail": {
+                                    "quality": 0.8457542824354555,
+                                    "popularity": 0.10570564717525681,
+                                    "maintenance": 0.16432241047926674
+                                }
+                            }
+                        }
                     },
-                    "maintenance": {
-                      "releasesFrequency": 0,
-                      "commitsFrequency": 0,
-                      "openIssues": 0,
-                      "issuesDistribution": 0
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/test-dependents-change-5",
+                        "_score": 6.0943313e-7,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/test-dependents-change-5",
+                                "scope": "bcoe",
+                                "version": "5.0.45",
+                                "description": "testing dependents count changing",
+                                "keywords": [
+                                    "test"
+                                ],
+                                "date": "2017-06-12T22:41:50.094Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Ftest-dependents-change-5",
+                                    "homepage": "https://github.com/yargs/yarsay#readme",
+                                    "repository": "https://github.com/yargs/yarsay",
+                                    "bugs": "https://github.com/yargs/yarsay/issues"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.5800000000000001,
+                                    "health": 0.5,
+                                    "branding": 0.44999999999999996
+                                },
+                                "popularity": {
+                                    "communityInterest": 19,
+                                    "downloadsCount": 24,
+                                    "downloadsAcceleration": -0.12439117199391175,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.3311562312306847,
+                                "detail": {
+                                    "quality": 0.8628825558195466,
+                                    "popularity": 0.039880374718535255,
+                                    "maintenance": 0.16666666666666666
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/test-dependents-50",
+                        "_score": 6.036657e-7,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/test-dependents-50",
+                                "scope": "bcoe",
+                                "version": "1.0.4",
+                                "description": "testing dependents count changing",
+                                "keywords": [
+                                    "test"
+                                ],
+                                "date": "2017-07-28T18:48:04.752Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Ftest-dependents-50",
+                                    "homepage": "https://github.com/yargs/yarsay#readme",
+                                    "repository": "https://github.com/yargs/yarsay",
+                                    "bugs": "https://github.com/yargs/yarsay/issues"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.9199999999999999,
+                                    "tests": 0.5800000000000001,
+                                    "health": 0.5,
+                                    "branding": 0.44999999999999996
+                                },
+                                "popularity": {
+                                    "communityInterest": 19,
+                                    "downloadsCount": 19.333333333333332,
+                                    "downloadsAcceleration": -0.008618721461187223,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 1,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.3309978356164194,
+                                "detail": {
+                                    "quality": 0.8628825558195466,
+                                    "popularity": 0.03942781582063443,
+                                    "maintenance": 0.16666666666666666
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/scoped-search-1",
+                        "_score": 1.7771693e-12,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/scoped-search-1",
+                                "scope": "bcoe",
+                                "version": "1.0.0",
+                                "description": "testing a private package being published by an org",
+                                "date": "2017-03-26T21:05:26.130Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-1"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.41550000000000004,
+                                    "tests": 0,
+                                    "health": 0.75,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 19.333333333333332,
+                                    "downloadsAcceleration": 0.11569634703196346,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.12954432172099972,
+                                "detail": {
+                                    "quality": 0.4267296507058762,
+                                    "popularity": 0.004358361454962514,
+                                    "maintenance": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/scoped-search-3",
+                        "_score": 1.7768542e-12,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/scoped-search-3",
+                                "scope": "bcoe",
+                                "version": "1.0.1",
+                                "description": "testing a scoped package search (abc123)",
+                                "date": "2017-03-26T21:08:11.992Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-3"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.41550000000000004,
+                                    "tests": 0,
+                                    "health": 0.75,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 20.666666666666668,
+                                    "downloadsAcceleration": 0.07882420091324202,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.12954317215086644,
+                                "detail": {
+                                    "quality": 0.4267296507058762,
+                                    "popularity": 0.004355076968867418,
+                                    "maintenance": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/scoped-search-2",
+                        "_score": 1.7642912e-12,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/scoped-search-2",
+                                "scope": "bcoe",
+                                "version": "1.0.0",
+                                "description": "testing a private package being published by an org",
+                                "date": "2017-03-26T21:05:50.344Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-2"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.41550000000000004,
+                                    "tests": 0,
+                                    "health": 0.75,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 18.666666666666668,
+                                    "downloadsAcceleration": 0.09899162861491625,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.1294971862003639,
+                                "detail": {
+                                    "quality": 0.4267296507058762,
+                                    "popularity": 0.004223688538860161,
+                                    "maintenance": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/spawn-wrap",
+                        "_score": 1.3764155e-12,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/spawn-wrap",
+                                "scope": "bcoe",
+                                "version": "1.4.0",
+                                "description": "Wrap all spawned Node.js child processes by adding environs and arguments ahead of the main JavaScript file argument.",
+                                "date": "2017-10-28T17:21:20.223Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fspawn-wrap",
+                                    "homepage": "https://github.com/isaacs/spawn-wrap#readme",
+                                    "repository": "https://github.com/isaacs/spawn-wrap",
+                                    "bugs": "https://github.com/isaacs/spawn-wrap/issues"
+                                },
+                                "author": {
+                                    "name": "Isaac Z. Schlueter",
+                                    "email": "i@izs.me",
+                                    "url": "http://blog.izs.me/"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.41000000000000003,
+                                    "tests": 0,
+                                    "health": 0,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 14,
+                                    "downloadsAcceleration": 0.06343226788432267,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.1849315068493151,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.1303272805573899,
+                                "detail": {
+                                    "quality": 0.2350003329979951,
+                                    "popularity": 0.003527194700684161,
+                                    "maintenance": 0.16740760717929118
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/lerna",
+                        "_score": 1.31869215e-14,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/lerna",
+                                "scope": "bcoe",
+                                "version": "2.0.0-alpha.0",
+                                "description": "Tool for managing JavaScript projects with multiple packages",
+                                "date": "2017-03-14T22:44:51.193Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Flerna",
+                                    "homepage": "https://lernajs.io/",
+                                    "repository": "https://github.com/lerna/lerna",
+                                    "bugs": "https://github.com/lerna/lerna/issues"
+                                },
+                                "author": {
+                                    "name": "Sebastian McKenzie",
+                                    "email": "sebmck@gmail.com"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.33,
+                                    "tests": 0,
+                                    "health": 0,
+                                    "branding": 0.4
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 18,
+                                    "downloadsAcceleration": 0.04419710806697108,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.08993319749411428,
+                                "detail": {
+                                    "quality": 0.29517922122821905,
+                                    "popularity": 0.003941231787567354,
+                                    "maintenance": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/test-typescript-jsx",
+                        "_score": 2.6352785e-15,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/test-typescript-jsx",
+                                "scope": "bcoe",
+                                "version": "1.0.6",
+                                "description": "testing typescript and JSX highlighting",
+                                "date": "2017-08-21T18:41:55.541Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Ftest-typescript-jsx",
+                                    "homepage": "https://github.com/bcoe-test/testing-publishes#readme",
+                                    "repository": "https://github.com/bcoe-test/testing-publishes",
+                                    "bugs": "https://github.com/bcoe-test/testing-publishes/issues"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.33,
+                                    "tests": 0,
+                                    "health": 0,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 20,
+                                    "downloadsAcceleration": -0.055098934550989354,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0.06164383561643837,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.08079630486284821,
+                                "detail": {
+                                    "quality": 0.1976412086076759,
+                                    "popularity": 0.0039854412422145645,
+                                    "maintenance": 0.05745439384505812
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/next",
+                        "_score": 6.2405475e-16,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/next",
+                                "scope": "bcoe",
+                                "version": "1.3.0-candidate",
+                                "description": "Minimalistic framework for server-rendered React applications",
+                                "date": "2016-12-20T16:27:17.610Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fnext",
+                                    "homepage": "https://github.com/zeit/next.js#readme",
+                                    "repository": "https://github.com/zeit/next.js",
+                                    "bugs": "https://github.com/zeit/next.js/issues"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.41000000000000003,
+                                    "tests": 0,
+                                    "health": 0,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 14.666666666666666,
+                                    "downloadsAcceleration": 0.011719939117199402,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.07169602852617724,
+                                "detail": {
+                                    "quality": 0.2350003329979951,
+                                    "popularity": 0.003416938933653469,
+                                    "maintenance": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/npme-auth-oauth2-restricted",
+                        "_score": 7.381727e-17,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/npme-auth-oauth2-restricted",
+                                "scope": "bcoe",
+                                "version": "1.4.0",
+                                "description": "auth strategy for OAuth 2.0 SSO.",
+                                "keywords": [
+                                    "sso",
+                                    "npme",
+                                    "npm",
+                                    "auth",
+                                    "strategy"
+                                ],
+                                "date": "2017-10-11T20:16:02.019Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Fnpme-auth-oauth2-restricted",
+                                    "homepage": "https://github.com/npm/npme-auth-oauth2#readme",
+                                    "repository": "https://github.com/npm/npme-auth-oauth2",
+                                    "bugs": "https://github.com/npm/npme-auth-oauth2/issues"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.33,
+                                    "tests": 0,
+                                    "health": 0,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 24.666666666666668,
+                                    "downloadsAcceleration": 0.054927701674277046,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.0609157746839593,
+                                "detail": {
+                                    "quality": 0.1976412086076759,
+                                    "popularity": 0.004638320290447252,
+                                    "maintenance": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/test-alternate-main",
+                        "_score": 6.1862416e-17,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/test-alternate-main",
+                                "scope": "bcoe",
+                                "version": "1.0.2",
+                                "description": "teting a scoped package search (abc123)",
+                                "date": "2017-08-16T18:15:39.125Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Ftest-alternate-main",
+                                    "homepage": "https://github.com/bcoe-test/testing-publishes#readme",
+                                    "repository": "https://github.com/bcoe-test/testing-publishes",
+                                    "bugs": "https://github.com/bcoe-test/testing-publishes/issues"
+                                },
+                                "author": {
+                                    "name": "Ben Coe",
+                                    "email": "ben@npmjs.com",
+                                    "username": "bcoe"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.33,
+                                    "tests": 0,
+                                    "health": 0,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 12.666666666666666,
+                                    "downloadsAcceleration": -0.03179223744292235,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.06037682210930751,
+                                "detail": {
+                                    "quality": 0.1976412086076759,
+                                    "popularity": 0.0030984557914421414,
+                                    "maintenance": 0
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "_index": "npms-1540901531616",
+                        "_type": "score",
+                        "_id": "@bcoe/inquirer",
+                        "_score": 2.7498045e-19,
+                        "_source": {
+                            "package": {
+                                "name": "@bcoe/inquirer",
+                                "scope": "bcoe",
+                                "version": "0.11.3-f1",
+                                "description": "A collection of common interactive command line user interfaces.",
+                                "keywords": [
+                                    "command",
+                                    "prompt",
+                                    "stdin",
+                                    "cli",
+                                    "tty",
+                                    "menu"
+                                ],
+                                "date": "2016-01-25T23:23:42.233Z",
+                                "links": {
+                                    "npm": "https://www.npmjs.com/package/%40bcoe%2Finquirer",
+                                    "homepage": "https://github.com/sboudrias/Inquirer.js#readme",
+                                    "repository": "https://github.com/sboudrias/Inquirer.js",
+                                    "bugs": "https://github.com/sboudrias/Inquirer.js/issues"
+                                },
+                                "author": {
+                                    "name": "Simon Boudrias",
+                                    "email": "admin@simonboudrias.com"
+                                },
+                                "publisher": {
+                                    "username": "bcoe",
+                                    "email": "ben@npmjs.com"
+                                },
+                                "maintainers": [
+                                    {
+                                        "username": "bcoe",
+                                        "email": "ben@npmjs.com"
+                                    }
+                                ]
+                            },
+                            "flags": {
+                                "unstable": true
+                            },
+                            "evaluation": {
+                                "quality": {
+                                    "carefulness": 0.20500000000000002,
+                                    "tests": 0,
+                                    "health": 0,
+                                    "branding": 0
+                                },
+                                "popularity": {
+                                    "communityInterest": 0,
+                                    "downloadsCount": 32,
+                                    "downloadsAcceleration": 0.0006278538812785339,
+                                    "dependentsCount": 0
+                                },
+                                "maintenance": {
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0,
+                                    "issuesDistribution": 0
+                                }
+                            },
+                            "score": {
+                                "final": 0.03992156427548803,
+                                "detail": {
+                                    "quality": 0.1272250901296374,
+                                    "popularity": 0.005011534961705168,
+                                    "maintenance": 0
+                                }
+                            }
+                        }
                     }
-                  },
-                  "score": {
-                    "final": 0.13258731824560602,
-                    "detail": {
-                      "quality": 0.44195772748535345,
-                      "popularity": 0,
-                      "maintenance": 0
-                    }
-                  }
-                }
-              },
-              {
-                "_index": "npms-1490562065235",
-                "_type": "score",
-                "_id": "@bcoe/scoped-search-2",
-                "_score": 5.382989e-14,
-                "_source": {
-                  "package": {
-                    "name": "@bcoe/scoped-search-2",
-                    "version": "1.0.0",
-                    "description": "testing a private package being published by an org",
-                    "date": "2017-03-26T21:05:50.344Z",
-                    "links": {
-                      "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-2"
-                    },
-                    "author": {
-                      "name": "Ben Coe",
-                      "email": "ben@npmjs.com",
-                      "username": "bcoe"
-                    },
-                    "publisher": {
-                      "username": "bcoe",
-                      "email": "ben@npmjs.com"
-                    },
-                    "maintainers": [
-                      {
-                        "username": "bcoe",
-                        "email": "ben@npmjs.com"
-                      }
-                    ],
-                    "scope": "bcoe"
-                  },
-                  "evaluation": {
-                    "quality": {
-                      "carefulness": 0.41550000000000004,
-                      "tests": 0,
-                      "health": 1,
-                      "branding": 0
-                    },
-                    "popularity": {
-                      "communityInterest": 0,
-                      "downloadsCount": 0,
-                      "downloadsAcceleration": 0,
-                      "dependentsCount": 0
-                    },
-                    "maintenance": {
-                      "releasesFrequency": 0,
-                      "commitsFrequency": 0,
-                      "openIssues": 0,
-                      "issuesDistribution": 0
-                    }
-                  },
-                  "score": {
-                    "final": 0.13258731824560602,
-                    "detail": {
-                      "quality": 0.44195772748535345,
-                      "popularity": 0,
-                      "maintenance": 0
-                    }
-                  }
-                }
-              },
-              {
-                "_index": "npms-1490562065235",
-                "_type": "score",
-                "_id": "@bcoe/scoped-search-1",
-                "_score": 5.382989e-14,
-                "_source": {
-                  "package": {
-                    "name": "@bcoe/scoped-search-1",
-                    "version": "1.0.0",
-                    "description": "testing a private package being published by an org",
-                    "date": "2017-03-26T21:05:26.130Z",
-                    "links": {
-                      "npm": "https://www.npmjs.com/package/%40bcoe%2Fscoped-search-1"
-                    },
-                    "author": {
-                      "name": "Ben Coe",
-                      "email": "ben@npmjs.com",
-                      "username": "bcoe"
-                    },
-                    "publisher": {
-                      "username": "bcoe",
-                      "email": "ben@npmjs.com"
-                    },
-                    "maintainers": [
-                      {
-                        "username": "bcoe",
-                        "email": "ben@npmjs.com"
-                      }
-                    ],
-                    "scope": "bcoe"
-                  },
-                  "evaluation": {
-                    "quality": {
-                      "carefulness": 0.41550000000000004,
-                      "tests": 0,
-                      "health": 1,
-                      "branding": 0
-                    },
-                    "popularity": {
-                      "communityInterest": 0,
-                      "downloadsCount": 0,
-                      "downloadsAcceleration": 0,
-                      "dependentsCount": 0
-                    },
-                    "maintenance": {
-                      "releasesFrequency": 0,
-                      "commitsFrequency": 0,
-                      "openIssues": 0,
-                      "issuesDistribution": 0
-                    }
-                  },
-                  "score": {
-                    "final": 0.13258731824560602,
-                    "detail": {
-                      "quality": 0.44195772748535345,
-                      "popularity": 0,
-                      "maintenance": 0
-                    }
-                  }
-                }
-              }
-            ]
-          }
+                ]
+            }
         },
         "rawHeaders": [
-          "Content-Type",
-          "application/json; charset=UTF-8",
-          "Content-Length",
-          "2980"
+            "content-type",
+            "application/json; charset=UTF-8",
+            "content-length",
+            "20401"
         ]
     }
 ]

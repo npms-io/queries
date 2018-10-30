@@ -13,18 +13,20 @@
                         "bool": {
                             "must": [
                                 {
-                                    "or": [
-                                        {
-                                            "term": {
-                                                "package.maintainers.username": "satazor"
+                                    "bool": {
+                                        "should": [
+                                            {
+                                                "term": {
+                                                    "package.maintainers.username": "satazor"
+                                                }
+                                            },
+                                            {
+                                                "term": {
+                                                    "package.maintainers.email": "satazor"
+                                                }
                                             }
-                                        },
-                                        {
-                                            "term": {
-                                                "package.maintainers.email": "satazor"
-                                            }
-                                        }
-                                    ]
+                                        ]
+                                    }
                                 },
                                 {
                                     "terms": {
@@ -34,13 +36,15 @@
                                     }
                                 },
                                 {
-                                    "and": [
-                                        {
-                                            "exists": {
-                                                "field": "flags.deprecated"
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "exists": {
+                                                    "field": "flags.deprecated"
+                                                }
                                             }
-                                        }
-                                    ]
+                                        ]
+                                    }
                                 }
                             ],
                             "must_not": [
@@ -52,16 +56,32 @@
                                     }
                                 },
                                 {
-                                    "or": [
-                                        {
-                                            "exists": {
-                                                "field": "flags.insecure"
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "exists": {
+                                                    "field": "flags.insecure"
+                                                }
                                             }
-                                        }
-                                    ]
+                                        ]
+                                    }
                                 }
                             ],
                             "should": [
+                                {
+                                    "multi_match": {
+                                        "query": "spawn",
+                                        "operator": "and",
+                                        "fields": [
+                                            "package.name.standard^4",
+                                            "package.description.standard",
+                                            "package.keywords.standard^2"
+                                        ],
+                                        "type": "cross_fields",
+                                        "boost": 6,
+                                        "tie_breaker": 0.5
+                                    }
+                                },
                                 {
                                     "multi_match": {
                                         "query": "spawn",
@@ -73,7 +93,8 @@
                                         ],
                                         "type": "phrase",
                                         "slop": 3,
-                                        "boost": 3
+                                        "boost": 3,
+                                        "tie_breaker": 0.5
                                     }
                                 },
                                 {
@@ -86,7 +107,8 @@
                                             "package.keywords.english_docs^2"
                                         ],
                                         "type": "cross_fields",
-                                        "boost": 3
+                                        "boost": 3,
+                                        "tie_breaker": 0.5
                                     }
                                 },
                                 {
@@ -98,7 +120,8 @@
                                             "package.description.english_aggressive_docs",
                                             "package.keywords.english_aggressive_docs^2"
                                         ],
-                                        "type": "cross_fields"
+                                        "type": "cross_fields",
+                                        "tie_breaker": 0.5
                                     }
                                 }
                             ],
@@ -106,14 +129,15 @@
                         }
                     },
                     "script_score": {
-                        "lang": "groovy",
-                        "script": "_score * pow((doc[\"score.detail.popularity\"].value * popularityWeight + doc[\"score.detail.quality\"].value * qualityWeight + doc[\"score.detail.maintenance\"].value * maintenanceWeight), scoreEffect)",
-                        "params": {
-                            "text": "spawn",
-                            "scoreEffect": 15.3,
-                            "qualityWeight": 0.26027397260273977,
-                            "popularityWeight": 0.452054794520548,
-                            "maintenanceWeight": 0.28767123287671237
+                        "script": {
+                            "source": "_score * Math.pow((doc[\"score.detail.popularity\"].value * params.popularityWeight + doc[\"score.detail.quality\"].value * params.qualityWeight + doc[\"score.detail.maintenance\"].value * params.maintenanceWeight), params.scoreEffect)",
+                            "params": {
+                                "text": "spawn",
+                                "scoreEffect": 13.5,
+                                "qualityWeight": 0.26027397260273977,
+                                "popularityWeight": 0.452054794520548,
+                                "maintenanceWeight": 0.28767123287671237
+                            }
                         }
                     }
                 }
@@ -121,26 +145,28 @@
         },
         "status": 200,
         "response": {
-            "took": 100,
+            "took": 5,
             "timed_out": false,
             "_shards": {
                 "total": 1,
                 "successful": 1,
+                "skipped": 0,
                 "failed": 0
             },
             "hits": {
                 "total": 1,
-                "max_score": 0.60620177,
+                "max_score": 0.0042553646,
                 "hits": [
                     {
-                        "_index": "npms-1478183443563",
+                        "_index": "npms-1540901531616",
                         "_type": "score",
                         "_id": "cross-spawn-async",
-                        "_score": 0.60620177,
+                        "_score": 0.0042553646,
                         "_source": {
                             "package": {
                                 "name": "cross-spawn-async",
-                                "version": "2.2.4",
+                                "scope": "unscoped",
+                                "version": "2.2.5",
                                 "description": "Cross platform child_process#spawn",
                                 "keywords": [
                                     "spawn",
@@ -156,7 +182,7 @@
                                     "cmd",
                                     "execute"
                                 ],
-                                "date": "2016-05-18T13:00:31.170Z",
+                                "date": "2016-10-27T18:43:35.328Z",
                                 "links": {
                                     "npm": "https://www.npmjs.com/package/cross-spawn-async",
                                     "homepage": "https://github.com/IndigoUnited/node-cross-spawn-async#readme",
@@ -180,7 +206,7 @@
                                 ]
                             },
                             "flags": {
-                                "deprecated": "cross-spawn no longer requires a build toolchain, use it instead!"
+                                "deprecated": "cross-spawn no longer requires a build toolchain, use it instead"
                             },
                             "evaluation": {
                                 "quality": {
@@ -190,24 +216,24 @@
                                     "branding": 0.6
                                 },
                                 "popularity": {
-                                    "communityInterest": 91,
-                                    "downloadsCount": 1010522.3333333334,
-                                    "downloadsAcceleration": -5692.30818112633,
-                                    "dependentsCount": 64
+                                    "communityInterest": 99,
+                                    "downloadsCount": 857576,
+                                    "downloadsAcceleration": -102.3077435312025,
+                                    "dependentsCount": 71
                                 },
                                 "maintenance": {
-                                    "releasesFrequency": 0.9307363013698631,
-                                    "commitsFrequency": 0.7701369863013698,
-                                    "openIssues": 1,
-                                    "issuesDistribution": 0.9603771540959041
+                                    "releasesFrequency": 0,
+                                    "commitsFrequency": 0,
+                                    "openIssues": 0.5,
+                                    "issuesDistribution": 0.5
                                 }
                             },
                             "score": {
-                                "final": 0.6603514672830382,
+                                "final": 0.4528836211891805,
                                 "detail": {
-                                    "quality": 0.6274679973028335,
-                                    "popularity": 0.3491906186962679,
-                                    "maintenance": 0.9996981472814126
+                                    "quality": 0.6283596506741649,
+                                    "popularity": 0.28971110454474763,
+                                    "maintenance": 0.4656481125607697
                                 }
                             }
                         }
@@ -216,10 +242,10 @@
             }
         },
         "rawHeaders": [
-            "Content-Type",
+            "content-type",
             "application/json; charset=UTF-8",
-            "Content-Length",
-            "1622"
+            "content-length",
+            "1597"
         ]
     }
 ]

@@ -5,7 +5,7 @@ const elasticsearch = require('elasticsearch');
 const nockBack = require('nock').back;
 const queries = require('../../');
 
-const localEsClient = new elasticsearch.Client({ host: '127.0.0.1:9200', log: null, apiVersion: '2.4' });
+const localEsClient = new elasticsearch.Client({ host: '127.0.0.1:9200', log: null, apiVersion: '6.3' });
 
 describe('search.suggestions()', () => {
     it('should return the desired results', () => {
