@@ -70,12 +70,12 @@ describe('search()', () => {
         nockBack('search-complex-query-spawn.json', (_nockDone) => { nockDone = _nockDone; });
 
         return queries.search('maintainer:satazor keywords:spawn,-foo is:deprecated not:insecure boost-exact:no spawn', localEsClient)
-            .then((res) => {
-                expect(res.total).to.equal(1);
-                expect(res.results).to.have.length(1);
-                expect(res.results[0].package.name).to.equal('cross-spawn-async');
-                nockDone();
-            });
+        .then((res) => {
+            expect(res.total).to.equal(1);
+            expect(res.results).to.have.length(1);
+            expect(res.results[0].package.name).to.equal('cross-spawn-async');
+            nockDone();
+        });
     });
 
     it('should accept a elasticsearch config as the second argument', () => {
@@ -102,18 +102,18 @@ describe('search()', () => {
         });
     });
 
-    it('should fail if q has invalid qualifiers and options.throwOnInvalid is enabled', () => {
-        return queries.search('keywords:gulpplugin is:foo sass', localEsClient, { throwOnInvalid: true })
+    it('should fail if q has invalid qualifiers and options.throwOnInvalid is enabled', () => (
+        queries.search('keywords:gulpplugin is:foo sass', localEsClient, { throwOnInvalid: true })
         .then(() => {
             throw new Error('Should have failed');
         }, (err) => {
             expect(err).to.be.an.instanceOf(Error);
             expect(err.message).to.contain('deprecated, unstable, insecure');
-        });
-    });
+        })
+    ));
 
-    it('should return 0 results if no text or filter qualifiers were specified', () => {
-        return queries.search('score-effect:1 quality-weight:1 popularity-weight:1 maintenance-weight:1 boost-exact:false', localEsClient)
-        .then((res) => expect(res).to.eql({ total: 0, results: [] }));
-    });
+    it('should return 0 results if no text or filter qualifiers were specified', () => (
+        queries.search('score-effect:1 quality-weight:1 popularity-weight:1 maintenance-weight:1 boost-exact:false', localEsClient)
+        .then((res) => expect(res).to.eql({ total: 0, results: [] }))
+    ));
 });
