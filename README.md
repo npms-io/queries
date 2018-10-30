@@ -1,18 +1,6 @@
 # @npms/queries
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
-
-[npm-url]:https://npmjs.org/package/%40npms%2Fqueries
-[downloads-image]:http://img.shields.io/npm/dm/%40npms%2Fqueries.svg
-[npm-image]:http://img.shields.io/npm/v/%40npms%2Fqueries.svg
-[travis-url]:https://travis-ci.org/npms-io/queries
-[travis-image]:http://img.shields.io/travis/npms-io/queries/master.svg
-[coveralls-url]:https://coveralls.io/r/npms-io/queries
-[coveralls-image]:https://img.shields.io/coveralls/npms-io/queries/master.svg
-[david-dm-url]:https://david-dm.org/npms-io/queries
-[david-dm-image]:https://img.shields.io/david/npms-io/queries.svg
-[david-dm-dev-url]:https://david-dm.org/npms-io/queries#info=devDependencies
-[david-dm-dev-image]:https://img.shields.io/david/dev/npms-io/queries.svg
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage status][codecov-image]][codecov-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
 
 Module that offers a variety of queries around `npms` data.
 
@@ -111,3 +99,16 @@ _the above default values were based on trial and error examining the
 ## License
 
 Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+
+
+[npm-url]:https://npmjs.org/package/%40npms%2Fqueries
+[downloads-image]:http://img.shields.io/npm/dm/%40npms%2Fqueries.svg
+[npm-image]:http://img.shields.io/npm/v/%40npms%2Fqueries.svg
+[travis-url]:https://travis-ci.org/npms-io/queries
+[travis-image]:http://img.shields.io/travis/npms-io/queries/master.svg
+[codecov-url]:https://codecov.io/gh/npms-io/npms-badges
+[codecov-image]:https://img.shields.io/codecov/c/github/npms-io/npms-badges/master.svg
+[david-dm-url]:https://david-dm.org/npms-io/queries
+[david-dm-image]:https://img.shields.io/david/npms-io/queries.svg
+[david-dm-dev-url]:https://david-dm.org/npms-io/queries#info=devDependencies
+[david-dm-dev-image]:https://img.shields.io/david/dev/npms-io/queries.svg
