@@ -4,7 +4,7 @@
   "description": "Module that offers a variety of queries around npms data",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint '{*.js,lib/**/*.js,test/**/*.js}' --ignore-pattern=test/coverage",
+    "lint": "eslint --ignore-path .gitignore '{*.js,lib/**/*.js,test/**/*.js}' ",
     "test": "NOCK_BACK_MODE=record mocha --bail",
     "test-cov": "NOCK_BACK_MODE=record istanbul cover --dir test/coverage _mocha && echo Coverage lies in test/coverage/lcov-report/index.html",
     "test-travis": "NOCK_BACK_MODE=lockdown istanbul cover _mocha --report lcovonly",
