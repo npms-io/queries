@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/npms-io/queries/compare/v2.0.2...v3.0.0) (2018-10-30)
+
+
+### Features
+
+* upgrade to new index & elasticsearch ([7465d37](https://github.com/npms-io/queries/commit/7465d37))
+
+
+### BREAKING CHANGES
+
+* the new queries are incompatible with the old npms index
+
+
+
 <a name="2.0.2"></a>
 ## [2.0.2](https://github.com/npms-io/queries/compare/v2.0.1...v2.0.2) (2017-11-09)
 
