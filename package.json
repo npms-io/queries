@@ -9,7 +9,7 @@
     "test-cov": "NOCK_BACK_MODE=record istanbul cover --dir test/coverage _mocha && echo Coverage lies in test/coverage/lcov-report/index.html",
     "test-travis": "NOCK_BACK_MODE=lockdown istanbul cover _mocha --report lcovonly",
     "release": "standard-version",
-    "postrelease": "git push --follow-tags origin master && npm publish"
+    "postrelease": "git push --follow-tags origin master"
   },
   "bugs": "https://github.com/npms-io/queries/issues/",
   "repository": {
